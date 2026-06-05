@@ -29,4 +29,4 @@
 - Both canonical methods achieved `canonical_sample_rate=1.0`, satisfying the tokenizer-validity constraint while improving held-out log-loss.
 
 ## Stop Justification
-- Stopped at `core_claim`: the reusable environment demonstrates the paper's central claim on a scaled WikiText-2 bigram setting. Higher milestones would require larger neural LM experiments beyond the minimum validated reproduction.
+- Completed at milestone `core_claim`.

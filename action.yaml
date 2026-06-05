@@ -27,8 +27,6 @@
 #   milestone: core_claim
 #   notes: "Reproduced the core claim. Environment packaged."
 
-action: submit
-gpus: 0
-test: false
-milestone: method_runs
-notes: "Rerun CPU benchmark after adding GPT-2 pretokenizer canonical bigram overrides; expect local/global log-loss improvements."
+action: done
+milestone: core_claim
+notes: "Reproduced the core claim in a scaled WikiText-2 GPT-2-BPE bigram environment: local/global canonical conditioning improve log-loss and satisfy canonical sample constraints; validation passes."
