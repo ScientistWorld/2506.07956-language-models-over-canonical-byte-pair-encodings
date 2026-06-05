@@ -10,5 +10,5 @@ set -e
 
 cd /home/user
 
-# TODO: run the paper's method
-# TODO: call scripts/evaluate.sh to score
+python -m method.canonical_conditioning "$@"
+bash scripts/evaluate.sh artifacts/canonical_conditioning/wikitext2_bigram.json

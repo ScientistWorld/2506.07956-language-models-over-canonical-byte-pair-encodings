@@ -1,50 +1,22 @@
 # Evaluation Targets
 
-<!-- Do not edit this unless you decide to stop -->
+## Primary: wikitext2_bigram_conditioning
 
-<!--
-Describe what a scientist could optimize and how to measure it.
+Tests whether enforcing tokenizer-valid token strings improves language-model likelihood on held-out WikiText-2 lines.
 
-If a paper claims "we get X without sacrificing Y." Your targets must
-capture BOTH sides. Without constraint targets, a scientist can trivially
-"improve" by breaking the property the paper was designed to satisfy.
+- **Metric**: `log_loss_bits_per_string` (lower is better)
+- **Run**: `bash scripts/reproduce.sh`, then `bash scripts/evaluate.sh artifacts/canonical_conditioning/wikitext2_bigram.json`
 
-Three kinds of targets:
+## Constraint: canonical_sample_rate
 
-  PRIMARY    — the main thing the paper optimizes (accuracy, PSNR, etc.)
-  CONSTRAINT — what the paper must maintain (security, fairness, param count,
-               baseline comparison). Constraint metrics guard against cheating:
-               a scientist who ignores the constraint should score WORSE.
-  ABLATION   — what breaks when the key idea is removed (wrong-key test,
-               no-module test). Proves the method actually does something. 
-               This can be ignored if truly not important.
+Tests whether generated token sequences satisfy tokenizer canonicality rather than improving likelihood while still producing impossible token encodings.
 
-For each target, write:
-- What the experiment tests (one sentence)
-- The primary metric and direction (higher/lower is better)
-- How to run evaluation
+- **Metric**: `canonical_sample_rate` (higher is better)
+- **Run**: included in the default reproduction artifact and aggregated by `scripts/evaluate.sh`
 
-Every target here MUST appear in both reference.json and scores.json.
-Do not list targets you cannot measure — phantom targets are worse than
-missing targets.
+## Constraint: vocab_size
 
-Example for a steganography paper:
+Tracks the token vocabulary size used by the scaled reproduction so future improvements do not come only from changing the support size.
 
-## Primary: reconstruction_quality
-Cover and hidden scene PSNR on Blender Synthetic.
-- **Metric**: psnr (higher is better)
-
-## Constraint: key_security
-Wrong-key rendering must produce incoherent output.
-- **Metric**: wrong_key_psnr (lower is better — high means security is broken)
-
-## Ablation: vs_standalone_baseline
-Cover quality should match standalone model (no hidden scene embedded).
-- **Metric**: psnr_gap (lower is better — large gap means hiding costs quality)
-
-Delete this comment block and fill in your actual targets below.
--->
-
-<!-- This is high-level. IT IS ABOUT CONCEPT, NOT NUMBERS. DO NOT INCLUDE ANY ACTUAL VALUES FROM THE PAPER OR YOUR EXPERIMENTS HERE. -->
-
-<!-- This should EXACTLY corresponds to the structure in your scores.json. -->
+- **Metric**: `vocab_size` (held fixed; lower is not a scientific improvement by itself)
+- **Run**: included in `scoring/scores.json`

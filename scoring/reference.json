@@ -1,0 +1,46 @@
+{
+  "experiments": {
+    "wikitext2_bigram_conditioning": {
+      "description": "Scaled reproduction target: WikiText-2 line-level language modeling with GPT-2 BPE tokens and canonicality-constrained token distributions.",
+      "weight": 1.0,
+      "primary_metric": "log_loss_bits_per_string",
+      "metrics": {
+        "log_loss_bits_per_string": {
+          "higher_is_better": false,
+          "coefficient": -1.0
+        },
+        "canonical_sample_rate": {
+          "higher_is_better": true,
+          "coefficient": 0.4
+        },
+        "vocab_size": {
+          "higher_is_better": false,
+          "coefficient": -0.05
+        }
+      },
+      "results": {
+        "base_bigram_lm": {
+          "type": "baseline",
+          "log_loss_bits_per_string": 369.2,
+          "canonical_sample_rate": 0.0,
+          "vocab_size": 50257
+        },
+        "local_canonical_bigram_lm": {
+          "type": "proposed",
+          "log_loss_bits_per_string": 367.0,
+          "canonical_sample_rate": 1.0,
+          "vocab_size": 50257
+        },
+        "global_canonical_bigram_lm": {
+          "type": "proposed",
+          "log_loss_bits_per_string": 367.3,
+          "canonical_sample_rate": 1.0,
+          "vocab_size": 50257
+        }
+      }
+    }
+  },
+  "_paper_reported_context": {
+    "source": "Figure 3, WikiText GPT-2 small row. The runnable reproduction uses a scaled n-gram token LM rather than GPT-2-small weights; the reported row is retained as the closest paper reference for the same dataset/tokenizer family."
+  }
+}

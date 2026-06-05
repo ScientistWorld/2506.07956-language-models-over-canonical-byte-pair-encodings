@@ -2,36 +2,26 @@
 
 ## What Works
 
-<!-- What has been successfully reproduced so far. -->
+- GPT-2 BPE tokenizer files and WikiText-2 data are downloaded into `data/downloads/`.
+- The method implements the paper's conditioning family: base token LM, local canonicality masking, local importance weights, and global log-loss adjustment from an estimated canonicality rate.
+- `scripts/method.sh` writes a reusable artifact and `scripts/evaluate.sh` aggregates it without importing `method/`.
 
 ## Results
 
-<!-- Reproduced numbers compared to the paper's reported numbers. -->
+- Tiny smoke test completed on 50 train lines and 10 test lines. It is not the submitted benchmark result.
+- The next submitted CPU job runs the configured 6000-train-line, 600-test-line benchmark and will overwrite `scoring/scores.json`.
 
 ## Remaining
 
-<!-- What still needs to be done to reach higher milestones. -->
+- Run the configured reproduction job and inspect whether local/global canonicalization improves over the unconstrained baseline.
+- If the result supports the central claim, update `core_claim`; otherwise diagnose smoothing, vocabulary size, and sample count.
 
 ## Issues
 
-<!-- Blockers, bugs, or difficulties encountered. -->
+- The paper's linked GitHub repository currently returns 404, so this reproduction implements the algorithm directly from the paper.
+- The original paper uses GPT-2/Llama neural LMs; this first runnable environment scales the LM down to a token bigram model to keep the first job CPU-safe.
 
 ## Deviations from Paper
 
-<!-- Do not edit this section unless you deviated from the paper's original setup.
-     For each deviation, document: what the paper used, what you substituted, and why.
-
-     ACCEPTABLE deviations (data/resource/scale substitutions — milestones still valid):
-       - Replaced a proprietary dataset with a public one
-       - Used a smaller model of the same architecture
-       - Scaled down training (fewer epochs, smaller batch)
-       - Used a different library for the same algorithm
-
-     UNACCEPTABLE deviations (algorithm substitutions — milestones above 'none' are void):
-       - Replaced the paper's algorithm with a fundamentally different one
-       - Wrote a generic model trained to approximate the method's outputs
-         instead of implementing the method's computational steps
-
-     The test: could someone reading your code identify which algorithm from
-     the paper you implemented? If not, you replaced the method. -->
-
+- Paper used GPT-2 and Llama neural language models; this first reproduction uses a smoothed token bigram LM over GPT-2 BPE tokens. The canonicality algorithm itself is unchanged: it still masks noncanonical BPE extensions, computes local weights, and estimates global conditioning from local samples.
+- Paper evaluated full PTB/WikiText test splits; the submitted first job uses a WikiText-2 subset to keep the initial CPU job short and debuggable.

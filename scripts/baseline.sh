@@ -17,4 +17,5 @@ set -e
 
 cd /home/user
 
-# TODO: run baseline
+python -m baseline.base_bigram "$@"
+bash scripts/evaluate.sh artifacts/baseline/wikitext2_bigram.json

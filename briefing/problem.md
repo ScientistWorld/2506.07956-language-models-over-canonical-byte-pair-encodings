@@ -6,12 +6,12 @@ Do NOT describe the paper's method or solution here — only the problem itself.
 
 ## Research Question
 
-<!-- What problem or challenge does this paper tackle? What gap in existing work does it address? -->
+Token-level language models define distributions over tokenizer token strings, but deterministic tokenizers only produce a subset of those strings for real text. The problem is to build or evaluate language models whose probability mass aligns with valid deterministic tokenizations rather than wasting mass on token sequences that cannot occur in tokenized training data.
 
 ## Why It Matters
 
-<!-- Why is this problem important? What would a good solution enable? Make it short -->
+If probability mass is assigned to impossible token encodings, held-out likelihood is artificially worse and generation can explore invalid internal representations. A good solution improves likelihood while preserving the ability to represent the same underlying text strings.
 
 ## Success Criteria
 
-<!-- What would a successful solution look like? What properties should it have? This is about the goal, not the paper's specific approach. Make it short -->
+A successful system lowers held-out negative log-likelihood in bits per string relative to an unconstrained token LM and produces only canonical token strings under the tokenizer. Evaluation should also report the constraint satisfaction rate so improvements cannot come from ignoring tokenizer validity.

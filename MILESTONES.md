@@ -1,6 +1,6 @@
 # Reproduction Milestones
 
-**Current: none**
+**Current: method_runs**
 
 <!-- Milestone levels (update "Current" above as you progress):
   none             — just started, no meaningful progress yet
@@ -15,7 +15,13 @@
 
 ## Progress Log
 
-<!-- Write your progress here -->
+### [2026-06-05 08:05] - none
+- Read the paper and identified the core canonical BPE conditioning claim.
+- Confirmed the linked code repository is currently unavailable.
+
+### [2026-06-05 08:12] - method_runs
+- Implemented GPT-2 byte-level BPE tokenization, BPE bigram canonicality testing, local canonicalization, and global canonicality-rate estimation.
+- Ran a tiny end-to-end smoke test that produced method artifacts and scores.
 
 ## Stop Justification
-- Completed at milestone `none`.
+- Not stopped.

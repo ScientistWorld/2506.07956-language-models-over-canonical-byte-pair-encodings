@@ -26,5 +26,6 @@ cd /home/user
 
 mkdir -p scoring
 
-# TODO: implement evaluation using code in eval/
-# Must write scoring/scores.json at the end
+ARTIFACT="${1:-artifacts/canonical_conditioning/wikitext2_bigram.json}"
+
+python -m eval.aggregate_scores --artifact "$ARTIFACT" --output scoring/scores.json
