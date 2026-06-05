@@ -31,4 +31,4 @@ action: submit
 gpus: 0
 test: false
 milestone: method_runs
-notes: "Rerun shortened CPU WikiText-2 GPT-2-BPE canonical conditioning benchmark with progress logging."
+notes: "Rerun CPU benchmark after adding GPT-2 pretokenizer canonical bigram overrides; expect local/global log-loss improvements."
