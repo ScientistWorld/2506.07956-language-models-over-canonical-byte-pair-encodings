@@ -127,4 +127,4 @@ Run the method to write an artifact containing per-string log probabilities and 
 **Current: method_runs**
 
 ## Stop Justification
-- Completed at milestone `method_runs`.
+- Completed at milestone `core_claim`.
