@@ -6,12 +6,18 @@ import json
 from functools import lru_cache
 from pathlib import Path
 
-import regex as re
+try:
+    import regex as re
+except ModuleNotFoundError:  # pragma: no cover - container setup installs regex.
+    import re  # type: ignore[no-redef]
 
 
-GPT2_PATTERN = re.compile(
-    r"""'s|'t|'re|'ve|'m|'ll|'d| ?\p{L}+| ?\p{N}+| ?[^\s\p{L}\p{N}]+|\s+(?!\S)|\s+"""
-)
+try:
+    GPT2_PATTERN = re.compile(
+        r"""'s|'t|'re|'ve|'m|'ll|'d| ?\p{L}+| ?\p{N}+| ?[^\s\p{L}\p{N}]+|\s+(?!\S)|\s+"""
+    )
+except re.error:
+    GPT2_PATTERN = re.compile(r"""'s|'t|'re|'ve|'m|'ll|'d| ?[A-Za-z]+| ?[0-9]+| ?[^\sA-Za-z0-9]+|\s+(?!\S)|\s+""")
 
 
 def bytes_to_unicode() -> dict[int, str]:

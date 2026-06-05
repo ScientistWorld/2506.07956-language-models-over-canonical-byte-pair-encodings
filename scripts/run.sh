@@ -14,8 +14,8 @@ set -e
 cd /home/user
 
 bash scripts/reproduce.sh \
-  --max-train-lines 6000 \
-  --max-test-lines 600 \
-  --vocab-size 4096 \
-  --samples 300 \
-  --sample-max-tokens 128
+  --max-train-lines 1000 \
+  --max-test-lines 50 \
+  --vocab-size 512 \
+  --samples 20 \
+  --sample-max-tokens 64

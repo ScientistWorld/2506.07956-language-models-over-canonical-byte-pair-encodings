@@ -11,6 +11,7 @@ import argparse
 import json
 import math
 import random
+import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -18,6 +19,10 @@ from data.gpt2_bpe import load_default_tokenizer
 from data.wikitext import read_wikitext_lines
 
 EOS = -1
+
+
+def log(message: str) -> None:
+    print(f"[canonical-conditioning] {message}", flush=True, file=sys.stderr)
 
 
 class BigramLM:
@@ -133,12 +138,16 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=13)
     args = parser.parse_args()
 
+    log("loading GPT-2 BPE tokenizer")
     tokenizer = load_default_tokenizer()
+    log("reading WikiText-2 lines")
     train_lines = read_wikitext_lines(args.train_path, args.max_train_lines)
     test_lines = read_wikitext_lines(args.test_path, args.max_test_lines)
+    log(f"tokenizing {len(train_lines)} train lines and {len(test_lines)} test lines")
     train_sequences = [tokenizer.encode(line) for line in train_lines]
     test_sequences_full = [tokenizer.encode(line) for line in test_lines]
 
+    log("building scaled token vocabulary")
     counts = Counter(tok for seq in train_sequences for tok in seq)
     top_vocab = {tok for tok, _ in counts.most_common(args.vocab_size)}
     top_vocab.update(tok for seq in test_sequences_full for tok in seq)
@@ -146,11 +155,14 @@ def main() -> None:
     test_sequences = [[tok for tok in seq if tok in top_vocab] for seq in test_sequences_full]
 
     base = BigramLM(sorted(top_vocab), alpha=args.alpha)
+    log(f"fitting bigram LM with vocab_size={len(top_vocab)}")
     base.fit(train_sequences)
     local = LocalCanonicalLM(base, tokenizer)
 
     records = []
     for i, seq in enumerate(test_sequences):
+        if i and i % 5 == 0:
+            log(f"evaluated {i}/{len(test_sequences)} test strings; cached_norms={len(local._norm_cache)}")
         base_lp, local_lp, logw = local.log2_probs_and_weight(seq)
         records.append(
             {
@@ -166,6 +178,8 @@ def main() -> None:
     sample_logw = []
     local_samples = []
     for _ in range(args.samples):
+        if sample_logw and len(sample_logw) % 5 == 0:
+            log(f"drew {len(sample_logw)}/{args.samples} local samples; cached_norms={len(local._norm_cache)}")
         sample, logw = local.sample(rng, args.sample_max_tokens)
         local_samples.append(sample)
         sample_logw.append(logw)
@@ -188,6 +202,7 @@ def main() -> None:
     out = Path(args.output)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(payload, indent=2, sort_keys=True))
+    log(f"wrote {out}")
 
 
 if __name__ == "__main__":

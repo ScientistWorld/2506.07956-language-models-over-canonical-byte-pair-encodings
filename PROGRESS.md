@@ -20,6 +20,7 @@
 
 - The paper's linked GitHub repository currently returns 404, so this reproduction implements the algorithm directly from the paper.
 - The original paper uses GPT-2/Llama neural LMs; this first runnable environment scales the LM down to a token bigram model to keep the first job CPU-safe.
+- First submitted CPU job was cancelled after 20 minutes because it produced no method progress output; the rerun uses a smaller benchmark slice and more frequent progress logging.
 
 ## Deviations from Paper
 
