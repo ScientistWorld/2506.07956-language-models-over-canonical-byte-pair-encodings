@@ -21,8 +21,10 @@
 - The paper's linked GitHub repository currently returns 404, so this reproduction implements the algorithm directly from the paper.
 - The original paper uses GPT-2/Llama neural LMs; this first runnable environment scales the LM down to a token bigram model to keep the first job CPU-safe.
 - First submitted CPU job was cancelled after 20 minutes because it produced no method progress output; the rerun uses a smaller benchmark slice and more frequent progress logging.
+- The first completed job showed global canonicalization improving log-loss, but local canonicalization assigned `-inf` to 17/50 strings due to GPT-2 pre-tokenizer false negatives. The next run adds the paper's corpus-derived override workaround for observed canonical bigrams.
 
 ## Deviations from Paper
 
 - Paper used GPT-2 and Llama neural language models; this first reproduction uses a smoothed token bigram LM over GPT-2 BPE tokens. The canonicality algorithm itself is unchanged: it still masks noncanonical BPE extensions, computes local weights, and estimates global conditioning from local samples.
 - Paper evaluated full PTB/WikiText test splits; the submitted first job uses a WikiText-2 subset to keep the initial CPU job short and debuggable.
+- The implementation uses the paper's suggested pre-tokenization workaround: adjacent token pairs observed in deterministic GPT-2-BPE tokenizations are allowed as canonical bigram overrides, which avoids false negatives from applying a pure BPE test to a tokenizer with regex pre-tokenization.

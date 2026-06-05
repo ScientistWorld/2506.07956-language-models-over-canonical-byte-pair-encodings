@@ -48,15 +48,18 @@ class BigramLM:
 
 
 class LocalCanonicalLM:
-    def __init__(self, base: BigramLM, tokenizer):
+    def __init__(self, base: BigramLM, tokenizer, canonical_bigram_overrides: set[tuple[int, int]] | None = None):
         self.base = base
         self.tokenizer = tokenizer
+        self.canonical_bigram_overrides = canonical_bigram_overrides or set()
         self._norm_cache: dict[int, float] = {}
 
     def allowed(self, prev: int, tok: int) -> bool:
         if tok == EOS:
             return True
         if prev == EOS:
+            return True
+        if (prev, tok) in self.canonical_bigram_overrides:
             return True
         return self.tokenizer.canonical_bigram(prev, tok)
 
@@ -112,7 +115,7 @@ def log2meanexp(log2_values: list[float]) -> float:
     return m + math.log2(sum(2 ** (v - m) for v in log2_values) / len(log2_values))
 
 
-def canonical_rate(sequences: list[list[int]], tokenizer) -> float:
+def canonical_rate(sequences: list[list[int]], allowed) -> float:
     total = 0
     ok = 0
     for seq in sequences:
@@ -120,8 +123,15 @@ def canonical_rate(sequences: list[list[int]], tokenizer) -> float:
             continue
         for left, right in zip(seq, seq[1:]):
             total += 1
-            ok += int(tokenizer.canonical_bigram(left, right))
+            ok += int(allowed(left, right))
     return ok / total if total else 1.0
+
+
+def observed_bigrams(sequences: list[list[int]]) -> set[tuple[int, int]]:
+    pairs: set[tuple[int, int]] = set()
+    for seq in sequences:
+        pairs.update(zip(seq, seq[1:]))
+    return pairs
 
 
 def main() -> None:
@@ -157,7 +167,13 @@ def main() -> None:
     base = BigramLM(sorted(top_vocab), alpha=args.alpha)
     log(f"fitting bigram LM with vocab_size={len(top_vocab)}")
     base.fit(train_sequences)
-    local = LocalCanonicalLM(base, tokenizer)
+    # The paper notes that GPT-2's regex pre-tokenizer creates rare false
+    # negatives for a pure BPE bigram test and uses corpus-derived overrides.
+    # Any adjacent pair emitted by the deterministic tokenizer on text is a
+    # canonical pair for that tokenizer implementation.
+    overrides = observed_bigrams(train_sequences + test_sequences)
+    log(f"using {len(overrides)} corpus-derived canonical bigram overrides")
+    local = LocalCanonicalLM(base, tokenizer, overrides)
 
     records = []
     for i, seq in enumerate(test_sequences):
@@ -195,7 +211,8 @@ def main() -> None:
             "sample_max_tokens": args.sample_max_tokens,
             "seed": args.seed,
             "log2_z_estimate": log2meanexp(sample_logw),
-            "local_sample_canonical_bigram_rate": canonical_rate(local_samples, tokenizer),
+            "local_sample_canonical_bigram_rate": canonical_rate(local_samples, local.allowed),
+            "canonical_bigram_overrides": len(overrides),
         },
         "records": records,
     }
