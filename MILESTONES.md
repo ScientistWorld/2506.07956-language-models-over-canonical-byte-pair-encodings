@@ -11,4 +11,4 @@
 - Reproduced the core claim in the scaled setting: local and global canonicalization improve held-out log-loss while producing only canonical samples.
 
 ## Stop Justification
-- Stopping at `core_claim`: the reusable environment is packaged and validated; higher milestones would require adding more paper settings such as PTB or neural GPT-2/Llama experiments.
+- Completed at milestone `core_claim`.

@@ -98,12 +98,28 @@ Run the method to write an artifact containing per-string log probabilities and 
 
 </details>
 
+### Iteration 2: gpt-5.5
+- **Milestone**: `core_claim` | **Status**: done
+- **Working time**: 3m | **GPU**: 0.0h
+- **Jobs**: 4 total (3 completed, 0 failed)
+
+<details>
+<summary>Progress Log</summary>
+
+### [2026-06-05 08:47] - core_claim
+- Audited the existing implementation and confirmed it implements the paper's canonicality-by-conditioning computation: token LM probabilities, BPE canonical bigram masking, local renormalization, local importance weights, and global conditioning estimate.
+- Corrected the constraint metric so the unconstrained baseline canonical sample rate is measured from generated samples rather than hardcoded.
+- Completed a CPU scheduler run on the scaled WikiText-2 benchmark with 1000 train lines, 50 held-out lines, 1302 GPT-2-BPE tokens, and 100 samples.
+- Reproduced the core claim in the scaled setting: local and global canonicalization improve held-out log-loss while producing only canonical samples.
+
+</details>
+
 
 ---
 
 # Reproduction Milestones
 
-**Current: method_runs**
+**Current: core_claim**
 
 ## Stop Justification
-- Completed at milestone `method_runs`.
+- Completed at milestone `core_claim`.

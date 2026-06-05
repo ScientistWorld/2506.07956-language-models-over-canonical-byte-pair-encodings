@@ -1,8 +1,8 @@
 # IMPORTANT: Once you set action to 'submit' or 'done', STOP immediately.
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends. Sleeping blocks the entire pipeline.
-action: submit
+action: done
 gpus: 0
 test: true
-milestone: method_runs
-notes: "Regenerate the scaled WikiText-2 canonical conditioning scores with measured baseline and local canonical sample rates."
+milestone: core_claim
+notes: "Corrected scaled WikiText-2 reproduction completed and validated: local/global canonical conditioning improve log-loss and produce canonical samples."
