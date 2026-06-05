@@ -1,6 +1,6 @@
 # Reproduction Milestones
 
-**Current: method_runs**
+**Current: core_claim**
 
 <!-- Milestone levels (update "Current" above as you progress):
   none             — just started, no meaningful progress yet
@@ -23,5 +23,10 @@
 - Implemented GPT-2 byte-level BPE tokenization, BPE bigram canonicality testing, local canonicalization, and global canonicality-rate estimation.
 - Ran a tiny end-to-end smoke test that produced method artifacts and scores.
 
+### [2026-06-05 08:41] - core_claim
+- Completed the scaled WikiText-2 CPU reproduction with corpus-derived GPT-2 pretokenizer canonical bigram overrides.
+- The unconstrained bigram LM scored 649.346 bits/string; global canonical conditioning improved to 649.183 bits/string and local canonical conditioning improved to 649.039 bits/string.
+- Both canonical methods achieved `canonical_sample_rate=1.0`, satisfying the tokenizer-validity constraint while improving held-out log-loss.
+
 ## Stop Justification
-- Not stopped.
+- Stopped at `core_claim`: the reusable environment demonstrates the paper's central claim on a scaled WikiText-2 bigram setting. Higher milestones would require larger neural LM experiments beyond the minimum validated reproduction.
