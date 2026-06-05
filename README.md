@@ -119,6 +119,11 @@ Run the method to write an artifact containing per-string log probabilities and 
 - **Working time**: 30m | **GPU**: 0.0h
 - **Jobs**: 4 total (3 completed, 0 failed)
 
+### Iteration 3: gpt-5.5
+- **Milestone**: `method_runs` | **Status**: error
+- **Working time**: 30m | **GPU**: 0.0h
+- **Jobs**: 4 total (3 completed, 0 failed)
+
 
 ---
 
@@ -127,4 +132,4 @@ Run the method to write an artifact containing per-string log probabilities and 
 **Current: method_runs**
 
 ## Stop Justification
-- Completed at milestone `core_claim`.
+- Completed at milestone `method_runs`.
