@@ -1,0 +1,23 @@
+{
+  "experiments": {
+    "wikitext2_bigram_conditioning": {
+      "results": {
+        "base_bigram_lm": {
+          "canonical_sample_rate": 0.0,
+          "log_loss_bits_per_string": 429.0224638117172,
+          "vocab_size": 1302
+        },
+        "global_canonical_bigram_lm": {
+          "canonical_sample_rate": 1.0,
+          "log_loss_bits_per_string": 428.4687567315828,
+          "vocab_size": 1302
+        },
+        "local_canonical_bigram_lm": {
+          "canonical_sample_rate": 1.0,
+          "log_loss_bits_per_string": 438.84799037921715,
+          "vocab_size": 1302
+        }
+      }
+    }
+  }
+}
