@@ -31,7 +31,7 @@ def main() -> None:
     results: dict[str, dict[str, float]] = {
         "base_bigram_lm": {
             "log_loss_bits_per_string": baseline_loss,
-            "canonical_sample_rate": 0.0,
+            "canonical_sample_rate": data["metadata"].get("base_sample_canonical_rate", 0.0),
             "vocab_size": data["metadata"]["vocab_size"],
         }
     }
@@ -40,7 +40,7 @@ def main() -> None:
         global_loss = baseline_loss + log2_z
         results["local_canonical_bigram_lm"] = {
             "log_loss_bits_per_string": local_loss,
-            "canonical_sample_rate": data["metadata"]["local_sample_canonical_bigram_rate"],
+            "canonical_sample_rate": data["metadata"]["local_sample_canonical_rate"],
             "vocab_size": data["metadata"]["vocab_size"],
         }
         results["global_canonical_bigram_lm"] = {

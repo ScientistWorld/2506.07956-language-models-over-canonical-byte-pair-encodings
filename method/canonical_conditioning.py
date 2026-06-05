@@ -46,6 +46,26 @@ class BigramLM:
             self.context_totals[prev] + self.alpha * self.denominator_size
         )
 
+    def sample(self, rng: random.Random, max_tokens: int = 256) -> list[int]:
+        seq: list[int] = []
+        prev = EOS
+        candidates = [EOS] + self.vocab
+        for _ in range(max_tokens):
+            weights = [self.prob(prev, tok) for tok in candidates]
+            draw = rng.random() * sum(weights)
+            acc = 0.0
+            chosen = EOS
+            for tok, weight in zip(candidates, weights):
+                acc += weight
+                if draw <= acc:
+                    chosen = tok
+                    break
+            if chosen == EOS:
+                return seq
+            seq.append(chosen)
+            prev = chosen
+        return seq
+
 
 class LocalCanonicalLM:
     def __init__(self, base: BigramLM, tokenizer, canonical_bigram_overrides: set[tuple[int, int]] | None = None):
@@ -115,16 +135,10 @@ def log2meanexp(log2_values: list[float]) -> float:
     return m + math.log2(sum(2 ** (v - m) for v in log2_values) / len(log2_values))
 
 
-def canonical_rate(sequences: list[list[int]], allowed) -> float:
-    total = 0
-    ok = 0
-    for seq in sequences:
-        if len(seq) < 2:
-            continue
-        for left, right in zip(seq, seq[1:]):
-            total += 1
-            ok += int(allowed(left, right))
-    return ok / total if total else 1.0
+def canonical_sample_rate(sequences: list[list[int]], allowed) -> float:
+    if not sequences:
+        return 0.0
+    return sum(all(allowed(left, right) for left, right in zip(seq, seq[1:])) for seq in sequences) / len(sequences)
 
 
 def observed_bigrams(sequences: list[list[int]]) -> set[tuple[int, int]]:
@@ -191,6 +205,7 @@ def main() -> None:
         )
 
     rng = random.Random(args.seed)
+    base_samples = [base.sample(rng, args.sample_max_tokens) for _ in range(args.samples)]
     sample_logw = []
     local_samples = []
     for _ in range(args.samples):
@@ -211,7 +226,8 @@ def main() -> None:
             "sample_max_tokens": args.sample_max_tokens,
             "seed": args.seed,
             "log2_z_estimate": log2meanexp(sample_logw),
-            "local_sample_canonical_bigram_rate": canonical_rate(local_samples, local.allowed),
+            "base_sample_canonical_rate": canonical_sample_rate(base_samples, local.allowed),
+            "local_sample_canonical_rate": canonical_sample_rate(local_samples, local.allowed),
             "canonical_bigram_overrides": len(overrides),
         },
         "records": records,

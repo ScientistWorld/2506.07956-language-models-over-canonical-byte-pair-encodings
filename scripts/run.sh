@@ -17,5 +17,5 @@ bash scripts/reproduce.sh \
   --max-train-lines 1000 \
   --max-test-lines 50 \
   --vocab-size 512 \
-  --samples 20 \
+  --samples 100 \
   --sample-max-tokens 64
