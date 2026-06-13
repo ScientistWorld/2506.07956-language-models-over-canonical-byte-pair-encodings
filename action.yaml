@@ -3,6 +3,6 @@
 # only after the turn ends.
 action: submit
 gpus: 0
-test: false
+test: true
 milestone: core_claim_plus
-notes: "CPU job to regenerate WikiText-2 scores and add PTB as a second corpus setting, with eval-side canonical sample verification."
+notes: "Retry final verification on a smaller faster CPU configuration after cf6dce5d-31d was killed by Hive heartbeat quota/orphaning."

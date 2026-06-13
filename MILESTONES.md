@@ -4,6 +4,11 @@
 
 ## Progress Log
 
+### [2026-06-13 08:51] - core_claim_plus
+- CPU verification job `cf6dce5d-31d` was killed after Hive/Ray heartbeat disk-quota failures and orphaning, before it could finish PTB and regenerate aggregate scores.
+- The existing WikiText artifact was checked and already contains generated samples required by the hardened evaluator; it scores successfully under `eval/aggregate_scores.py`.
+- Added allowed-candidate caching to the local conditioned sampler and scaled `scripts/run.sh` to a faster two-corpus CPU verification setting for retry.
+
 ### [2026-06-13 08:21] - core_claim_plus
 - Prepared a secondary corpus reproduction: PTB download paths verified and added, method/baseline artifacts made experiment-name aware, and the aggregate evaluator now supports multiple experiment artifacts.
 - Fixed a benchmark integrity issue by requiring generated token samples in artifacts and independently verifying canonical sample rate inside `eval/` instead of trusting method metadata.

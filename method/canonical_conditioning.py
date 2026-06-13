@@ -73,6 +73,7 @@ class LocalCanonicalLM:
         self.tokenizer = tokenizer
         self.canonical_bigram_overrides = canonical_bigram_overrides or set()
         self._norm_cache: dict[int, float] = {}
+        self._candidate_cache: dict[int, list[int]] = {}
 
     def allowed(self, prev: int, tok: int) -> bool:
         if tok == EOS:
@@ -85,10 +86,13 @@ class LocalCanonicalLM:
 
     def norm(self, prev: int) -> float:
         if prev not in self._norm_cache:
-            total = self.base.prob(prev, EOS)
-            total += sum(self.base.prob(prev, tok) for tok in self.base.vocab if self.allowed(prev, tok))
-            self._norm_cache[prev] = total
+            self._norm_cache[prev] = sum(self.base.prob(prev, tok) for tok in self.candidates(prev))
         return self._norm_cache[prev]
+
+    def candidates(self, prev: int) -> list[int]:
+        if prev not in self._candidate_cache:
+            self._candidate_cache[prev] = [EOS] + [tok for tok in self.base.vocab if self.allowed(prev, tok)]
+        return self._candidate_cache[prev]
 
     def log2_probs_and_weight(self, seq: list[int]) -> tuple[float, float, float]:
         base_log2 = 0.0
@@ -111,7 +115,7 @@ class LocalCanonicalLM:
         log2_weight = 0.0
         prev = EOS
         for _ in range(max_tokens):
-            candidates = [EOS] + [tok for tok in self.base.vocab if self.allowed(prev, tok)]
+            candidates = self.candidates(prev)
             weights = [self.base.prob(prev, tok) for tok in candidates]
             z = sum(weights)
             log2_weight += math.log2(z)
@@ -191,11 +195,14 @@ def completed_local_samples(
     samples: list[list[int]] = []
     log_weights: list[float] = []
     attempts = 0
+    last_logged = 0
+    progress_every = max(5, n // 10)
     max_attempts = max(100, n * 20)
     while len(samples) < n and attempts < max_attempts:
         attempts += 1
-        if samples and len(samples) % 5 == 0:
+        if samples and len(samples) % progress_every == 0 and len(samples) != last_logged:
             log(f"drew {len(samples)}/{n} completed local samples; cached_norms={len(local._norm_cache)}")
+            last_logged = len(samples)
         sample, logw, completed = local.sample(rng, max_tokens)
         if completed:
             samples.append(sample)

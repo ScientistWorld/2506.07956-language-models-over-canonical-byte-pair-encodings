@@ -29,10 +29,12 @@
   - `global_canonical_bigram_lm`: relative log-loss 0.996584, 40.242 bits/string, canonical sample rate 1.0, vocab size 4096.
   - `local_canonical_bigram_lm`: relative log-loss 0.999570, 40.362 bits/string, canonical sample rate 1.0, vocab size 4096.
 - The follow-up reaches `core_claim_plus`: the corrected canonical conditioning result holds at a broader train-derived support and on more held-out lines.
+- Final verification retry `cf6dce5d-31d` was killed by Hive/Ray heartbeat disk-quota errors and orphaning before aggregate scores were regenerated. The WikiText artifact from the completed follow-up was inspected and already contains generated samples, and it scores correctly under the hardened evaluator.
+- The next retry uses the same algorithm with cached allowed-candidate lists and a smaller two-corpus CPU configuration: 3000 train lines, 2048-token train-derived support, and 100 completed samples per corpus.
 
 ## Remaining
 
-- A CPU job is being submitted to add PTB as a second corpus setting using the same canonical-conditioning implementation. If it succeeds and both corpora support the likelihood and canonicality claims, the next honest milestone is `secondary_claims`.
+- A smaller CPU test job is being submitted to regenerate WikiText-2 scores and add PTB as a second corpus setting using the same canonical-conditioning implementation. If it succeeds and both corpora support the likelihood and canonicality claims, the next honest milestone is `secondary_claims`.
 - To go further after that, replace the scaled bigram LM with a small neural LM while preserving the same canonical conditioning algorithm.
 
 ## Issues
@@ -51,6 +53,7 @@
 - The primary scoring metric was changed from absolute `log_loss_bits_per_string` to `relative_log_loss_to_baseline` after validation flagged that the paper's GPT-2-small WikiText strings and this scaled WikiText-2 bigram benchmark have different absolute bits/string scales. Absolute bits/string remains reported as a secondary metric.
 - The evaluator now verifies `canonical_sample_rate` from generated token samples stored in the artifact instead of trusting method-reported metadata. This keeps the constraint metric benchmark-side while preserving the `eval/` versus `method/` separation.
 - PTB train/valid/test URLs from `wojzaremba/lstm` were verified with HTTP 200 responses and added to `scripts/download.sh`; the files are downloaded into `data/downloads/` for compute nodes.
+- CPU job `cf6dce5d-31d` failed with exit code `-9` after repeated Hive/Ray heartbeat `Disk quota exceeded` errors. The retry reduces runtime and log volume but does not treat the infrastructure failure as a reason to lower the milestone.
 
 ## Deviations from Paper
 
