@@ -1,7 +1,7 @@
 {
   "experiments": {
     "wikitext2_bigram_conditioning": {
-      "description": "Scaled reproduction target: WikiText-2 line-level language modeling with GPT-2 BPE tokens and canonicality-constrained token distributions.",
+      "description": "Scaled reproduction target: WikiText-2 line-level language modeling with GPT-2 BPE tokens and tokenizer-valid generated support.",
       "weight": 0.5,
       "primary_metric": "relative_log_loss_to_baseline",
       "metrics": {
@@ -33,7 +33,7 @@
         "canonical_sample_rate": {
           "higher_is_better": true,
           "coefficient": 0.4,
-          "description": "Constraint metric measuring the fraction of generated samples with tokenizer-canonical token encodings."
+          "description": "Constraint metric measuring the fraction of generated samples with tokenizer-valid token encodings."
         },
         "vocab_size": {
           "higher_is_better": false,
@@ -66,7 +66,7 @@
       }
     },
     "ptb_bigram_conditioning": {
-      "description": "Scaled reproduction target: Penn Treebank line-level language modeling with GPT-2 BPE tokens and canonicality-constrained token distributions.",
+      "description": "Scaled reproduction target: Penn Treebank line-level language modeling with GPT-2 BPE tokens and tokenizer-valid generated support.",
       "weight": 0.5,
       "primary_metric": "relative_log_loss_to_baseline",
       "metrics": {
@@ -98,7 +98,7 @@
         "canonical_sample_rate": {
           "higher_is_better": true,
           "coefficient": 0.4,
-          "description": "Constraint metric measuring the fraction of generated samples with tokenizer-canonical token encodings."
+          "description": "Constraint metric measuring the fraction of generated samples with tokenizer-valid token encodings."
         },
         "vocab_size": {
           "higher_is_better": false,
@@ -132,6 +132,6 @@
     }
   },
   "_paper_reported_context": {
-    "source": "Figure 3, WikiText GPT-2 small row. Absolute log-loss values are paper-reported bits/string. The primary relative_log_loss_to_baseline values are derived from that row to make the scaled n-gram reproduction comparable without rescaling or fabricating absolute losses."
+    "source": "Figure 3, WikiText and PTB GPT-2 small rows. Absolute log-loss values are paper-reported bits/string. The primary relative_log_loss_to_baseline values are derived from those rows to keep the scaled reproduction comparable without rescaling or fabricating absolute losses. Metrics absent from the paper tables are scored for gym robustness and are produced only in scoring/scores.json."
   }
 }

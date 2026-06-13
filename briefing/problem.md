@@ -1,17 +1,25 @@
 # Problem Definition
 
-What problem does this paper address? Write this so that someone with no knowledge of the paper can understand what needs to be solved and how success is measured.
-
-Do NOT describe the paper's method or solution here — only the problem itself. Think about if a future scientist agent try to solve this problem from scratch without knowing what approach the paper took. If you leak the solution, you compromise the benchmark.
-
 ## Research Question
 
-Token-level language models define distributions over tokenizer token strings, but deterministic tokenizers only produce a subset of those strings for real text. The problem is to build or evaluate language models whose probability mass aligns with valid deterministic tokenizations rather than wasting mass on token sequences that cannot occur in tokenized training data.
+Token-level language models define probability distributions over token
+sequences, while a deterministic tokenizer maps each text string to only one
+valid tokenization. The problem is to model text so that probability mass is
+assigned to tokenizer-valid token sequences, rather than to alternate token
+segmentations that cannot be produced by the tokenizer.
 
 ## Why It Matters
 
-If probability mass is assigned to impossible token encodings, held-out likelihood is artificially worse and generation can explore invalid internal representations. A good solution improves likelihood while preserving the ability to represent the same underlying text strings.
+Probability assigned to invalid token encodings is unavailable to real text.
+This can worsen held-out likelihood and can make sampled internal token
+sequences inconsistent with the tokenizer used to train and evaluate the model.
+A useful solution improves likelihood on held-out text while preserving support
+for the same underlying text strings.
 
 ## Success Criteria
 
-A successful system lowers held-out negative log-likelihood in bits per string relative to an unconstrained token LM and produces only canonical token strings under the tokenizer. Evaluation should also report the constraint satisfaction rate so improvements cannot come from ignoring tokenizer validity.
+A successful system reduces held-out negative log-likelihood relative to an
+unconstrained token-level baseline and produces token sequences that are valid
+under the deterministic tokenizer. Evaluation must report both the likelihood
+benefit and the tokenizer-validity constraint so improvements cannot come from
+ignoring valid support.
