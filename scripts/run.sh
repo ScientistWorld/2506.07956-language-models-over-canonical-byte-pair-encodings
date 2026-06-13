@@ -7,3 +7,4 @@ cd /home/user
 
 bash scripts/evaluate_train.sh artifacts
 bash scripts/evaluate_test.sh artifacts
+python validate.py --compare
