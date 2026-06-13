@@ -1,6 +1,9 @@
-# IMPORTANT: Once you set action to 'submit' or 'done', STOP immediately.
-# Do NOT sleep, poll, or wait for jobs. The system reads this file
-# only after your turn ends. Sleeping blocks the entire pipeline.
-action: done
+# This iteration writes files only — do NOT submit compute jobs.
+# Once you set action to 'done', STOP immediately.
+# Do NOT sleep, poll, or wait. The system reads this file
+# only after your turn ends.
+action: pending
+gpus: 0
+test: false
 milestone: core_claim_plus
-notes: "Done at core_claim_plus. Validation issue fixed by making relative_log_loss_to_baseline the primary paper-comparable likelihood metric while retaining absolute bits/string as a secondary metric; python validate.py --compare now passes."
+notes: ""
