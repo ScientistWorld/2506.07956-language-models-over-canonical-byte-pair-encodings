@@ -1,8 +1,8 @@
-# Split scoring completed; end the design phase.
+# Run the two-corpus canonical-conditioning reproduction.
 # Do NOT sleep, poll, or wait. The system reads this file
-# only after your turn ends.
-action: done
+# only after the turn ends.
+action: submit
 gpus: 0
 test: false
 milestone: core_claim_plus
-notes: "Fresh-clone packaging audit passed; public download URLs resolve and code paths match data/downloads artifacts."
+notes: "CPU job to regenerate WikiText-2 scores and add PTB as a second corpus setting, with eval-side canonical sample verification."
