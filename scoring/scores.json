@@ -3,19 +3,19 @@
     "wikitext2_bigram_conditioning": {
       "results": {
         "base_bigram_lm": {
-          "canonical_sample_rate": 0.97,
-          "log_loss_bits_per_string": 36.90227714874709,
-          "vocab_size": 2048
+          "canonical_sample_rate": 0.9,
+          "log_loss_bits_per_string": 40.37971714477535,
+          "vocab_size": 4096
         },
         "global_canonical_bigram_lm": {
           "canonical_sample_rate": 1.0,
-          "log_loss_bits_per_string": 36.85752120367156,
-          "vocab_size": 2048
+          "log_loss_bits_per_string": 40.24185751431909,
+          "vocab_size": 4096
         },
         "local_canonical_bigram_lm": {
           "canonical_sample_rate": 1.0,
-          "log_loss_bits_per_string": 36.88503947217533,
-          "vocab_size": 2048
+          "log_loss_bits_per_string": 40.36236760332388,
+          "vocab_size": 4096
         }
       }
     }
