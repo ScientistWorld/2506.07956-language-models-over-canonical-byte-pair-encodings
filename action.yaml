@@ -2,8 +2,8 @@
 # Once you set action to 'done', STOP immediately.
 # Do NOT sleep, poll, or wait. The system reads this file
 # only after your turn ends.
-action: pending
+action: done
 gpus: 0
 test: false
 milestone: core_claim_plus
-notes: ""
+notes: "Improvements: added split-local loss improvement, per-token loss, finite-record support checks, and metric descriptions. Notes: canonical_sample_rate remains metadata-level; see DESIGN_NOTES.md."

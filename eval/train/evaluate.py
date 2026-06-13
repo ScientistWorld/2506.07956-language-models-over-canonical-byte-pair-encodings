@@ -31,6 +31,48 @@ def bits_per_string(records: list[dict], field: str) -> float:
     return -sum(values) / len(values)
 
 
+def bits_per_token(records: list[dict], field: str) -> float:
+    total_log2_prob = 0.0
+    total_tokens = 0
+    for rec in records:
+        if field not in rec:
+            raise KeyError(f"missing required field {field!r} in record {rec.get('id', '<unknown>')}")
+        value = rec[field]
+        if not math.isfinite(value):
+            raise ValueError(f"non-finite {field!r} in record {rec.get('id', '<unknown>')}: {value}")
+        num_tokens = int(rec.get("num_tokens", 0))
+        if num_tokens <= 0:
+            raise ValueError(f"record {rec.get('id', '<unknown>')} has invalid num_tokens={num_tokens}")
+        total_log2_prob += value
+        total_tokens += num_tokens
+    if total_tokens <= 0:
+        raise ValueError(f"no tokens available for {SLICE} slice")
+    return -total_log2_prob / total_tokens
+
+
+def token_count(records: list[dict]) -> int:
+    total = 0
+    for rec in records:
+        num_tokens = int(rec.get("num_tokens", 0))
+        if num_tokens <= 0:
+            raise ValueError(f"record {rec.get('id', '<unknown>')} has invalid num_tokens={num_tokens}")
+        total += num_tokens
+    if total <= 0:
+        raise ValueError(f"no tokens available for {SLICE} slice")
+    return total
+
+
+def finite_record_rate(records: list[dict], field: str) -> float:
+    if not records:
+        raise ValueError(f"no records available for {SLICE} slice")
+    finite = 0
+    for rec in records:
+        if field not in rec:
+            raise KeyError(f"missing required field {field!r} in record {rec.get('id', '<unknown>')}")
+        finite += int(math.isfinite(rec[field]))
+    return finite / len(records)
+
+
 def record_id(rec: dict) -> int:
     if "id" not in rec:
         raise KeyError("artifact record is missing required 'id' field")
@@ -64,11 +106,15 @@ def score_artifact(path: Path) -> dict[str, dict[str, float]]:
     records = select_slice(data["records"])
     metadata = data["metadata"]
     baseline_loss = bits_per_string(records, "baseline_log2_prob")
+    baseline_token_loss = bits_per_token(records, "baseline_log2_prob")
 
     results: dict[str, dict[str, float]] = {
         "base_bigram_lm": {
             "relative_log_loss_to_baseline": 1.0,
             "log_loss_bits_per_string": baseline_loss,
+            "loss_improvement_bits_per_string": 0.0,
+            "log_loss_bits_per_token": baseline_token_loss,
+            "finite_record_rate": finite_record_rate(records, "baseline_log2_prob"),
             "canonical_sample_rate": metadata.get("base_sample_canonical_rate", 0.0),
             "vocab_size": metadata["vocab_size"],
         }
@@ -88,12 +134,18 @@ def score_artifact(path: Path) -> dict[str, dict[str, float]]:
         results["local_canonical_bigram_lm"] = {
             "relative_log_loss_to_baseline": local_loss / baseline_loss,
             "log_loss_bits_per_string": local_loss,
+            "loss_improvement_bits_per_string": baseline_loss - local_loss,
+            "log_loss_bits_per_token": bits_per_token(records, "local_log2_prob"),
+            "finite_record_rate": finite_record_rate(records, "local_log2_prob"),
             "canonical_sample_rate": metadata["local_sample_canonical_rate"],
             "vocab_size": metadata["vocab_size"],
         }
         results["global_canonical_bigram_lm"] = {
             "relative_log_loss_to_baseline": global_loss / baseline_loss,
             "log_loss_bits_per_string": global_loss,
+            "loss_improvement_bits_per_string": baseline_loss - global_loss,
+            "log_loss_bits_per_token": baseline_token_loss + (len(records) * log2_z / token_count(records)),
+            "finite_record_rate": finite_record_rate(records, "baseline_log2_prob"),
             "canonical_sample_rate": global_canonical_rate,
             "vocab_size": metadata["vocab_size"],
         }
