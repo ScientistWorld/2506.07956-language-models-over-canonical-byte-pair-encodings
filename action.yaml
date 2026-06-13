@@ -1,8 +1,6 @@
-# Run the two-corpus canonical-conditioning reproduction.
+# Final verification complete.
 # Do NOT sleep, poll, or wait. The system reads this file
 # only after the turn ends.
-action: submit
-gpus: 0
-test: true
+action: done
 milestone: core_claim_plus
-notes: "Retry final verification on a smaller faster CPU configuration after cf6dce5d-31d was killed by Hive heartbeat quota/orphaning."
+notes: "Final verification passed: refreshed two-corpus scores, train/test evaluators, and documentation are ready for gym use."

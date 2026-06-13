@@ -4,6 +4,11 @@
 
 ## Progress Log
 
+### [2026-06-13 08:58] - core_claim_plus
+- CPU test retry `8243ca38-61e` completed successfully and regenerated both WikiText-2 and PTB artifacts using the scaled canonical-conditioning implementation.
+- `scoring/scores.json` now contains both `wikitext2_bigram_conditioning` and `ptb_bigram_conditioning`; in both corpora, local and global conditioned variants improve held-out log-loss over the unconstrained baseline and reach canonical sample rate 1.0.
+- Standalone evaluation, train/test slice evaluation, and `python validate.py --compare` all pass after fixing train/test aggregation to separate methods by experiment.
+
 ### [2026-06-13 08:51] - core_claim_plus
 - CPU verification job `cf6dce5d-31d` was killed after Hive/Ray heartbeat disk-quota failures and orphaning, before it could finish PTB and regenerate aggregate scores.
 - The existing WikiText artifact was checked and already contains generated samples required by the hardened evaluator; it scores successfully under `eval/aggregate_scores.py`.

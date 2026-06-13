@@ -31,10 +31,18 @@
 - The follow-up reaches `core_claim_plus`: the corrected canonical conditioning result holds at a broader train-derived support and on more held-out lines.
 - Final verification retry `cf6dce5d-31d` was killed by Hive/Ray heartbeat disk-quota errors and orphaning before aggregate scores were regenerated. The WikiText artifact from the completed follow-up was inspected and already contains generated samples, and it scores correctly under the hardened evaluator.
 - The next retry uses the same algorithm with cached allowed-candidate lists and a smaller two-corpus CPU configuration: 3000 train lines, 2048-token train-derived support, and 100 completed samples per corpus.
+- CPU test retry `8243ca38-61e` completed successfully. It regenerated both WikiText-2 and PTB artifacts, refreshed `scoring/scores.json`, and passed `python validate.py --compare`.
+- Final regenerated scores:
+  - `wikitext2_bigram_conditioning/base_bigram_lm`: relative log-loss 1.0, 36.688 bits/string, canonical sample rate 0.97, vocab size 2048.
+  - `wikitext2_bigram_conditioning/local_canonical_bigram_lm`: relative log-loss 0.999570, 36.672 bits/string, canonical sample rate 1.0, vocab size 2048.
+  - `wikitext2_bigram_conditioning/global_canonical_bigram_lm`: relative log-loss 0.998296, 36.626 bits/string, canonical sample rate 1.0, vocab size 2048.
+  - `ptb_bigram_conditioning/base_bigram_lm`: relative log-loss 1.0, 102.495 bits/string, canonical sample rate 0.79, vocab size 2048.
+  - `ptb_bigram_conditioning/local_canonical_bigram_lm`: relative log-loss 0.998857, 102.377 bits/string, canonical sample rate 1.0, vocab size 2048.
+  - `ptb_bigram_conditioning/global_canonical_bigram_lm`: relative log-loss 0.997294, 102.217 bits/string, canonical sample rate 1.0, vocab size 2048.
 
 ## Remaining
 
-- A smaller CPU test job is being submitted to regenerate WikiText-2 scores and add PTB as a second corpus setting using the same canonical-conditioning implementation. If it succeeds and both corpora support the likelihood and canonicality claims, the next honest milestone is `secondary_claims`.
+- To go beyond `core_claim_plus`, replace the scaled bigram LM with a small neural LM while preserving the same canonical conditioning algorithm, or reproduce additional model-family results from the paper.
 - To go further after that, replace the scaled bigram LM with a small neural LM while preserving the same canonical conditioning algorithm.
 
 ## Issues
@@ -54,10 +62,11 @@
 - The evaluator now verifies `canonical_sample_rate` from generated token samples stored in the artifact instead of trusting method-reported metadata. This keeps the constraint metric benchmark-side while preserving the `eval/` versus `method/` separation.
 - PTB train/valid/test URLs from `wojzaremba/lstm` were verified with HTTP 200 responses and added to `scripts/download.sh`; the files are downloaded into `data/downloads/` for compute nodes.
 - CPU job `cf6dce5d-31d` failed with exit code `-9` after repeated Hive/Ray heartbeat `Disk quota exceeded` errors. The retry reduces runtime and log volume but does not treat the infrastructure failure as a reason to lower the milestone.
+- The optional train/test evaluators initially merged methods globally and conflicted when both corpora reused the same method names. They now aggregate by experiment, and refreshed `scores_train.json` and `scores_test.json` both cover WikiText-2 and PTB.
 
 ## Deviations from Paper
 
 - Paper used GPT-2 and Llama neural language models; this first reproduction uses a smoothed token bigram LM over GPT-2 BPE tokens. The canonicality algorithm itself is unchanged: it still masks noncanonical BPE extensions, computes local weights, and estimates global conditioning from local samples.
-- Paper evaluated full PTB/WikiText test splits; this scaled CPU reproduction uses a WikiText-2 subset to keep the environment short and debuggable.
+- Paper evaluated full PTB/WikiText test splits; this scaled CPU reproduction uses WikiText-2 and PTB subsets to keep the environment short and debuggable.
 - The implementation handles GPT-2 pre-tokenization by first checking the paper's pure BPE bigram round trip and then checking the full GPT-2 tokenizer on valid UTF-8 token pairs. Corpus-derived overrides are allowed only from training sequences, not held-out text.
 - The reduced vocabulary is derived from training text only. Held-out lines containing out-of-support tokens are omitted from the scaled score rather than adding test tokens to the model support.

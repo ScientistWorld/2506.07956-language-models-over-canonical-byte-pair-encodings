@@ -1,4 +1,4 @@
-"""Visible train-slice scorer for WikiText-2 bigram conditioning artifacts.
+"""Visible train-slice scorer for canonical-conditioning artifacts.
 
 This evaluator reads method artifacts only. It intentionally avoids depending
 on the reproduced implementation so any future method can participate by
@@ -14,7 +14,6 @@ from pathlib import Path
 
 from data.gpt2_bpe import load_default_tokenizer
 
-EXPERIMENT = "wikitext2_bigram_conditioning"
 SLICE = "train"
 SLICE_PARITY = 0
 
@@ -102,7 +101,7 @@ def discover_artifacts(target: Path) -> list[Path]:
         return [target]
     if not target.exists():
         raise FileNotFoundError(f"artifact path does not exist: {target}")
-    artifacts = sorted(target.glob("*/wikitext2_bigram.json")) + sorted(target.glob("*.json"))
+    artifacts = sorted(target.glob("**/*.json"))
     unique = []
     seen = set()
     for artifact in artifacts:
@@ -115,8 +114,11 @@ def discover_artifacts(target: Path) -> list[Path]:
     return unique
 
 
-def score_artifact(path: Path) -> dict[str, dict[str, float]]:
+def score_artifact(path: Path) -> tuple[str, dict[str, dict[str, float]]]:
     data = json.loads(path.read_text())
+    experiment = data.get("experiment")
+    if not experiment:
+        raise KeyError(f"{path}: missing required experiment field")
     records = select_slice(data["records"])
     metadata = data["metadata"]
     samples = data.get("samples", {})
@@ -164,20 +166,22 @@ def score_artifact(path: Path) -> dict[str, dict[str, float]]:
             "canonical_sample_rate": verified_canonical_sample_rate(samples.get("global_canonical_bigram_lm", [])),
             "vocab_size": metadata["vocab_size"],
         }
-    return results
+    return experiment, results
 
 
-def merge_results(artifacts: list[Path]) -> dict[str, dict[str, float]]:
-    merged: dict[str, dict[str, float]] = {}
+def merge_results(artifacts: list[Path]) -> dict[str, dict[str, dict[str, float]]]:
+    merged: dict[str, dict[str, dict[str, float]]] = {}
     for artifact in artifacts:
-        for method, scores in score_artifact(artifact).items():
-            if method in merged and merged[method] != scores:
+        experiment, results = score_artifact(artifact)
+        exp_results = merged.setdefault(experiment, {})
+        for method, scores in results.items():
+            if method in exp_results and exp_results[method] != scores:
                 raise ValueError(
-                    f"conflicting scores for method {method!r}; pass one artifact or use unique method outputs"
+                    f"conflicting scores for {experiment}.{method}; pass one artifact or use unique method outputs"
                 )
-            merged[method] = scores
+            exp_results[method] = scores
     if not merged:
-        raise ValueError("no methods were scored")
+        raise ValueError("no experiments were scored")
     return merged
 
 
@@ -195,7 +199,7 @@ def main() -> None:
             "split_rule": "record id parity; even ids are visible train",
             "artifacts": [str(path) for path in artifacts],
         },
-        "experiments": {EXPERIMENT: {"results": results}},
+        "experiments": {name: {"results": exp_results} for name, exp_results in sorted(results.items())},
     }
     out = Path(args.output)
     out.parent.mkdir(parents=True, exist_ok=True)

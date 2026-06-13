@@ -1,4 +1,4 @@
-"""Held-out test-slice scorer for WikiText-2 bigram conditioning artifacts.
+"""Held-out test-slice scorer for canonical-conditioning artifacts.
 
 This evaluator mirrors eval/train/evaluate.py while keeping an independent
 implementation and selecting the complementary held-out record slice.
@@ -13,7 +13,6 @@ from pathlib import Path
 
 from data.gpt2_bpe import load_default_tokenizer
 
-EXPERIMENT = "wikitext2_bigram_conditioning"
 SLICE = "test"
 SLICE_PARITY = 1
 
@@ -101,7 +100,7 @@ def discover_artifacts(target: Path) -> list[Path]:
         return [target]
     if not target.exists():
         raise FileNotFoundError(f"artifact path does not exist: {target}")
-    artifacts = sorted(target.glob("*/wikitext2_bigram.json")) + sorted(target.glob("*.json"))
+    artifacts = sorted(target.glob("**/*.json"))
     unique = []
     seen = set()
     for artifact in artifacts:
@@ -114,22 +113,29 @@ def discover_artifacts(target: Path) -> list[Path]:
     return unique
 
 
-def expected_methods(train_scores_path: Path) -> set[str]:
+def expected_methods(train_scores_path: Path) -> dict[str, set[str]]:
     if not train_scores_path.exists():
-        return set()
+        return {}
     data = json.loads(train_scores_path.read_text())
     experiments = data.get("experiments", data)
-    exp = experiments.get(EXPERIMENT)
-    if not isinstance(exp, dict):
-        raise KeyError(f"{train_scores_path}: missing experiment {EXPERIMENT!r}")
-    methods = exp.get("results", exp)
-    if not isinstance(methods, dict):
-        raise TypeError(f"{train_scores_path}: experiment results must be a dict")
-    return {name for name in methods if not name.startswith("_")}
+    expected: dict[str, set[str]] = {}
+    for experiment, exp_data in experiments.items():
+        if experiment.startswith("_"):
+            continue
+        if not isinstance(exp_data, dict):
+            raise TypeError(f"{train_scores_path}: experiment {experiment!r} must be a dict")
+        methods = exp_data.get("results", exp_data)
+        if not isinstance(methods, dict):
+            raise TypeError(f"{train_scores_path}: experiment results must be a dict")
+        expected[experiment] = {name for name in methods if not name.startswith("_")}
+    return expected
 
 
-def score_artifact(path: Path) -> dict[str, dict[str, float]]:
+def score_artifact(path: Path) -> tuple[str, dict[str, dict[str, float]]]:
     data = json.loads(path.read_text())
+    experiment = data.get("experiment")
+    if not experiment:
+        raise KeyError(f"{path}: missing required experiment field")
     records = select_slice(data["records"])
     metadata = data["metadata"]
     samples = data.get("samples", {})
@@ -177,20 +183,22 @@ def score_artifact(path: Path) -> dict[str, dict[str, float]]:
             "canonical_sample_rate": verified_canonical_sample_rate(samples.get("global_canonical_bigram_lm", [])),
             "vocab_size": metadata["vocab_size"],
         }
-    return results
+    return experiment, results
 
 
-def merge_results(artifacts: list[Path]) -> dict[str, dict[str, float]]:
-    merged: dict[str, dict[str, float]] = {}
+def merge_results(artifacts: list[Path]) -> dict[str, dict[str, dict[str, float]]]:
+    merged: dict[str, dict[str, dict[str, float]]] = {}
     for artifact in artifacts:
-        for method, scores in score_artifact(artifact).items():
-            if method in merged and merged[method] != scores:
+        experiment, results = score_artifact(artifact)
+        exp_results = merged.setdefault(experiment, {})
+        for method, scores in results.items():
+            if method in exp_results and exp_results[method] != scores:
                 raise ValueError(
-                    f"conflicting scores for method {method!r}; pass one artifact or use unique method outputs"
+                    f"conflicting scores for {experiment}.{method}; pass one artifact or use unique method outputs"
                 )
-            merged[method] = scores
+            exp_results[method] = scores
     if not merged:
-        raise ValueError("no methods were scored")
+        raise ValueError("no experiments were scored")
     return merged
 
 
@@ -205,13 +213,23 @@ def main() -> None:
     results = merge_results(artifacts)
     expected = expected_methods(Path(args.train_scores))
     if expected:
-        missing = sorted(expected - results.keys())
-        extra = sorted(results.keys() - expected)
-        if missing:
-            raise KeyError(f"test slice is missing methods scored on train: {missing}")
-        results = {name: results[name] for name in sorted(expected)}
+        missing_experiments = sorted(set(expected) - set(results))
+        if missing_experiments:
+            raise KeyError(f"test slice is missing experiments scored on train: {missing_experiments}")
+        filtered: dict[str, dict[str, dict[str, float]]] = {}
+        ignored_extra: dict[str, list[str]] = {}
+        for experiment, expected_for_exp in sorted(expected.items()):
+            exp_results = results[experiment]
+            missing = sorted(expected_for_exp - exp_results.keys())
+            extra = sorted(exp_results.keys() - expected_for_exp)
+            if missing:
+                raise KeyError(f"test slice is missing methods scored on train for {experiment}: {missing}")
+            filtered[experiment] = {name: exp_results[name] for name in sorted(expected_for_exp)}
+            if extra:
+                ignored_extra[experiment] = extra
+        results = filtered
     else:
-        extra = []
+        ignored_extra = {}
 
     payload = {
         "_metadata": {
@@ -219,9 +237,9 @@ def main() -> None:
             "split_rule": "record id parity; odd ids are held-out test",
             "artifacts": [str(path) for path in artifacts],
             "matched_train_scores": bool(expected),
-            "ignored_extra_methods": extra,
+            "ignored_extra_methods": ignored_extra,
         },
-        "experiments": {EXPERIMENT: {"results": results}},
+        "experiments": {name: {"results": exp_results} for name, exp_results in sorted(results.items())},
     }
     out = Path(args.output)
     out.parent.mkdir(parents=True, exist_ok=True)
