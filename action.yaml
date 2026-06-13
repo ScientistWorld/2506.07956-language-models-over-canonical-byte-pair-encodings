@@ -4,5 +4,5 @@
 action: submit
 gpus: 0
 test: true
-milestone: core_claim
-notes: "Run a larger CPU WikiText-2 canonicality-by-conditioning benchmark (3000 train lines, 200 test lines, 300 local samples) and validate scores."
+milestone: method_runs
+notes: "Run corrected CPU WikiText-2 benchmark after audit fixes: train-only reduced vocabulary/overrides, completed samples for global Z, independent baseline, 3000 train lines, 200 test lines, 200 local samples."

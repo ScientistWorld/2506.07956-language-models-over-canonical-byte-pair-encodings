@@ -17,7 +17,7 @@ bash scripts/reproduce.sh \
   --max-train-lines 3000 \
   --max-test-lines 200 \
   --vocab-size 2048 \
-  --samples 300 \
-  --sample-max-tokens 96
+  --samples 200 \
+  --sample-max-tokens 128
 
 python validate.py --compare

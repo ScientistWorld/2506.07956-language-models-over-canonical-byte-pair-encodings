@@ -1,8 +1,13 @@
 # Reproduction Milestones
 
-**Current: core_claim**
+**Current: method_runs**
 
 ## Progress Log
+
+### [2026-06-13 07:23] - method_runs
+- Audited the continued workspace and confirmed the method implements canonicality by conditioning rather than a surrogate.
+- Parallel audit found protocol issues in the previous `core_claim` run: test-derived canonical bigram overrides, test-derived vocabulary support, truncated samples in the global normalizer, a method-dependent baseline script, and a hardcoded global canonicality score.
+- Fixed those issues and smoke-tested the corrected method and independent baseline on a tiny local slice; the larger corrected CPU benchmark is being submitted before restoring `core_claim`.
 
 ### [2026-06-05 04:44] - core_claim
 - Completed CPU reproduction of canonicality by conditioning on a scaled WikiText-2 token bigram language model.

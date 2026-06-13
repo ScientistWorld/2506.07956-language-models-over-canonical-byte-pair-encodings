@@ -9,12 +9,20 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 from pathlib import Path
 
 
 def bits_per_string(records: list[dict], field: str) -> float:
-    usable = [rec for rec in records if field in rec and rec[field] != float("-inf")]
-    return -sum(rec[field] for rec in usable) / len(usable)
+    values = []
+    for rec in records:
+        if field not in rec:
+            raise KeyError(f"missing required field {field!r} in record {rec.get('id', '<unknown>')}")
+        value = rec[field]
+        if not math.isfinite(value):
+            raise ValueError(f"non-finite {field!r} in record {rec.get('id', '<unknown>')}: {value}")
+        values.append(value)
+    return -sum(values) / len(values)
 
 
 def main() -> None:
@@ -38,6 +46,11 @@ def main() -> None:
     if "local_log2_prob" in records[0]:
         local_loss = bits_per_string(records, "local_log2_prob")
         global_loss = baseline_loss + log2_z
+        global_canonical_rate = data["metadata"].get(
+            "global_sample_canonical_rate", data["metadata"].get("local_sample_canonical_rate")
+        )
+        if global_canonical_rate is None:
+            raise KeyError("missing global_sample_canonical_rate in method artifact metadata")
         results["local_canonical_bigram_lm"] = {
             "log_loss_bits_per_string": local_loss,
             "canonical_sample_rate": data["metadata"]["local_sample_canonical_rate"],
@@ -45,7 +58,7 @@ def main() -> None:
         }
         results["global_canonical_bigram_lm"] = {
             "log_loss_bits_per_string": global_loss,
-            "canonical_sample_rate": 1.0,
+            "canonical_sample_rate": global_canonical_rate,
             "vocab_size": data["metadata"]["vocab_size"],
         }
 

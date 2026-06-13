@@ -101,6 +101,25 @@ class GPT2BPE:
         merged = self.token_bytes(left) + self.token_bytes(right)
         return self.encode_bytes_no_pretokenize(merged) == [left, right]
 
+    @lru_cache(maxsize=2_000_000)
+    def tokenizer_canonical_bigram(self, left: int, right: int) -> bool:
+        """Canonical bigram test against GPT-2's full tokenizer behavior.
+
+        The paper's BPE bigram test is byte-local. GPT-2 also has a regex
+        pre-tokenizer, so valid UTF-8 token pairs can be canonical under the
+        implemented tokenizer even when a pure no-pretokenize BPE round trip
+        would merge across the pair boundary. This reference check handles
+        those cases without looking at the held-out test set.
+        """
+        if self.canonical_bigram(left, right):
+            return True
+        merged = self.token_bytes(left) + self.token_bytes(right)
+        try:
+            text = merged.decode("utf-8")
+        except UnicodeDecodeError:
+            return False
+        return self.encode(text) == [left, right]
+
 
 def load_default_tokenizer(root: str | Path = "/home/user") -> GPT2BPE:
     root = Path(root)

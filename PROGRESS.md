@@ -16,10 +16,11 @@
   - `local_canonical_bigram_lm`: 649.039 bits/string, canonical sample rate 1.0, vocab size 1302.
 - The result supports the core claim in the scaled setting: canonical conditioning removes invalid token strings and improves held-out log-loss without changing vocabulary size.
 - `python validate.py --compare` passes all structure and score checks.
+- 2026-06-13 continuation audit confirmed the paper-specific computation is present in `method/canonical_conditioning.py`, but a parallel audit found protocol issues in the previous run. The current milestone is held at `method_runs` until the corrected benchmark job regenerates `scoring/scores.json`.
 
 ## Remaining
 
-- A larger WikiText-2 CPU run is prepared in `scripts/run.sh` to strengthen the current result beyond the initial 50-line held-out slice.
+- A corrected larger WikiText-2 CPU run is prepared in `scripts/run.sh` to restore `core_claim` without test-set vocabulary leakage, test-derived canonical bigram overrides, truncated global-normalizer samples, or a method-dependent baseline.
 - To go further after that, add PTB if an accessible PTB text split is verified, or replace the scaled bigram LM with a small neural LM while preserving the same canonical conditioning algorithm.
 
 ## Issues
@@ -30,10 +31,15 @@
 - The first completed job showed global canonicalization improving log-loss, but local canonicalization assigned `-inf` to 17/50 strings due to GPT-2 pre-tokenizer false negatives. The next run adds the paper's corpus-derived override workaround for observed canonical bigrams.
 - The final completed CPU run fixed the false negatives using those overrides and produced finite improved losses for both proposed conditioning variants.
 - A later audit found the baseline `canonical_sample_rate` was hardcoded. This was fixed by sampling the unconstrained bigram LM and aggregating the measured sample-level canonicality from the method artifact.
-- Current highest honest milestone is `core_claim`; a larger follow-up CPU job is being submitted before any attempt to claim `core_claim_plus`.
+- The 2026-06-13 audit found that `eval/aggregate_scores.py` silently skipped non-finite log probabilities, which could hide a broken run. The evaluator now fails on missing or non-finite per-string log-probability fields; the current artifact still validates under the stricter check.
+- The same audit found that the previous run used test-set bigrams as canonical overrides and included test tokens in the reduced vocabulary. The corrected method uses a train-derived vocabulary, scores only held-out lines fully representable in that fixed support, uses tokenizer-reference canonical bigram checks without reading the test set, and restricts corpus-derived overrides to training sequences.
+- The baseline script previously shelled into `method/`; it is now an independent unconstrained bigram implementation using only `data/` helpers.
+- Global canonical sample rate was hardcoded in `eval/`; the corrected method writes an artifact-level measured rate from importance-resampled completed local samples, and `eval/` reads that field.
+- Current highest honest milestone is `method_runs`; a corrected larger CPU job is being submitted to restore `core_claim`.
 
 ## Deviations from Paper
 
 - Paper used GPT-2 and Llama neural language models; this first reproduction uses a smoothed token bigram LM over GPT-2 BPE tokens. The canonicality algorithm itself is unchanged: it still masks noncanonical BPE extensions, computes local weights, and estimates global conditioning from local samples.
-- Paper evaluated full PTB/WikiText test splits; the completed core-claim job uses a WikiText-2 subset to keep the CPU reproduction short and debuggable.
-- The implementation uses the paper's suggested pre-tokenization workaround: adjacent token pairs observed in deterministic GPT-2-BPE tokenizations are allowed as canonical bigram overrides, which avoids false negatives from applying a pure BPE test to a tokenizer with regex pre-tokenization.
+- Paper evaluated full PTB/WikiText test splits; this scaled CPU reproduction uses a WikiText-2 subset to keep the environment short and debuggable.
+- The implementation handles GPT-2 pre-tokenization by first checking the paper's pure BPE bigram round trip and then checking the full GPT-2 tokenizer on valid UTF-8 token pairs. Corpus-derived overrides are allowed only from training sequences, not held-out text.
+- The reduced vocabulary is derived from training text only. Held-out lines containing out-of-support tokens are omitted from the scaled score rather than adding test tokens to the model support.

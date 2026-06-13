@@ -46,7 +46,7 @@ class BigramLM:
             self.context_totals[prev] + self.alpha * self.denominator_size
         )
 
-    def sample(self, rng: random.Random, max_tokens: int = 256) -> list[int]:
+    def sample(self, rng: random.Random, max_tokens: int = 256) -> tuple[list[int], bool]:
         seq: list[int] = []
         prev = EOS
         candidates = [EOS] + self.vocab
@@ -61,10 +61,10 @@ class BigramLM:
                     chosen = tok
                     break
             if chosen == EOS:
-                return seq
+                return seq, True
             seq.append(chosen)
             prev = chosen
-        return seq
+        return seq, False
 
 
 class LocalCanonicalLM:
@@ -81,7 +81,7 @@ class LocalCanonicalLM:
             return True
         if (prev, tok) in self.canonical_bigram_overrides:
             return True
-        return self.tokenizer.canonical_bigram(prev, tok)
+        return self.tokenizer.tokenizer_canonical_bigram(prev, tok)
 
     def norm(self, prev: int) -> float:
         if prev not in self._norm_cache:
@@ -106,7 +106,7 @@ class LocalCanonicalLM:
             prev = tok
         return base_log2, local_log2, log2_weight
 
-    def sample(self, rng: random.Random, max_tokens: int = 256) -> tuple[list[int], float]:
+    def sample(self, rng: random.Random, max_tokens: int = 256) -> tuple[list[int], float, bool]:
         seq: list[int] = []
         log2_weight = 0.0
         prev = EOS
@@ -124,10 +124,10 @@ class LocalCanonicalLM:
                     chosen = tok
                     break
             if chosen == EOS:
-                return seq, log2_weight
+                return seq, log2_weight, True
             seq.append(chosen)
             prev = chosen
-        return seq, log2_weight
+        return seq, log2_weight, False
 
 
 def log2meanexp(log2_values: list[float]) -> float:
@@ -135,10 +135,19 @@ def log2meanexp(log2_values: list[float]) -> float:
     return m + math.log2(sum(2 ** (v - m) for v in log2_values) / len(log2_values))
 
 
+def is_canonical_sequence(seq: list[int], allowed) -> bool:
+    prev = EOS
+    for tok in seq + [EOS]:
+        if not allowed(prev, tok):
+            return False
+        prev = tok
+    return True
+
+
 def canonical_sample_rate(sequences: list[list[int]], allowed) -> float:
     if not sequences:
         return 0.0
-    return sum(all(allowed(left, right) for left, right in zip(seq, seq[1:])) for seq in sequences) / len(sequences)
+    return sum(is_canonical_sequence(seq, allowed) for seq in sequences) / len(sequences)
 
 
 def observed_bigrams(sequences: list[list[int]]) -> set[tuple[int, int]]:
@@ -146,6 +155,72 @@ def observed_bigrams(sequences: list[list[int]]) -> set[tuple[int, int]]:
     for seq in sequences:
         pairs.update(zip(seq, seq[1:]))
     return pairs
+
+
+def split_by_vocab(seq: list[int], vocab: set[int]) -> list[list[int]]:
+    segments: list[list[int]] = []
+    current: list[int] = []
+    for tok in seq:
+        if tok in vocab:
+            current.append(tok)
+        elif current:
+            segments.append(current)
+            current = []
+    if current:
+        segments.append(current)
+    return segments
+
+
+def completed_base_samples(base: BigramLM, rng: random.Random, n: int, max_tokens: int) -> tuple[list[list[int]], int]:
+    samples: list[list[int]] = []
+    attempts = 0
+    max_attempts = max(100, n * 20)
+    while len(samples) < n and attempts < max_attempts:
+        attempts += 1
+        sample, completed = base.sample(rng, max_tokens)
+        if completed:
+            samples.append(sample)
+    if len(samples) < n:
+        raise RuntimeError(f"only drew {len(samples)}/{n} completed baseline samples in {attempts} attempts")
+    return samples, attempts
+
+
+def completed_local_samples(
+    local: LocalCanonicalLM, rng: random.Random, n: int, max_tokens: int
+) -> tuple[list[list[int]], list[float], int]:
+    samples: list[list[int]] = []
+    log_weights: list[float] = []
+    attempts = 0
+    max_attempts = max(100, n * 20)
+    while len(samples) < n and attempts < max_attempts:
+        attempts += 1
+        if samples and len(samples) % 5 == 0:
+            log(f"drew {len(samples)}/{n} completed local samples; cached_norms={len(local._norm_cache)}")
+        sample, logw, completed = local.sample(rng, max_tokens)
+        if completed:
+            samples.append(sample)
+            log_weights.append(logw)
+    if len(samples) < n:
+        raise RuntimeError(f"only drew {len(samples)}/{n} completed local samples in {attempts} attempts")
+    return samples, log_weights, attempts
+
+
+def importance_resample(
+    samples: list[list[int]], log2_weights: list[float], rng: random.Random, n: int
+) -> list[list[int]]:
+    max_logw = max(log2_weights)
+    weights = [2 ** (logw - max_logw) for logw in log2_weights]
+    total = sum(weights)
+    resampled: list[list[int]] = []
+    for _ in range(n):
+        draw = rng.random() * total
+        acc = 0.0
+        for sample, weight in zip(samples, weights):
+            acc += weight
+            if draw <= acc:
+                resampled.append(sample)
+                break
+    return resampled
 
 
 def main() -> None:
@@ -168,15 +243,18 @@ def main() -> None:
     train_lines = read_wikitext_lines(args.train_path, args.max_train_lines)
     test_lines = read_wikitext_lines(args.test_path, args.max_test_lines)
     log(f"tokenizing {len(train_lines)} train lines and {len(test_lines)} test lines")
-    train_sequences = [tokenizer.encode(line) for line in train_lines]
+    train_sequences_full = [tokenizer.encode(line) for line in train_lines]
     test_sequences_full = [tokenizer.encode(line) for line in test_lines]
 
     log("building scaled token vocabulary")
-    counts = Counter(tok for seq in train_sequences for tok in seq)
+    counts = Counter(tok for seq in train_sequences_full for tok in seq)
     top_vocab = {tok for tok, _ in counts.most_common(args.vocab_size)}
-    top_vocab.update(tok for seq in test_sequences_full for tok in seq)
-    train_sequences = [[tok for tok in seq if tok in top_vocab] for seq in train_sequences]
-    test_sequences = [[tok for tok in seq if tok in top_vocab] for seq in test_sequences_full]
+    train_sequences = [segment for seq in train_sequences_full for segment in split_by_vocab(seq, top_vocab)]
+    test_sequences = [seq for seq in test_sequences_full if seq and all(tok in top_vocab for tok in seq)]
+    if not test_sequences:
+        raise RuntimeError("no held-out lines are fully representable by the train-derived reduced vocabulary")
+    if len(test_sequences) < len(test_sequences_full):
+        log(f"kept {len(test_sequences)}/{len(test_sequences_full)} test lines representable by the reduced vocabulary")
 
     base = BigramLM(sorted(top_vocab), alpha=args.alpha)
     log(f"fitting bigram LM with vocab_size={len(top_vocab)}")
@@ -185,7 +263,7 @@ def main() -> None:
     # negatives for a pure BPE bigram test and uses corpus-derived overrides.
     # Any adjacent pair emitted by the deterministic tokenizer on text is a
     # canonical pair for that tokenizer implementation.
-    overrides = observed_bigrams(train_sequences + test_sequences)
+    overrides = observed_bigrams(train_sequences)
     log(f"using {len(overrides)} corpus-derived canonical bigram overrides")
     local = LocalCanonicalLM(base, tokenizer, overrides)
 
@@ -205,29 +283,30 @@ def main() -> None:
         )
 
     rng = random.Random(args.seed)
-    base_samples = [base.sample(rng, args.sample_max_tokens) for _ in range(args.samples)]
-    sample_logw = []
-    local_samples = []
-    for _ in range(args.samples):
-        if sample_logw and len(sample_logw) % 5 == 0:
-            log(f"drew {len(sample_logw)}/{args.samples} local samples; cached_norms={len(local._norm_cache)}")
-        sample, logw = local.sample(rng, args.sample_max_tokens)
-        local_samples.append(sample)
-        sample_logw.append(logw)
+    base_samples, base_sample_attempts = completed_base_samples(base, rng, args.samples, args.sample_max_tokens)
+    local_samples, sample_logw, local_sample_attempts = completed_local_samples(
+        local, rng, args.samples, args.sample_max_tokens
+    )
+    global_samples = importance_resample(local_samples, sample_logw, rng, args.samples)
 
     payload = {
         "experiment": "wikitext2_bigram_conditioning",
         "metadata": {
             "train_lines": len(train_lines),
             "test_lines": len(test_lines),
+            "train_segments": len(train_sequences),
+            "scored_test_lines": len(test_sequences),
             "vocab_size": len(top_vocab),
             "alpha": args.alpha,
             "samples": args.samples,
+            "base_sample_attempts": base_sample_attempts,
+            "local_sample_attempts": local_sample_attempts,
             "sample_max_tokens": args.sample_max_tokens,
             "seed": args.seed,
             "log2_z_estimate": log2meanexp(sample_logw),
             "base_sample_canonical_rate": canonical_sample_rate(base_samples, local.allowed),
             "local_sample_canonical_rate": canonical_sample_rate(local_samples, local.allowed),
+            "global_sample_canonical_rate": canonical_sample_rate(global_samples, local.allowed),
             "canonical_bigram_overrides": len(overrides),
         },
         "records": records,
