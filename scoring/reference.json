@@ -2,6 +2,7 @@
   "experiments": {
     "wikitext2_bigram_conditioning": {
       "description": "Scaled reproduction target: WikiText-2 line-level language modeling with GPT-2 BPE tokens and tokenizer-valid generated support.",
+      "notes": "The paper reports this likelihood pattern for GPT-2 small, not for the scaled bigram model used by the CPU-safe gym. The relative_log_loss_to_baseline entries below are derived from the paper's GPT-2 small WikiText row as qualitative reference context; absolute losses and scaled-resource constraints are intentionally produced only in scoring/scores.json.",
       "weight": 0.3,
       "primary_metric": "relative_log_loss_to_baseline",
       "metrics": {
@@ -44,24 +45,15 @@
       "results": {
         "base_bigram_lm": {
           "type": "baseline",
-          "relative_log_loss_to_baseline": 1.0,
-          "log_loss_bits_per_string": 369.2,
-          "canonical_sample_rate": 0.0,
-          "vocab_size": 50257
+          "relative_log_loss_to_baseline": 1.0
         },
         "local_canonical_bigram_lm": {
           "type": "proposed",
-          "relative_log_loss_to_baseline": 0.9940411700975082,
-          "log_loss_bits_per_string": 367.0,
-          "canonical_sample_rate": 1.0,
-          "vocab_size": 50257
+          "relative_log_loss_to_baseline": 0.9940411700975082
         },
         "global_canonical_bigram_lm": {
           "type": "proposed",
-          "relative_log_loss_to_baseline": 0.9948537378114843,
-          "log_loss_bits_per_string": 367.3,
-          "canonical_sample_rate": 1.0,
-          "vocab_size": 50257
+          "relative_log_loss_to_baseline": 0.9948537378114843
         }
       }
     },
@@ -132,6 +124,7 @@
     },
     "ptb_bigram_conditioning": {
       "description": "Scaled reproduction target: Penn Treebank line-level language modeling with GPT-2 BPE tokens and tokenizer-valid generated support.",
+      "notes": "The paper reports this likelihood pattern for GPT-2 small, not for the scaled bigram model used by the CPU-safe gym. The relative_log_loss_to_baseline entries below are derived from the paper's GPT-2 small PTB row as qualitative reference context; absolute losses and scaled-resource constraints are intentionally produced only in scoring/scores.json.",
       "weight": 0.3,
       "primary_metric": "relative_log_loss_to_baseline",
       "metrics": {
@@ -174,24 +167,15 @@
       "results": {
         "base_bigram_lm": {
           "type": "baseline",
-          "relative_log_loss_to_baseline": 1.0,
-          "log_loss_bits_per_string": 201.0,
-          "canonical_sample_rate": 0.0,
-          "vocab_size": 50257
+          "relative_log_loss_to_baseline": 1.0
         },
         "local_canonical_bigram_lm": {
           "type": "proposed",
-          "relative_log_loss_to_baseline": 0.9985074626865672,
-          "log_loss_bits_per_string": 200.7,
-          "canonical_sample_rate": 1.0,
-          "vocab_size": 50257
+          "relative_log_loss_to_baseline": 0.9985074626865672
         },
         "global_canonical_bigram_lm": {
           "type": "proposed",
-          "relative_log_loss_to_baseline": 0.990547263681592,
-          "log_loss_bits_per_string": 199.1,
-          "canonical_sample_rate": 1.0,
-          "vocab_size": 50257
+          "relative_log_loss_to_baseline": 0.990547263681592
         }
       }
     }

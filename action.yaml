@@ -3,4 +3,4 @@
 # only after the turn ends.
 action: done
 milestone: core_claim_plus
-notes: "Final verification passed: refreshed two-corpus scores, train/test evaluators, and documentation are ready for gym use."
+notes: "Final verification passed after cleaning unverified GPT-2 target docs and scaled-reference comparisons; gym remains core_claim_plus."

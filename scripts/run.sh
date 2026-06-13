@@ -32,14 +32,5 @@ python -m method.canonical_conditioning \
   --samples 100 \
   --sample-max-tokens 96
 
-python -m method.gpt2_conditioning \
-  --model-dir data/downloads/gpt2-small \
-  --test-path data/downloads/wikitext-2-test.txt \
-  --output artifacts/canonical_conditioning/wikitext2_gpt2_small.json \
-  --experiment-name wikitext2_gpt2_small_conditioning \
-  --max-test-lines 12 \
-  --samples 2 \
-  --sample-max-tokens 16
-
 bash scripts/evaluate.sh artifacts/canonical_conditioning
 python validate.py --compare

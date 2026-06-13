@@ -20,9 +20,10 @@ same tokenizer, train split, held-out split, and output artifact format as the
 candidate system. Candidate systems should improve held-out likelihood while
 maintaining tokenizer-valid generated support.
 
-The highest-fidelity lightweight target uses cached GPT-2 small on WikiText-2.
-The bigram experiments remain as fast multi-corpus coverage for the same
-canonicality-by-conditioning claim.
+The current scored gym uses two lightweight token-level language-model
+settings, one on WikiText-2 and one on Penn Treebank. They are intentionally
+small enough to rerun quickly while still requiring both likelihood gains and
+tokenizer-valid generated support.
 
 ## Evaluation Protocol
 

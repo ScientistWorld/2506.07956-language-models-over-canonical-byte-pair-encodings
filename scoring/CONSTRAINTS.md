@@ -6,11 +6,6 @@ Use the GPT-2 BPE tokenizer files provided by `scripts/download.sh`. Changes
 intended as scientific improvements must evaluate under the same artifact
 contract and report the same metrics.
 
-For `wikitext2_gpt2_small_conditioning`, use the cached GPT-2 small weights
-downloaded by `scripts/download.sh`. Do not switch to a larger pretrained
-model for that experiment unless reporting it as a separate, clearly named
-experiment.
-
 ## Data
 
 Use only the train/test files downloaded by `scripts/download.sh` for the
@@ -25,7 +20,6 @@ Evaluation must be performed by `scripts/evaluate.sh` reading a method artifact.
 ## Compliance Checklist
 
 - [ ] Uses the provided GPT-2 BPE tokenizer files
-- [ ] Uses cached GPT-2 small weights for `wikitext2_gpt2_small_conditioning`
 - [ ] Uses the benchmark train/test files for each reported experiment
 - [ ] Builds reduced vocabularies or fitted statistics from training text only
 - [ ] Writes the expected method artifact and scores it through `scripts/evaluate.sh`

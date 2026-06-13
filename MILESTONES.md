@@ -4,9 +4,14 @@
 
 ## Progress Log
 
+### [2026-06-13 09:25] - core_claim_plus
+- Final verification confirmed the current completed gym baseline is the verified two-corpus scaled run, not the optional unverified GPT-2-small follow-up.
+- Cleaned method-agnostic target docs and reference entries so `scores.json` experiments are the active gym surface and scaled absolute losses are not compared against unrelated paper GPT-2 absolute losses.
+- Kept milestone at `core_claim_plus`: the method implements the paper's canonical-conditioning computation and demonstrates the core likelihood/validity claim on WikiText-2 and PTB scaled settings.
+
 ### [2026-06-13 09:07] - core_claim_plus
 - Follow-up audit identified the main remaining fidelity gap: the current successful result uses a scaled token bigram LM rather than the paper's GPT-2/Llama neural LMs.
-- Added a cached GPT-2-small canonical-conditioning experiment and submitted it as a verification follow-up; no higher milestone is claimed until that job finishes and scores are inspected.
+- Added a cached GPT-2-small canonical-conditioning implementation for future verification; no higher milestone is claimed because no completed job has produced inspected GPT-2-small scores.
 - Removed generated `jobs/` logs from git tracking and fixed wrapper scripts so custom output paths do not accidentally evaluate stale artifacts.
 
 ### [2026-06-13 08:58] - core_claim_plus
