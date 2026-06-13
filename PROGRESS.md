@@ -25,9 +25,9 @@
 - The corrected run restores `core_claim`: both canonicalized variants improve held-out log-loss while satisfying the canonical sample constraint.
 - Larger CPU follow-up `9adc68d5-926` completed successfully. It used 6000 WikiText-2 train lines, scanned 600 held-out lines, scored the 92 held-out lines fully representable under the 4096-token train-derived support, and drew 300 completed baseline/local samples.
 - Current `scoring/scores.json` from that follow-up:
-  - `base_bigram_lm`: 40.380 bits/string, measured canonical sample rate 0.90, vocab size 4096.
-  - `global_canonical_bigram_lm`: 40.242 bits/string, canonical sample rate 1.0, vocab size 4096.
-  - `local_canonical_bigram_lm`: 40.362 bits/string, canonical sample rate 1.0, vocab size 4096.
+  - `base_bigram_lm`: relative log-loss 1.0, 40.380 bits/string, measured canonical sample rate 0.90, vocab size 4096.
+  - `global_canonical_bigram_lm`: relative log-loss 0.996584, 40.242 bits/string, canonical sample rate 1.0, vocab size 4096.
+  - `local_canonical_bigram_lm`: relative log-loss 0.999570, 40.362 bits/string, canonical sample rate 1.0, vocab size 4096.
 - The follow-up reaches `core_claim_plus`: the corrected canonical conditioning result holds at a broader train-derived support and on more held-out lines.
 
 ## Remaining
@@ -47,6 +47,7 @@
 - The baseline script previously shelled into `method/`; it is now an independent unconstrained bigram implementation using only `data/` helpers.
 - Global canonical sample rate was hardcoded in `eval/`; the corrected method writes an artifact-level measured rate from importance-resampled completed local samples, and `eval/` reads that field.
 - Current highest honest milestone is `core_claim_plus`; remaining gaps are secondary paper settings rather than the core conditioning claim.
+- The primary scoring metric was changed from absolute `log_loss_bits_per_string` to `relative_log_loss_to_baseline` after validation flagged that the paper's GPT-2-small WikiText strings and this scaled WikiText-2 bigram benchmark have different absolute bits/string scales. Absolute bits/string remains reported as a secondary metric.
 
 ## Deviations from Paper
 

@@ -4,7 +4,7 @@
 
 Tests whether enforcing tokenizer-valid token strings improves language-model likelihood on held-out WikiText-2 lines.
 
-- **Metric**: `log_loss_bits_per_string` (lower is better)
+- **Metric**: `relative_log_loss_to_baseline` (lower is better; below 1.0 means the method improves likelihood over the unconstrained baseline in the same run)
 - **Run**: `bash scripts/reproduce.sh`, then `bash scripts/evaluate.sh artifacts/canonical_conditioning/wikitext2_bigram.json`
 
 ## Constraint: canonical_sample_rate

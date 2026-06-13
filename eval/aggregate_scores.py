@@ -38,6 +38,7 @@ def main() -> None:
 
     results: dict[str, dict[str, float]] = {
         "base_bigram_lm": {
+            "relative_log_loss_to_baseline": 1.0,
             "log_loss_bits_per_string": baseline_loss,
             "canonical_sample_rate": data["metadata"].get("base_sample_canonical_rate", 0.0),
             "vocab_size": data["metadata"]["vocab_size"],
@@ -52,11 +53,13 @@ def main() -> None:
         if global_canonical_rate is None:
             raise KeyError("missing global_sample_canonical_rate in method artifact metadata")
         results["local_canonical_bigram_lm"] = {
+            "relative_log_loss_to_baseline": local_loss / baseline_loss,
             "log_loss_bits_per_string": local_loss,
             "canonical_sample_rate": data["metadata"]["local_sample_canonical_rate"],
             "vocab_size": data["metadata"]["vocab_size"],
         }
         results["global_canonical_bigram_lm"] = {
+            "relative_log_loss_to_baseline": global_loss / baseline_loss,
             "log_loss_bits_per_string": global_loss,
             "canonical_sample_rate": global_canonical_rate,
             "vocab_size": data["metadata"]["vocab_size"],
