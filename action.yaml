@@ -5,4 +5,4 @@ action: done
 gpus: 0
 test: false
 milestone: core_claim_plus
-notes: "Parity record split; 21 train metrics, 21 test metrics; global relative loss train/test 0.9963/0.9968, local 0.9996/0.9996; constraint guards saturated as expected for valid artifacts."
+notes: "Fresh-clone packaging audit passed; public download URLs resolve and code paths match data/downloads artifacts."
