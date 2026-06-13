@@ -4,5 +4,5 @@
 action: submit
 gpus: 0
 test: true
-milestone: method_runs
-notes: "Run corrected CPU WikiText-2 benchmark after audit fixes: train-only reduced vocabulary/overrides, completed samples for global Z, independent baseline, 3000 train lines, 200 test lines, 200 local samples."
+milestone: core_claim
+notes: "Core claim restored by corrected run b53a337b-9ca. Submit a larger CPU follow-up with 6000 train lines, 600 scanned test lines, 4096-token train-derived support, and 300 samples to strengthen coverage."

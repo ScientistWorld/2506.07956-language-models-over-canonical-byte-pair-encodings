@@ -14,10 +14,10 @@ set -e
 cd /home/user
 
 bash scripts/reproduce.sh \
-  --max-train-lines 3000 \
-  --max-test-lines 200 \
-  --vocab-size 2048 \
-  --samples 200 \
-  --sample-max-tokens 128
+  --max-train-lines 6000 \
+  --max-test-lines 600 \
+  --vocab-size 4096 \
+  --samples 300 \
+  --sample-max-tokens 160
 
 python validate.py --compare

@@ -10,17 +10,23 @@
 
 - Tiny smoke test completed on 50 train lines and 10 test lines. It was used only to validate the pipeline.
 - The completed scaled WikiText-2 benchmark trained on 1000 lines, evaluated 50 held-out lines, used an expanded 1302-token GPT-2-BPE support, and sampled 100 baseline/local strings for canonicality/global normalization checks.
-- Reproduced scores in `scoring/scores.json`:
+- Superseded pre-audit scores from the earlier run were:
   - `base_bigram_lm`: 649.346 bits/string, measured canonical sample rate 0.88, vocab size 1302.
   - `global_canonical_bigram_lm`: 649.129 bits/string, canonical sample rate 1.0, vocab size 1302.
   - `local_canonical_bigram_lm`: 649.039 bits/string, canonical sample rate 1.0, vocab size 1302.
 - The result supports the core claim in the scaled setting: canonical conditioning removes invalid token strings and improves held-out log-loss without changing vocabulary size.
 - `python validate.py --compare` passes all structure and score checks.
-- 2026-06-13 continuation audit confirmed the paper-specific computation is present in `method/canonical_conditioning.py`, but a parallel audit found protocol issues in the previous run. The current milestone is held at `method_runs` until the corrected benchmark job regenerates `scoring/scores.json`.
+- 2026-06-13 continuation audit confirmed the paper-specific computation is present in `method/canonical_conditioning.py`, but a parallel audit found protocol issues in the previous run. The milestone was held at `method_runs` until the corrected benchmark job regenerated `scoring/scores.json`.
+- Corrected CPU benchmark `b53a337b-9ca` completed successfully after those fixes. It used 3000 WikiText-2 train lines, scanned 200 test lines, scored the 20 held-out lines fully representable under the 2048-token train-derived support, and drew 200 completed baseline/local samples.
+- Corrected scores in `scoring/scores.json`:
+  - `base_bigram_lm`: 36.902 bits/string, measured canonical sample rate 0.97, vocab size 2048.
+  - `global_canonical_bigram_lm`: 36.858 bits/string, canonical sample rate 1.0, vocab size 2048.
+  - `local_canonical_bigram_lm`: 36.885 bits/string, canonical sample rate 1.0, vocab size 2048.
+- The corrected run restores `core_claim`: both canonicalized variants improve held-out log-loss while satisfying the canonical sample constraint.
 
 ## Remaining
 
-- A corrected larger WikiText-2 CPU run is prepared in `scripts/run.sh` to restore `core_claim` without test-set vocabulary leakage, test-derived canonical bigram overrides, truncated global-normalizer samples, or a method-dependent baseline.
+- A larger 4096-token WikiText-2 CPU run is prepared in `scripts/run.sh` to strengthen the current result with broader train-derived support and more held-out lines.
 - To go further after that, add PTB if an accessible PTB text split is verified, or replace the scaled bigram LM with a small neural LM while preserving the same canonical conditioning algorithm.
 
 ## Issues
@@ -35,7 +41,7 @@
 - The same audit found that the previous run used test-set bigrams as canonical overrides and included test tokens in the reduced vocabulary. The corrected method uses a train-derived vocabulary, scores only held-out lines fully representable in that fixed support, uses tokenizer-reference canonical bigram checks without reading the test set, and restricts corpus-derived overrides to training sequences.
 - The baseline script previously shelled into `method/`; it is now an independent unconstrained bigram implementation using only `data/` helpers.
 - Global canonical sample rate was hardcoded in `eval/`; the corrected method writes an artifact-level measured rate from importance-resampled completed local samples, and `eval/` reads that field.
-- Current highest honest milestone is `method_runs`; a corrected larger CPU job is being submitted to restore `core_claim`.
+- Current highest honest milestone is `core_claim`; a larger CPU job is being submitted to strengthen the benchmark before any attempt to claim `core_claim_plus`.
 
 ## Deviations from Paper
 
