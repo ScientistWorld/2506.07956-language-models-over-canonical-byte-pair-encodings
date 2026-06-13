@@ -2,7 +2,7 @@
   "experiments": {
     "wikitext2_bigram_conditioning": {
       "description": "Scaled reproduction target: WikiText-2 line-level language modeling with GPT-2 BPE tokens and tokenizer-valid generated support.",
-      "weight": 0.5,
+      "weight": 0.3,
       "primary_metric": "relative_log_loss_to_baseline",
       "metrics": {
         "relative_log_loss_to_baseline": {
@@ -65,9 +65,74 @@
         }
       }
     },
+    "wikitext2_gpt2_small_conditioning": {
+      "description": "Closer reproduction target: WikiText-2 line-level language modeling with cached GPT-2 small and canonical conditioning.",
+      "weight": 0.4,
+      "primary_metric": "relative_log_loss_to_baseline",
+      "metrics": {
+        "relative_log_loss_to_baseline": {
+          "higher_is_better": false,
+          "coefficient": -1.0,
+          "description": "Primary likelihood metric normalized by the same-slice unconstrained baseline; values below 1.0 mean better held-out fit."
+        },
+        "log_loss_bits_per_string": {
+          "higher_is_better": false,
+          "coefficient": -0.2,
+          "description": "Absolute held-out negative log likelihood in bits per scored string."
+        },
+        "loss_improvement_bits_per_string": {
+          "higher_is_better": true,
+          "coefficient": 0.6,
+          "description": "Same-slice reduction in held-out bits per string relative to the unconstrained baseline."
+        },
+        "log_loss_bits_per_token": {
+          "higher_is_better": false,
+          "coefficient": -0.3,
+          "description": "Length-normalized held-out negative log likelihood to catch gains concentrated only on long or short strings."
+        },
+        "finite_record_rate": {
+          "higher_is_better": true,
+          "coefficient": 0.3,
+          "description": "Fraction of scored records assigned finite probability, penalizing methods that improve averages by dropping hard examples from support."
+        },
+        "canonical_sample_rate": {
+          "higher_is_better": true,
+          "coefficient": 0.4,
+          "description": "Constraint metric measuring the fraction of generated samples with tokenizer-valid token encodings."
+        },
+        "vocab_size": {
+          "higher_is_better": false,
+          "coefficient": -0.05,
+          "description": "Support-size constraint so improvements do not come solely from shrinking the token vocabulary."
+        }
+      },
+      "results": {
+        "base_gpt2_small": {
+          "type": "baseline",
+          "relative_log_loss_to_baseline": 1.0,
+          "log_loss_bits_per_string": 369.2,
+          "canonical_sample_rate": 0.0,
+          "vocab_size": 50257
+        },
+        "local_canonical_gpt2_small": {
+          "type": "proposed",
+          "relative_log_loss_to_baseline": 0.9940411700975082,
+          "log_loss_bits_per_string": 367.0,
+          "canonical_sample_rate": 1.0,
+          "vocab_size": 50257
+        },
+        "global_canonical_gpt2_small": {
+          "type": "proposed",
+          "relative_log_loss_to_baseline": 0.9948537378114843,
+          "log_loss_bits_per_string": 367.3,
+          "canonical_sample_rate": 1.0,
+          "vocab_size": 50257
+        }
+      }
+    },
     "ptb_bigram_conditioning": {
       "description": "Scaled reproduction target: Penn Treebank line-level language modeling with GPT-2 BPE tokens and tokenizer-valid generated support.",
-      "weight": 0.5,
+      "weight": 0.3,
       "primary_metric": "relative_log_loss_to_baseline",
       "metrics": {
         "relative_log_loss_to_baseline": {

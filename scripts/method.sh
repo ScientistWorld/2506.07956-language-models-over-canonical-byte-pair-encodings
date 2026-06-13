@@ -11,4 +11,22 @@ set -e
 cd /home/user
 
 python -m method.canonical_conditioning "$@"
-bash scripts/evaluate.sh artifacts/canonical_conditioning/wikitext2_bigram.json
+
+ARTIFACT="artifacts/canonical_conditioning/wikitext2_bigram.json"
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --output)
+      ARTIFACT="$2"
+      shift 2
+      ;;
+    --output=*)
+      ARTIFACT="${1#--output=}"
+      shift
+      ;;
+    *)
+      shift
+      ;;
+  esac
+done
+
+bash scripts/evaluate.sh "$ARTIFACT"

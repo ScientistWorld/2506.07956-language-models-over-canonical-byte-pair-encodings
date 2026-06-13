@@ -9,14 +9,15 @@
 #
 # Update the storage estimate below as you add downloads.
 #
-# Estimated total download size: 21 MB
-# Estimated disk usage after extraction: 21 MB
+# Estimated total download size: 546 MB
+# Estimated disk usage after extraction: 546 MB
 
 set -e
 
 cd /home/user
 
 mkdir -p data/downloads/gpt2-tokenizer
+mkdir -p data/downloads/gpt2-small
 
 [ -e data/downloads/gpt2-tokenizer/vocab.json ] || \
   curl -L https://huggingface.co/gpt2/resolve/main/vocab.json \
@@ -25,6 +26,22 @@ mkdir -p data/downloads/gpt2-tokenizer
 [ -e data/downloads/gpt2-tokenizer/merges.txt ] || \
   curl -L https://huggingface.co/gpt2/resolve/main/merges.txt \
     -o data/downloads/gpt2-tokenizer/merges.txt
+
+[ -e data/downloads/gpt2-small/config.json ] || \
+  curl -L https://huggingface.co/gpt2/resolve/main/config.json \
+    -o data/downloads/gpt2-small/config.json
+
+[ -e data/downloads/gpt2-small/model.safetensors ] || \
+  curl -L https://huggingface.co/gpt2/resolve/main/model.safetensors \
+    -o data/downloads/gpt2-small/model.safetensors
+
+[ -e data/downloads/gpt2-small/tokenizer.json ] || \
+  curl -L https://huggingface.co/gpt2/resolve/main/tokenizer.json \
+    -o data/downloads/gpt2-small/tokenizer.json
+
+[ -e data/downloads/gpt2-small/generation_config.json ] || \
+  curl -L https://huggingface.co/gpt2/resolve/main/generation_config.json \
+    -o data/downloads/gpt2-small/generation_config.json
 
 [ -e data/downloads/wikitext-2-train.txt ] || \
   curl -L https://raw.githubusercontent.com/pytorch/examples/main/word_language_model/data/wikitext-2/train.txt \

@@ -39,11 +39,13 @@
   - `ptb_bigram_conditioning/base_bigram_lm`: relative log-loss 1.0, 102.495 bits/string, canonical sample rate 0.79, vocab size 2048.
   - `ptb_bigram_conditioning/local_canonical_bigram_lm`: relative log-loss 0.998857, 102.377 bits/string, canonical sample rate 1.0, vocab size 2048.
   - `ptb_bigram_conditioning/global_canonical_bigram_lm`: relative log-loss 0.997294, 102.217 bits/string, canonical sample rate 1.0, vocab size 2048.
+- 2026-06-13 09:07 update: added a cached GPT-2 small conditioning runner to reduce the main limitation of the prior bigram-only reproduction. The new `wikitext2_gpt2_small_conditioning` experiment uses the same local mask and global importance-weighted canonicality-rate estimate, but with the paper's GPT-2-small backbone family.
+- The next submitted job will regenerate all artifacts and add GPT-2-small scores to `scoring/scores.json`. This is not claimed as a new milestone until that job completes.
 
 ## Remaining
 
-- To go beyond `core_claim_plus`, replace the scaled bigram LM with a small neural LM while preserving the same canonical conditioning algorithm, or reproduce additional model-family results from the paper.
-- To go further after that, replace the scaled bigram LM with a small neural LM while preserving the same canonical conditioning algorithm.
+- Verify the new GPT-2-small conditioning artifact on compute and inspect whether it improves held-out likelihood while reaching canonical generated support.
+- If the GPT-2-small run is successful, update `MILESTONES.md` and `scoring/scores.json` as a stronger reproduction of the paper's Figure 3 setting.
 
 ## Issues
 
@@ -63,10 +65,13 @@
 - PTB train/valid/test URLs from `wojzaremba/lstm` were verified with HTTP 200 responses and added to `scripts/download.sh`; the files are downloaded into `data/downloads/` for compute nodes.
 - CPU job `cf6dce5d-31d` failed with exit code `-9` after repeated Hive/Ray heartbeat `Disk quota exceeded` errors. The retry reduces runtime and log volume but does not treat the infrastructure failure as a reason to lower the milestone.
 - The optional train/test evaluators initially merged methods globally and conflicted when both corpora reused the same method names. They now aggregate by experiment, and refreshed `scores_train.json` and `scores_test.json` both cover WikiText-2 and PTB.
+- A follow-up audit flagged that the successful reproduction was still scaled to a smoothed bigram LM and covered a small filtered subset. This turn adds a GPT-2-small experiment instead of treating the bigram result as the final fidelity ceiling.
+- The generated `jobs/` directory had been tracked despite `.gitignore`; it has been removed from the index and `jobs/` is now ignored.
 
 ## Deviations from Paper
 
 - Paper used GPT-2 and Llama neural language models; this first reproduction uses a smoothed token bigram LM over GPT-2 BPE tokens. The canonicality algorithm itself is unchanged: it still masks noncanonical BPE extensions, computes local weights, and estimates global conditioning from local samples.
 - Paper evaluated full PTB/WikiText test splits; this scaled CPU reproduction uses WikiText-2 and PTB subsets to keep the environment short and debuggable.
+- The GPT-2-small follow-up still uses a small WikiText-2 subset and a short length limit for canonicality-rate sampling so it can complete inside the remaining budget. The conditioning computation is unchanged.
 - The implementation handles GPT-2 pre-tokenization by first checking the paper's pure BPE bigram round trip and then checking the full GPT-2 tokenizer on valid UTF-8 token pairs. Corpus-derived overrides are allowed only from training sequences, not held-out text.
 - The reduced vocabulary is derived from training text only. Held-out lines containing out-of-support tokens are omitted from the scaled score rather than adding test tokens to the model support.

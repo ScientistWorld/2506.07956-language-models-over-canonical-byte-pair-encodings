@@ -122,17 +122,28 @@ def score_artifact(path: Path) -> tuple[str, dict[str, dict[str, float]]]:
     records = select_slice(data["records"])
     metadata = data["metadata"]
     samples = data.get("samples", {})
+    method_names = metadata.get(
+        "method_names",
+        {
+            "base": "base_bigram_lm",
+            "local": "local_canonical_bigram_lm",
+            "global": "global_canonical_bigram_lm",
+        },
+    )
+    base_name = method_names["base"]
+    local_name = method_names.get("local", "local_canonical_bigram_lm")
+    global_name = method_names.get("global", "global_canonical_bigram_lm")
     baseline_loss = bits_per_string(records, "baseline_log2_prob")
     baseline_token_loss = bits_per_token(records, "baseline_log2_prob")
 
     results: dict[str, dict[str, float]] = {
-        "base_bigram_lm": {
+        base_name: {
             "relative_log_loss_to_baseline": 1.0,
             "log_loss_bits_per_string": baseline_loss,
             "loss_improvement_bits_per_string": 0.0,
             "log_loss_bits_per_token": baseline_token_loss,
             "finite_record_rate": finite_record_rate(records, "baseline_log2_prob"),
-            "canonical_sample_rate": verified_canonical_sample_rate(samples.get("base_bigram_lm", [])),
+            "canonical_sample_rate": verified_canonical_sample_rate(samples.get(base_name, [])),
             "vocab_size": metadata["vocab_size"],
         }
     }
@@ -148,22 +159,22 @@ def score_artifact(path: Path) -> tuple[str, dict[str, dict[str, float]]]:
         )
         if global_canonical_rate is None:
             raise KeyError(f"{path}: missing global_sample_canonical_rate in method artifact metadata")
-        results["local_canonical_bigram_lm"] = {
+        results[local_name] = {
             "relative_log_loss_to_baseline": local_loss / baseline_loss,
             "log_loss_bits_per_string": local_loss,
             "loss_improvement_bits_per_string": baseline_loss - local_loss,
             "log_loss_bits_per_token": bits_per_token(records, "local_log2_prob"),
             "finite_record_rate": finite_record_rate(records, "local_log2_prob"),
-            "canonical_sample_rate": verified_canonical_sample_rate(samples.get("local_canonical_bigram_lm", [])),
+            "canonical_sample_rate": verified_canonical_sample_rate(samples.get(local_name, [])),
             "vocab_size": metadata["vocab_size"],
         }
-        results["global_canonical_bigram_lm"] = {
+        results[global_name] = {
             "relative_log_loss_to_baseline": global_loss / baseline_loss,
             "log_loss_bits_per_string": global_loss,
             "loss_improvement_bits_per_string": baseline_loss - global_loss,
             "log_loss_bits_per_token": baseline_token_loss + (len(records) * log2_z / token_count(records)),
             "finite_record_rate": finite_record_rate(records, "baseline_log2_prob"),
-            "canonical_sample_rate": verified_canonical_sample_rate(samples.get("global_canonical_bigram_lm", [])),
+            "canonical_sample_rate": verified_canonical_sample_rate(samples.get(global_name, [])),
             "vocab_size": metadata["vocab_size"],
         }
     return experiment, results

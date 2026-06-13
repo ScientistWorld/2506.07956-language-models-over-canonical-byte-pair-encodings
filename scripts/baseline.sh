@@ -18,4 +18,22 @@ set -e
 cd /home/user
 
 python -m baseline.base_bigram "$@"
-bash scripts/evaluate.sh artifacts/baseline/wikitext2_bigram.json
+
+ARTIFACT="artifacts/baseline/wikitext2_bigram.json"
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --output)
+      ARTIFACT="$2"
+      shift 2
+      ;;
+    --output=*)
+      ARTIFACT="${1#--output=}"
+      shift
+      ;;
+    *)
+      shift
+      ;;
+  esac
+done
+
+bash scripts/evaluate.sh "$ARTIFACT"

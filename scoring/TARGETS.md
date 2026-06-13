@@ -1,11 +1,21 @@
 # Evaluation Targets
 
-## Primary: wikitext2_bigram_conditioning and ptb_bigram_conditioning
+## Primary: wikitext2_gpt2_small_conditioning
 
-Tests whether tokenizer-valid token-level modeling improves held-out likelihood
-on WikiText-2 and Penn Treebank lines.
+Tests whether tokenizer-valid conditioning improves held-out likelihood for a
+cached GPT-2 small model on WikiText-2 lines, matching the paper's closest
+reported model family in this reproduction.
 
 - **Metric**: `relative_log_loss_to_baseline` (lower is better; below 1.0 means the method improves likelihood over the unconstrained baseline in the same run)
+- **Run**: `bash scripts/run.sh`
+
+## Scaled Coverage: wikitext2_bigram_conditioning and ptb_bigram_conditioning
+
+Tests the same canonical conditioning equations on a smaller token bigram LM
+across WikiText-2 and Penn Treebank so future agents have fast multi-corpus
+coverage while improving the method.
+
+- **Metric**: `relative_log_loss_to_baseline`
 - **Run**: `bash scripts/run.sh`
 
 ## Constraint: canonical_sample_rate

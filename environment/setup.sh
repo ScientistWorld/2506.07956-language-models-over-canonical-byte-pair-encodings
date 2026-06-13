@@ -16,4 +16,4 @@
 
 set -e
 
-uv pip install --system regex
+uv pip install --system regex torch==2.3.1 transformers==4.41.2 safetensors==0.4.3

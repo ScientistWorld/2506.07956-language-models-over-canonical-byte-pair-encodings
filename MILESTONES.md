@@ -4,6 +4,11 @@
 
 ## Progress Log
 
+### [2026-06-13 09:07] - core_claim_plus
+- Follow-up audit identified the main remaining fidelity gap: the current successful result uses a scaled token bigram LM rather than the paper's GPT-2/Llama neural LMs.
+- Added a cached GPT-2-small canonical-conditioning experiment and submitted it as a verification follow-up; no higher milestone is claimed until that job finishes and scores are inspected.
+- Removed generated `jobs/` logs from git tracking and fixed wrapper scripts so custom output paths do not accidentally evaluate stale artifacts.
+
 ### [2026-06-13 08:58] - core_claim_plus
 - CPU test retry `8243ca38-61e` completed successfully and regenerated both WikiText-2 and PTB artifacts using the scaled canonical-conditioning implementation.
 - `scoring/scores.json` now contains both `wikitext2_bigram_conditioning` and `ptb_bigram_conditioning`; in both corpora, local and global conditioned variants improve held-out log-loss over the unconstrained baseline and reach canonical sample rate 1.0.
