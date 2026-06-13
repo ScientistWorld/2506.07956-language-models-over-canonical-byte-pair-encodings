@@ -32,7 +32,8 @@
 
 ## Remaining
 
-- To go beyond `core_claim_plus`, add PTB if an accessible PTB text split is verified, or replace the scaled bigram LM with a small neural LM while preserving the same canonical conditioning algorithm.
+- A CPU job is being submitted to add PTB as a second corpus setting using the same canonical-conditioning implementation. If it succeeds and both corpora support the likelihood and canonicality claims, the next honest milestone is `secondary_claims`.
+- To go further after that, replace the scaled bigram LM with a small neural LM while preserving the same canonical conditioning algorithm.
 
 ## Issues
 
@@ -48,6 +49,8 @@
 - Global canonical sample rate was hardcoded in `eval/`; the corrected method writes an artifact-level measured rate from importance-resampled completed local samples, and `eval/` reads that field.
 - Current highest honest milestone is `core_claim_plus`; remaining gaps are secondary paper settings rather than the core conditioning claim.
 - The primary scoring metric was changed from absolute `log_loss_bits_per_string` to `relative_log_loss_to_baseline` after validation flagged that the paper's GPT-2-small WikiText strings and this scaled WikiText-2 bigram benchmark have different absolute bits/string scales. Absolute bits/string remains reported as a secondary metric.
+- The evaluator now verifies `canonical_sample_rate` from generated token samples stored in the artifact instead of trusting method-reported metadata. This keeps the constraint metric benchmark-side while preserving the `eval/` versus `method/` separation.
+- PTB train/valid/test URLs from `wojzaremba/lstm` were verified with HTTP 200 responses and added to `scripts/download.sh`; the files are downloaded into `data/downloads/` for compute nodes.
 
 ## Deviations from Paper
 

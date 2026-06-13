@@ -18,5 +18,4 @@ set -e
 
 cd /home/user
 
-bash scripts/baseline.sh "$@"
-bash scripts/method.sh "$@"
+bash scripts/run.sh "$@"

@@ -228,6 +228,7 @@ def main() -> None:
     parser.add_argument("--train-path", default="data/downloads/wikitext-2-train.txt")
     parser.add_argument("--test-path", default="data/downloads/wikitext-2-test.txt")
     parser.add_argument("--output", default="artifacts/canonical_conditioning/wikitext2_bigram.json")
+    parser.add_argument("--experiment-name", default="wikitext2_bigram_conditioning")
     parser.add_argument("--max-train-lines", type=int, default=6000)
     parser.add_argument("--max-test-lines", type=int, default=600)
     parser.add_argument("--vocab-size", type=int, default=4096)
@@ -290,7 +291,7 @@ def main() -> None:
     global_samples = importance_resample(local_samples, sample_logw, rng, args.samples)
 
     payload = {
-        "experiment": "wikitext2_bigram_conditioning",
+        "experiment": args.experiment_name,
         "metadata": {
             "train_lines": len(train_lines),
             "test_lines": len(test_lines),
@@ -308,6 +309,11 @@ def main() -> None:
             "local_sample_canonical_rate": canonical_sample_rate(local_samples, local.allowed),
             "global_sample_canonical_rate": canonical_sample_rate(global_samples, local.allowed),
             "canonical_bigram_overrides": len(overrides),
+        },
+        "samples": {
+            "base_bigram_lm": base_samples,
+            "local_canonical_bigram_lm": local_samples,
+            "global_canonical_bigram_lm": global_samples,
         },
         "records": records,
     }

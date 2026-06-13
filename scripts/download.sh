@@ -9,8 +9,8 @@
 #
 # Update the storage estimate below as you add downloads.
 #
-# Estimated total download size: 14 MB
-# Estimated disk usage after extraction: 14 MB
+# Estimated total download size: 21 MB
+# Estimated disk usage after extraction: 21 MB
 
 set -e
 
@@ -37,3 +37,15 @@ mkdir -p data/downloads/gpt2-tokenizer
 [ -e data/downloads/wikitext-2-test.txt ] || \
   curl -L https://raw.githubusercontent.com/pytorch/examples/main/word_language_model/data/wikitext-2/test.txt \
     -o data/downloads/wikitext-2-test.txt
+
+[ -e data/downloads/ptb-train.txt ] || \
+  curl -L https://raw.githubusercontent.com/wojzaremba/lstm/master/data/ptb.train.txt \
+    -o data/downloads/ptb-train.txt
+
+[ -e data/downloads/ptb-valid.txt ] || \
+  curl -L https://raw.githubusercontent.com/wojzaremba/lstm/master/data/ptb.valid.txt \
+    -o data/downloads/ptb-valid.txt
+
+[ -e data/downloads/ptb-test.txt ] || \
+  curl -L https://raw.githubusercontent.com/wojzaremba/lstm/master/data/ptb.test.txt \
+    -o data/downloads/ptb-test.txt

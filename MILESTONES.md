@@ -4,6 +4,11 @@
 
 ## Progress Log
 
+### [2026-06-13 08:21] - core_claim_plus
+- Prepared a secondary corpus reproduction: PTB download paths verified and added, method/baseline artifacts made experiment-name aware, and the aggregate evaluator now supports multiple experiment artifacts.
+- Fixed a benchmark integrity issue by requiring generated token samples in artifacts and independently verifying canonical sample rate inside `eval/` instead of trusting method metadata.
+- Submitted a CPU job to rerun WikiText-2 and PTB canonicality-by-conditioning experiments before claiming `secondary_claims`.
+
 ### [2026-06-13 07:53] - core_claim_plus
 - Completed the larger CPU follow-up `9adc68d5-926` using 6000 WikiText-2 train lines, 600 scanned held-out lines, a 4096-token train-derived support, and 300 completed local samples.
 - The run scored 92 held-out lines representable under the fixed support and passed `python validate.py --compare`.

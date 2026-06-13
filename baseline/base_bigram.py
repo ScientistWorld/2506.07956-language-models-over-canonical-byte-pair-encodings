@@ -126,6 +126,7 @@ def main() -> None:
     parser.add_argument("--train-path", default="data/downloads/wikitext-2-train.txt")
     parser.add_argument("--test-path", default="data/downloads/wikitext-2-test.txt")
     parser.add_argument("--output", default="artifacts/baseline/wikitext2_bigram.json")
+    parser.add_argument("--experiment-name", default="wikitext2_bigram_conditioning")
     parser.add_argument("--max-train-lines", type=int, default=6000)
     parser.add_argument("--max-test-lines", type=int, default=600)
     parser.add_argument("--vocab-size", type=int, default=4096)
@@ -162,7 +163,7 @@ def main() -> None:
     canonical_rate = sum(is_canonical_sequence(seq, tokenizer, overrides) for seq in samples) / len(samples)
 
     payload = {
-        "experiment": "wikitext2_bigram_conditioning",
+        "experiment": args.experiment_name,
         "metadata": {
             "baseline_only": True,
             "train_lines": len(train_lines),
@@ -177,6 +178,9 @@ def main() -> None:
             "seed": args.seed,
             "base_sample_canonical_rate": canonical_rate,
             "canonical_bigram_overrides": len(overrides),
+        },
+        "samples": {
+            "base_bigram_lm": samples,
         },
         "records": records,
     }

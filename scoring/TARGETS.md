@@ -1,11 +1,11 @@
 # Evaluation Targets
 
-## Primary: wikitext2_bigram_conditioning
+## Primary: wikitext2_bigram_conditioning and ptb_bigram_conditioning
 
-Tests whether enforcing tokenizer-valid token strings improves language-model likelihood on held-out WikiText-2 lines.
+Tests whether enforcing tokenizer-valid token strings improves language-model likelihood on held-out WikiText-2 and Penn Treebank lines.
 
 - **Metric**: `relative_log_loss_to_baseline` (lower is better; below 1.0 means the method improves likelihood over the unconstrained baseline in the same run)
-- **Run**: `bash scripts/reproduce.sh`, then `bash scripts/evaluate.sh artifacts/canonical_conditioning/wikitext2_bigram.json`
+- **Run**: `bash scripts/run.sh`
 
 ## Constraint: canonical_sample_rate
 

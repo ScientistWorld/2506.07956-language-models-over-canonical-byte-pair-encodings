@@ -120,6 +120,11 @@ class GPT2BPE:
             return False
         return self.encode(text) == [left, right]
 
+    def bpe_canonical_sequence(self, token_ids: list[int]) -> bool:
+        """Exact byte-level BPE round-trip test for a complete token string."""
+        data = b"".join(self.token_bytes(token_id) for token_id in token_ids)
+        return self.encode_bytes_no_pretokenize(data) == token_ids
+
 
 def load_default_tokenizer(root: str | Path = "/home/user") -> GPT2BPE:
     root = Path(root)
