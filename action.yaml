@@ -1,9 +1,8 @@
-# This iteration writes files only — do NOT submit compute jobs.
-# Once you set action to 'done', STOP immediately.
+# This iteration submits split scoring on the compute node.
 # Do NOT sleep, poll, or wait. The system reads this file
 # only after your turn ends.
-action: done
+action: submit
 gpus: 0
 test: false
 milestone: core_claim_plus
-notes: "Improvements: added split-local loss improvement, per-token loss, finite-record support checks, and metric descriptions. Notes: canonical_sample_rate remains metadata-level; see DESIGN_NOTES.md."
+notes: "Run evaluate_train.sh and evaluate_test.sh over existing artifacts to populate split scores."
