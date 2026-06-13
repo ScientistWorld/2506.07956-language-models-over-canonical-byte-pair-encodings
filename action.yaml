@@ -1,8 +1,6 @@
 # IMPORTANT: Once you set action to 'submit' or 'done', STOP immediately.
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends. Sleeping blocks the entire pipeline.
-action: submit
-gpus: 0
-test: true
-milestone: core_claim
-notes: "Core claim restored by corrected run b53a337b-9ca. Submit a larger CPU follow-up with 6000 train lines, 600 scanned test lines, 4096-token train-derived support, and 300 samples to strengthen coverage."
+action: done
+milestone: core_claim_plus
+notes: "Corrected reproduction completed. Core claim was restored on the audited 2048-token run and strengthened by job 9adc68d5-926 at 4096-token train-derived support with improved log-loss and canonical sample rate 1.0 for both canonicalized variants."

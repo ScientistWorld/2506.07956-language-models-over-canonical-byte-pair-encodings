@@ -23,11 +23,16 @@
   - `global_canonical_bigram_lm`: 36.858 bits/string, canonical sample rate 1.0, vocab size 2048.
   - `local_canonical_bigram_lm`: 36.885 bits/string, canonical sample rate 1.0, vocab size 2048.
 - The corrected run restores `core_claim`: both canonicalized variants improve held-out log-loss while satisfying the canonical sample constraint.
+- Larger CPU follow-up `9adc68d5-926` completed successfully. It used 6000 WikiText-2 train lines, scanned 600 held-out lines, scored the 92 held-out lines fully representable under the 4096-token train-derived support, and drew 300 completed baseline/local samples.
+- Current `scoring/scores.json` from that follow-up:
+  - `base_bigram_lm`: 40.380 bits/string, measured canonical sample rate 0.90, vocab size 4096.
+  - `global_canonical_bigram_lm`: 40.242 bits/string, canonical sample rate 1.0, vocab size 4096.
+  - `local_canonical_bigram_lm`: 40.362 bits/string, canonical sample rate 1.0, vocab size 4096.
+- The follow-up reaches `core_claim_plus`: the corrected canonical conditioning result holds at a broader train-derived support and on more held-out lines.
 
 ## Remaining
 
-- A larger 4096-token WikiText-2 CPU run is prepared in `scripts/run.sh` to strengthen the current result with broader train-derived support and more held-out lines.
-- To go further after that, add PTB if an accessible PTB text split is verified, or replace the scaled bigram LM with a small neural LM while preserving the same canonical conditioning algorithm.
+- To go beyond `core_claim_plus`, add PTB if an accessible PTB text split is verified, or replace the scaled bigram LM with a small neural LM while preserving the same canonical conditioning algorithm.
 
 ## Issues
 
@@ -41,7 +46,7 @@
 - The same audit found that the previous run used test-set bigrams as canonical overrides and included test tokens in the reduced vocabulary. The corrected method uses a train-derived vocabulary, scores only held-out lines fully representable in that fixed support, uses tokenizer-reference canonical bigram checks without reading the test set, and restricts corpus-derived overrides to training sequences.
 - The baseline script previously shelled into `method/`; it is now an independent unconstrained bigram implementation using only `data/` helpers.
 - Global canonical sample rate was hardcoded in `eval/`; the corrected method writes an artifact-level measured rate from importance-resampled completed local samples, and `eval/` reads that field.
-- Current highest honest milestone is `core_claim`; a larger CPU job is being submitted to strengthen the benchmark before any attempt to claim `core_claim_plus`.
+- Current highest honest milestone is `core_claim_plus`; remaining gaps are secondary paper settings rather than the core conditioning claim.
 
 ## Deviations from Paper
 

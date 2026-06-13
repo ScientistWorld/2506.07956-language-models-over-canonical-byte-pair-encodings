@@ -1,8 +1,13 @@
 # Reproduction Milestones
 
-**Current: core_claim**
+**Current: core_claim_plus**
 
 ## Progress Log
+
+### [2026-06-13 07:53] - core_claim_plus
+- Completed the larger CPU follow-up `9adc68d5-926` using 6000 WikiText-2 train lines, 600 scanned held-out lines, a 4096-token train-derived support, and 300 completed local samples.
+- The run scored 92 held-out lines representable under the fixed support and passed `python validate.py --compare`.
+- Results strengthen the core claim at the broader setting: baseline 40.380 bits/string with canonical sample rate 0.90; local canonicalization 40.362 bits/string with rate 1.0; global canonicalization 40.242 bits/string with rate 1.0.
 
 ### [2026-06-13 07:37] - core_claim
 - Completed corrected CPU benchmark after audit fixes: train-only reduced vocabulary, train-only canonical bigram overrides, completed local samples for global normalizer estimation, independent baseline, and artifact-measured canonicality rates.
