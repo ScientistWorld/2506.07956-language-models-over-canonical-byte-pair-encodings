@@ -19,7 +19,8 @@
 
 ## Remaining
 
-- To go beyond `core_claim`, run larger WikiText-2 slices, add PTB, or replace the scaled bigram LM with a small neural LM while preserving the same canonical conditioning algorithm.
+- A larger WikiText-2 CPU run is prepared in `scripts/run.sh` to strengthen the current result beyond the initial 50-line held-out slice.
+- To go further after that, add PTB if an accessible PTB text split is verified, or replace the scaled bigram LM with a small neural LM while preserving the same canonical conditioning algorithm.
 
 ## Issues
 
@@ -29,6 +30,7 @@
 - The first completed job showed global canonicalization improving log-loss, but local canonicalization assigned `-inf` to 17/50 strings due to GPT-2 pre-tokenizer false negatives. The next run adds the paper's corpus-derived override workaround for observed canonical bigrams.
 - The final completed CPU run fixed the false negatives using those overrides and produced finite improved losses for both proposed conditioning variants.
 - A later audit found the baseline `canonical_sample_rate` was hardcoded. This was fixed by sampling the unconstrained bigram LM and aggregating the measured sample-level canonicality from the method artifact.
+- Current highest honest milestone is `core_claim`; a larger follow-up CPU job is being submitted before any attempt to claim `core_claim_plus`.
 
 ## Deviations from Paper
 
