@@ -1,8 +1,3 @@
-# Once you set action to 'submit' or 'done', STOP immediately.
-# Do NOT sleep, poll, or wait for jobs. The system reads this file
-# only after your turn ends.
-action: pending
-gpus: 0
-test: false
+action: done
 milestone: core_claim_plus
-notes: ""
+notes: "Audit complete: honest weighted ordering passes beyond seed spread, primary ratios reverse, and ten shortcut trials increase score. REDTEAM.md and all run evidence committed; gym source restored."
