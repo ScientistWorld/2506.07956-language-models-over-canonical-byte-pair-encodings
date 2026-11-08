@@ -17,6 +17,7 @@ python -m redteam.hardened.selftest
 
 echo "== smoke pipeline on a tiny support"
 S=tmp/smoke
+if [ ! -f "$S/scores_train.json" ]; then
 rm -rf "$S"
 python -m data.build_support --support-size 128 --max-train-lines 2000 --out-dir "$S/support"
 python -m eval.train.build_assets --support-dir "$S/support" --out-dir "$S/train_assets" --max-train-lines 2000
@@ -25,9 +26,11 @@ python -m method.canonical_conditioning --support-dir "$S/support" --out-root "$
 python -m baseline.base_bigram --kind unconstrained --support-dir "$S/support" --out-root "$S/artifacts" --max-train-lines 2000
 python -I eval/test/evaluate.py "$S/artifacts" --assets-dir "$S/test_assets" --output "$S/scores_test.json"
 python -I eval/train/evaluate.py "$S/artifacts" --assets-dir "$S/train_assets" --output "$S/scores_train.json"
+fi
 
 echo "== fixed task assets (support, canonical bigrams, dev/test cohorts, evaluator baseline)"
-bash scripts/build_assets.sh
+# (skipped when a previous attempt of this job already built them)
+[ -f eval/test/assets/manifest.json ] && [ -f data/support/ptb_canonical.npz ] || bash scripts/build_assets.sh
 
 echo "== reference"
 rm -rf artifacts
