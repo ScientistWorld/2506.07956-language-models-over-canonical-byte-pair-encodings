@@ -1,26 +1,38 @@
 # Train/Test Evaluation Design Notes
 
-## Checks Performed
+Current design (iteration 11 hardening; details and evidence in `HARDENING.md`).
 
-- Read `scripts/evaluate_train.sh` and `scripts/evaluate_test.sh` side by side. The train script calls `eval.train.evaluate` and writes `scoring/scores_train.json`; the test script calls `eval.test.evaluate` and writes `scoring/scores_test.json`.
-- Checked for hardcoded method defaults. Both split scripts accept an artifact path and the evaluators discover JSON artifacts under that path rather than locking to one method name.
-- Checked evaluator attachment to method outputs. Both split evaluators read pre-generated artifacts and do not import from `method/`.
-- Grepped for train/test cross-imports. No executable cross-imports were found; the only match is a test evaluator docstring mentioning the train evaluator.
-- Checked forbidden paper-agreement metric names. No active metric names use paper-agreement or reproduction-error scoring.
-- Confirmed no `scoring/scores_train.json` or `scoring/scores_test.json` stubs exist.
-- Ran `bash -n` on both split scripts.
+## Interface
 
-## Changes Made
+- Methods write `artifacts/<method>/<experiment>.npz` (`support`, `weights`).
+  Both evaluators discover every method directory. No method name is
+  hardcoded, and `base_bigram_lm` is reserved for the evaluator's baseline.
+- `scripts/evaluate_train.sh` → `eval/train/evaluate.py` → `scoring/scores_train.json`
+  (development cohort from the visible validation split).
+  `scripts/evaluate.sh` writes the same development scores to `scoring/scores.json`.
+- `scripts/evaluate_test.sh` → `eval/test/evaluate.py` → `scoring/scores_test.json`
+  (held-out cohort from the test split; the text lives only in `eval/test/downloads/`).
+- Each evaluator is a single self-contained file (stdlib + numpy) run with
+  `python -I`. They share no code; each has its own builder (`build_assets.py`)
+  and its own frozen assets (`assets/<corpus>.npz`): support, canonical table,
+  cohort, evaluator-owned baseline, and failure floor.
 
-- Added split-computed `loss_improvement_bits_per_string` so train/test compare the actual likelihood gain over the same-slice baseline, not only the ratio.
-- Added `log_loss_bits_per_token` to catch methods whose apparent bits-per-string gain is concentrated in string-length artifacts.
-- Added `finite_record_rate` as a support-coverage guard against methods that improve averages by assigning non-finite probabilities to hard records.
-- Added required `description` fields to every metric in `scoring/reference.json`.
-- Kept the train/test split as complementary record-id parity. This remains appropriate for the scaled WikiText held-out artifact because the core claim is held-out likelihood improvement under canonical support constraints, and per-record artifact fields make a data split meaningful.
+## Scoring rules
 
-## Runtime Concerns For Next Iteration
+- Exact normalization of the submitted weights over all finite strings, with a
+  termination certificate (solution of (I − A)x = 1 with x ≥ 1).
+- Exact canonical mass. It must be ≥ 1 − 1e-9. Anything else, an invalid table,
+  a zero-probability cohort string, or a missing experiment is scored at the
+  failure floor (the uniform canonical model's loss).
+- Metrics: relative loss to the fixed baseline (primary), bits/string,
+  improvement over the baseline, bits/token, canonical rate.
 
-- `canonical_sample_rate` is still metadata-level, not split-specific. It is a useful constraint metric, but it will be identical between train and test unless future artifacts include per-sample outputs that can be independently sliced.
-- `finite_record_rate` is currently both a scored metric and a hard validation guard because non-finite log probabilities make the loss metrics fail. This is intentional for now, but the runner should confirm the failure mode is clear for future methods.
-- The train split reveals that even record ids are visible train. A shortcut could infer that odd ids are likely held out, but it cannot improve odd-record scores without writing good held-out probabilities into the artifact.
-- The split is only as strong as the number and diversity of records in the method artifact. If a future run uses a very small `--max-test-lines`, train/test variance may dominate the shortcut signal.
+## Cohorts
+
+| Corpus | Dev strings (tokens) | Test strings (tokens) |
+|---|---|---|
+| WikiText-2 | 182 (1,875) | 275 (2,870) |
+| PTB | 388 (6,760) | 516 (8,676) |
+
+An honest variant's dev and test deltas agree within 5%. Fitting on dev or
+test text shows a 14–16× gap between the two (`redteam/hardened/summary.md`).

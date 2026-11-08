@@ -1,3 +1,5 @@
+> Iteration 11 note: the scoring contract below was replaced by the hardened design in `HARDENING.md` (exact evaluator-side scoring of submitted bigram tables, hidden test cohort, canonicality gate). This report describes the earlier gym.
+
 # Verification Report
 
 ## Initial Assessment

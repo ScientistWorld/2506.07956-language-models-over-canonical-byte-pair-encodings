@@ -1,5 +1,15 @@
 # Progress
 
+## Current state (iteration 11 hardening; see `HARDENING.md`)
+
+- Task: on WikiText-2 and PTB, build a token bigram LM over a fixed 2048-token GPT-2 BPE support (`data/support/`) that puts all its probability on canonical token strings. Submissions are weight tables (`artifacts/<method>/<experiment>.npz`). The evaluators normalize them exactly and score held-out lines fully inside the support.
+- Reference (`scripts/run.sh` → `method/canonical_conditioning.py`): add-0.05 bigram on the full training file; local canonicalization (masked, renormalized); global canonicalization (masked p_Δ, normalized exactly by the evaluator); importance-sampling estimate of log Z with 2000 local samples as a diagnostic (WikiText-2 −0.00717 vs exact −0.00697; PTB −0.02792 vs −0.02700).
+- Hidden test (`scoring/scores_test.json`), bits/string base / local / global: WikiText-2 34.7399 / 34.7352 / 34.7329; PTB 88.4911 / 88.4557 / 88.4641. Canonical mass: base 0.9952 / 0.9815, both canonical models 1.0.
+- Development (`scoring/scores_train.json` = `scores.json`): WikiText-2 33.1355 / 33.1305 / 33.1285; PTB 90.8112 / 90.7759 / 90.7842.
+- Limitation: the canonicalization gain is small at bigram scale (0.005–0.035 bits/string), so headroom comes mostly from better estimation under the exact constraint. The GPT-2 experiment was retired unrun.
+
+## History (earlier iterations; superseded numbers)
+
 ## What Works
 
 - GPT-2 BPE tokenizer files and WikiText-2 data are downloaded into `data/downloads/`.
