@@ -1,5 +1,3 @@
-action: submit
-gpus: 0
-test: false
+action: done
 milestone: core_claim_plus
-notes: "Hardening check: selftest + smoke, rebuild fixed support/canonical table and eval-owned dev/test assets, rerun reference (local+global canonical bigram LMs, full train), baselines, then 25 variant/shortcut cases scored via no-arg scripts/evaluate_test.sh, final reference scores + validate."
+notes: "Hardened gym: exact evaluator-side scoring of submitted bigram LM tables on a hidden 275/516-string test cohort with a canonicality gate; better variants rank higher beyond noise, all major shortcuts fail or tie (public-test-text memorization left, documented in HARDENING.md)."
