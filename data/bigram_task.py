@@ -122,14 +122,16 @@ def train_segments(
 
 def transition_counts(segments: list[np.ndarray], k: int) -> np.ndarray:
     """Counts of (previous, next) symbols; row k is the string start, column k the string end."""
-    counts = np.zeros((k + 1, k + 1), dtype=np.float64)
+    boundary = np.asarray([k], dtype=np.int64)
+    parts = [boundary]
     for seg in segments:
-        if len(seg) == 0:
-            continue
-        prev = np.concatenate(([k], seg))
-        nxt = np.concatenate((seg, [k]))
-        np.add.at(counts, (prev, nxt), 1.0)
-    return counts
+        if len(seg):
+            parts.append(np.asarray(seg, dtype=np.int64))
+            parts.append(boundary)
+    stream = np.concatenate(parts)  # k s_1 ... k s_2 ... k: every adjacent pair is one transition
+    flat_index = stream[:-1] * (k + 1) + stream[1:]
+    counts = np.bincount(flat_index, minlength=(k + 1) * (k + 1)).astype(np.float64)
+    return counts.reshape(k + 1, k + 1)
 
 
 def full_mask(canonical: np.ndarray) -> np.ndarray:
