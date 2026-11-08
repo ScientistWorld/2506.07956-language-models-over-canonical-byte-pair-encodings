@@ -1,0 +1,67 @@
+[hive] Node draining before SLURM walltime; waiting for another node
+[hive] This stderr log is managed by Hive.
+[hive] job_id: ed51af5a
+[hive] host: node
+[hive] node_id: fa3b2a33324e929238bca0807245d9e0fb97e3a232b4cb5d38167f11
+[hive] user: nexus/user (remote)
+[hive] resource: gpu-cpu-test
+[hive] gpus: 0
+[hive] cpus: 1
+[hive] workdir: /home/user
+[hive] timeout_sec: 21600
+[hive] started_at: 2026-11-07 22:37:08 EST
+[hive] command: apptainer exec --containall --cleanenv --env HF_HOME=/home/user/shared/hf_cache --env TRANSFORMERS_CACHE=/home/user/shared/hf_cache --env HF_DATASETS_CACHE=/home/user/shared/hf_cache/datasets --env TORCH_HOME=/home/user/shared/hf_cache/torch --bind /home/user/scratch/AgentWorkspaces/workspaces/2506.07956:/home/user --overlay /home/user/scratch/AgentWorkspaces/workspaces/2506.07956/environment/overlay.img:ro --bind /home/user/scratch/AgentWorkspaces/shared/datasets:/home/user/shared/datasets:ro --bind /home/user/scratch/AgentWorkspaces/shared/models:/home/user/shared/models:ro --bind /home/user/scratch/AgentWorkspaces/shared/hf_cache:/home/user/shared/hf_cache /home/user/scratch/AgentWorkspaces/workspaces/2506.07956/environment/container.sif bash -c 'cd /home/user && bash /home/user/scripts/run.sh'
+[canonical-conditioning] drew 10/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 20/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 30/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 40/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 50/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 60/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 70/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 80/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 90/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 10/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 20/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 30/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 40/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 50/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 60/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 70/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 80/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 90/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 10/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 20/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 30/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 40/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 50/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 60/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 70/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 80/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 90/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 10/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 20/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 30/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 40/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 50/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 60/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 70/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 80/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 90/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 10/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 20/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 30/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 40/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 50/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 60/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 70/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 80/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 90/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 10/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 20/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 30/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 40/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 50/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 60/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 70/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 80/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 90/100 completed local samples; cached_norms=267

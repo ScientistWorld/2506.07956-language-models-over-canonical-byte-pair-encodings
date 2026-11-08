@@ -1,4 +1,8 @@
-action: submit
+# Once you set action to 'submit' or 'done', STOP immediately.
+# Do NOT sleep, poll, or wait for jobs. The system reads this file
+# only after your turn ends.
+action: pending
 gpus: 0
 test: false
-notes: "Bundled gym audit: original-setting reference seeds 13/14/15, controlled training and smoothing variants, independent baseline, and 15 artifact/data shortcut checks via the exact no-argument hidden test."
+milestone: core_claim_plus
+notes: ""

@@ -1,0 +1,1535 @@
+[hive] This stdout log is managed by Hive.
+[hive] job_id: ed51af5a
+[hive] host: node
+[hive] node_id: fa3b2a33324e929238bca0807245d9e0fb97e3a232b4cb5d38167f11
+[hive] user: nexus/user (remote)
+[hive] resource: gpu-cpu-test
+[hive] gpus: 0
+[hive] cpus: 1
+[hive] workdir: /home/user
+[hive] timeout_sec: 21600
+[hive] started_at: 2026-11-07 22:37:08 EST
+[hive] command: apptainer exec --containall --cleanenv --env HF_HOME=/home/user/shared/hf_cache --env TRANSFORMERS_CACHE=/home/user/shared/hf_cache --env HF_DATASETS_CACHE=/home/user/shared/hf_cache/datasets --env TORCH_HOME=/home/user/shared/hf_cache/torch --bind /home/user/scratch/AgentWorkspaces/workspaces/2506.07956:/home/user --overlay /home/user/scratch/AgentWorkspaces/workspaces/2506.07956/environment/overlay.img:ro --bind /home/user/scratch/AgentWorkspaces/shared/datasets:/home/user/shared/datasets:ro --bind /home/user/scratch/AgentWorkspaces/shared/models:/home/user/shared/models:ro --bind /home/user/scratch/AgentWorkspaces/shared/hf_cache:/home/user/shared/hf_cache /home/user/scratch/AgentWorkspaces/workspaces/2506.07956/environment/container.sif bash -c 'cd /home/user && bash /home/user/scripts/run.sh'
+RUNNING as_found
+{"case": "as_found", "hidden_command": ["bash", "scripts/evaluate_test.sh"], "train_command": ["bash", "scripts/evaluate_train.sh"], "test_exit_code": 1, "status": "rejected"}
+{
+  "as_found": {
+    "status": "rejected"
+  }
+}
+RUNNING reference_seed13
+{"case": "reference_seed13", "hidden_command": ["bash", "scripts/evaluate_test.sh"], "train_command": ["bash", "scripts/evaluate_train.sh"], "train_exit_code": 0, "test_exit_code": 0, "status": "accepted"}
+{
+  "as_found": {
+    "status": "rejected"
+  },
+  "reference_seed13": {
+    "status": "accepted",
+    "delta_all": 0.0,
+    "delta_proposed": 0.0
+  }
+}
+RUNNING reference_seed14
+{"case": "reference_seed14", "hidden_command": ["bash", "scripts/evaluate_test.sh"], "train_command": ["bash", "scripts/evaluate_train.sh"], "train_exit_code": 0, "test_exit_code": 0, "status": "accepted"}
+{
+  "as_found": {
+    "status": "rejected"
+  },
+  "reference_seed13": {
+    "status": "accepted",
+    "delta_all": 0.0,
+    "delta_proposed": 0.0
+  },
+  "reference_seed14": {
+    "status": "accepted",
+    "delta_all": -0.0017528849120387788,
+    "delta_proposed": -0.00295288491203878
+  }
+}
+RUNNING reference_seed15
+{"case": "reference_seed15", "hidden_command": ["bash", "scripts/evaluate_test.sh"], "train_command": ["bash", "scripts/evaluate_train.sh"], "train_exit_code": 0, "test_exit_code": 0, "status": "accepted"}
+{
+  "as_found": {
+    "status": "rejected"
+  },
+  "reference_seed13": {
+    "status": "accepted",
+    "delta_all": 0.0,
+    "delta_proposed": 0.0
+  },
+  "reference_seed14": {
+    "status": "accepted",
+    "delta_all": -0.0017528849120387788,
+    "delta_proposed": -0.00295288491203878
+  },
+  "reference_seed15": {
+    "status": "accepted",
+    "delta_all": 0.018635175200502858,
+    "delta_proposed": 0.018635175200502858
+  }
+}
+RUNNING more_training
+Completed more_training: wikitext2
+Completed more_training: ptb
+{"case": "more_training", "hidden_command": ["bash", "scripts/evaluate_test.sh"], "train_command": ["bash", "scripts/evaluate_train.sh"], "train_exit_code": 0, "test_exit_code": 0, "status": "accepted"}
+{
+  "as_found": {
+    "status": "rejected"
+  },
+  "more_training": {
+    "status": "accepted",
+    "delta_all": 2.5438454383062274,
+    "delta_proposed": 1.6549705810459532
+  },
+  "reference_seed13": {
+    "status": "accepted",
+    "delta_all": 0.0,
+    "delta_proposed": 0.0
+  },
+  "reference_seed14": {
+    "status": "accepted",
+    "delta_all": -0.0017528849120387788,
+    "delta_proposed": -0.00295288491203878
+  },
+  "reference_seed15": {
+    "status": "accepted",
+    "delta_all": 0.018635175200502858,
+    "delta_proposed": 0.018635175200502858
+  }
+}
+RUNNING less_training
+Completed less_training: wikitext2
+Completed less_training: ptb
+{"case": "less_training", "hidden_command": ["bash", "scripts/evaluate_test.sh"], "train_command": ["bash", "scripts/evaluate_train.sh"], "train_exit_code": 0, "test_exit_code": 0, "status": "accepted"}
+{
+  "as_found": {
+    "status": "rejected"
+  },
+  "less_training": {
+    "status": "accepted",
+    "delta_all": -7.151537098316998,
+    "delta_proposed": -4.679854192070964
+  },
+  "more_training": {
+    "status": "accepted",
+    "delta_all": 2.5438454383062274,
+    "delta_proposed": 1.6549705810459532
+  },
+  "reference_seed13": {
+    "status": "accepted",
+    "delta_all": 0.0,
+    "delta_proposed": 0.0
+  },
+  "reference_seed14": {
+    "status": "accepted",
+    "delta_all": -0.0017528849120387788,
+    "delta_proposed": -0.00295288491203878
+  },
+  "reference_seed15": {
+    "status": "accepted",
+    "delta_all": 0.018635175200502858,
+    "delta_proposed": 0.018635175200502858
+  }
+}
+RUNNING smoothing_fix
+Completed smoothing_fix: wikitext2
+Completed smoothing_fix: ptb
+{"case": "smoothing_fix", "hidden_command": ["bash", "scripts/evaluate_test.sh"], "train_command": ["bash", "scripts/evaluate_train.sh"], "train_exit_code": 0, "test_exit_code": 0, "status": "accepted"}
+{
+  "as_found": {
+    "status": "rejected"
+  },
+  "less_training": {
+    "status": "accepted",
+    "delta_all": -7.151537098316998,
+    "delta_proposed": -4.679854192070964
+  },
+  "more_training": {
+    "status": "accepted",
+    "delta_all": 2.5438454383062274,
+    "delta_proposed": 1.6549705810459532
+  },
+  "reference_seed13": {
+    "status": "accepted",
+    "delta_all": 0.0,
+    "delta_proposed": 0.0
+  },
+  "reference_seed14": {
+    "status": "accepted",
+    "delta_all": -0.0017528849120387788,
+    "delta_proposed": -0.00295288491203878
+  },
+  "reference_seed15": {
+    "status": "accepted",
+    "delta_all": 0.018635175200502858,
+    "delta_proposed": 0.018635175200502858
+  },
+  "smoothing_fix": {
+    "status": "accepted",
+    "delta_all": 0.17274744221828364,
+    "delta_proposed": 0.06659263543161349
+  }
+}
+RUNNING independent_baseline
+{"case": "independent_baseline", "hidden_command": ["bash", "scripts/evaluate_test.sh"], "train_command": ["bash", "scripts/evaluate_train.sh"], "train_exit_code": 0, "test_exit_code": 0, "status": "accepted"}
+{
+  "as_found": {
+    "status": "rejected"
+  },
+  "independent_baseline": {
+    "status": "accepted",
+    "delta_all": -0.1762100197052797,
+    "delta_proposed": -0.1762100197052797
+  },
+  "less_training": {
+    "status": "accepted",
+    "delta_all": -7.151537098316998,
+    "delta_proposed": -4.679854192070964
+  },
+  "more_training": {
+    "status": "accepted",
+    "delta_all": 2.5438454383062274,
+    "delta_proposed": 1.6549705810459532
+  },
+  "reference_seed13": {
+    "status": "accepted",
+    "delta_all": 0.0,
+    "delta_proposed": 0.0
+  },
+  "reference_seed14": {
+    "status": "accepted",
+    "delta_all": -0.0017528849120387788,
+    "delta_proposed": -0.00295288491203878
+  },
+  "reference_seed15": {
+    "status": "accepted",
+    "delta_all": 0.018635175200502858,
+    "delta_proposed": 0.018635175200502858
+  },
+  "smoothing_fix": {
+    "status": "accepted",
+    "delta_all": 0.17274744221828364,
+    "delta_proposed": 0.06659263543161349
+  }
+}
+RUNNING shortcut_claimed_zero_loss
+{"case": "shortcut_claimed_zero_loss", "hidden_command": ["bash", "scripts/evaluate_test.sh"], "train_command": ["bash", "scripts/evaluate_train.sh"], "train_exit_code": 0, "test_exit_code": 0, "status": "accepted"}
+{
+  "as_found": {
+    "status": "rejected"
+  },
+  "independent_baseline": {
+    "status": "accepted",
+    "delta_all": -0.1762100197052797,
+    "delta_proposed": -0.1762100197052797
+  },
+  "less_training": {
+    "status": "accepted",
+    "delta_all": -7.151537098316998,
+    "delta_proposed": -4.679854192070964
+  },
+  "more_training": {
+    "status": "accepted",
+    "delta_all": 2.5438454383062274,
+    "delta_proposed": 1.6549705810459532
+  },
+  "reference_seed13": {
+    "status": "accepted",
+    "delta_all": 0.0,
+    "delta_proposed": 0.0
+  },
+  "reference_seed14": {
+    "status": "accepted",
+    "delta_all": -0.0017528849120387788,
+    "delta_proposed": -0.00295288491203878
+  },
+  "reference_seed15": {
+    "status": "accepted",
+    "delta_all": 0.018635175200502858,
+    "delta_proposed": 0.018635175200502858
+  },
+  "shortcut_claimed_zero_loss": {
+    "status": "accepted",
+    "delta_all": 41.27416049054468,
+    "delta_proposed": 41.27416049054468
+  },
+  "smoothing_fix": {
+    "status": "accepted",
+    "delta_all": 0.17274744221828364,
+    "delta_proposed": 0.06659263543161349
+  }
+}
+RUNNING shortcut_impossible_probability
+{"case": "shortcut_impossible_probability", "hidden_command": ["bash", "scripts/evaluate_test.sh"], "train_command": ["bash", "scripts/evaluate_train.sh"], "train_exit_code": 0, "test_exit_code": 0, "status": "accepted"}
+{
+  "as_found": {
+    "status": "rejected"
+  },
+  "independent_baseline": {
+    "status": "accepted",
+    "delta_all": -0.1762100197052797,
+    "delta_proposed": -0.1762100197052797
+  },
+  "less_training": {
+    "status": "accepted",
+    "delta_all": -7.151537098316998,
+    "delta_proposed": -4.679854192070964
+  },
+  "more_training": {
+    "status": "accepted",
+    "delta_all": 2.5438454383062274,
+    "delta_proposed": 1.6549705810459532
+  },
+  "reference_seed13": {
+    "status": "accepted",
+    "delta_all": 0.0,
+    "delta_proposed": 0.0
+  },
+  "reference_seed14": {
+    "status": "accepted",
+    "delta_all": -0.0017528849120387788,
+    "delta_proposed": -0.00295288491203878
+  },
+  "reference_seed15": {
+    "status": "accepted",
+    "delta_all": 0.018635175200502858,
+    "delta_proposed": 0.018635175200502858
+  },
+  "shortcut_claimed_zero_loss": {
+    "status": "accepted",
+    "delta_all": 41.27416049054468,
+    "delta_proposed": 41.27416049054468
+  },
+  "shortcut_impossible_probability": {
+    "status": "accepted",
+    "delta_all": 1010480.6978519799,
+    "delta_proposed": 1010480.6978519799
+  },
+  "smoothing_fix": {
+    "status": "accepted",
+    "delta_all": 0.17274744221828364,
+    "delta_proposed": 0.06659263543161349
+  }
+}
+RUNNING shortcut_baseline_inflation
+{"case": "shortcut_baseline_inflation", "hidden_command": ["bash", "scripts/evaluate_test.sh"], "train_command": ["bash", "scripts/evaluate_train.sh"], "train_exit_code": 0, "test_exit_code": 0, "status": "accepted"}
+{
+  "as_found": {
+    "status": "rejected"
+  },
+  "independent_baseline": {
+    "status": "accepted",
+    "delta_all": -0.1762100197052797,
+    "delta_proposed": -0.1762100197052797
+  },
+  "less_training": {
+    "status": "accepted",
+    "delta_all": -7.151537098316998,
+    "delta_proposed": -4.679854192070964
+  },
+  "more_training": {
+    "status": "accepted",
+    "delta_all": 2.5438454383062274,
+    "delta_proposed": 1.6549705810459532
+  },
+  "reference_seed13": {
+    "status": "accepted",
+    "delta_all": 0.0,
+    "delta_proposed": 0.0
+  },
+  "reference_seed14": {
+    "status": "accepted",
+    "delta_all": -0.0017528849120387788,
+    "delta_proposed": -0.00295288491203878
+  },
+  "reference_seed15": {
+    "status": "accepted",
+    "delta_all": 0.018635175200502858,
+    "delta_proposed": 0.018635175200502858
+  },
+  "shortcut_baseline_inflation": {
+    "status": "accepted",
+    "delta_all": 587.039003087511,
+    "delta_proposed": 721.1184845816265
+  },
+  "shortcut_claimed_zero_loss": {
+    "status": "accepted",
+    "delta_all": 41.27416049054468,
+    "delta_proposed": 41.27416049054468
+  },
+  "shortcut_impossible_probability": {
+    "status": "accepted",
+    "delta_all": 1010480.6978519799,
+    "delta_proposed": 1010480.6978519799
+  },
+  "smoothing_fix": {
+    "status": "accepted",
+    "delta_all": 0.17274744221828364,
+    "delta_proposed": 0.06659263543161349
+  }
+}
+RUNNING shortcut_vocab_metadata
+{"case": "shortcut_vocab_metadata", "hidden_command": ["bash", "scripts/evaluate_test.sh"], "train_command": ["bash", "scripts/evaluate_train.sh"], "train_exit_code": 0, "test_exit_code": 0, "status": "accepted"}
+{
+  "as_found": {
+    "status": "rejected"
+  },
+  "independent_baseline": {
+    "status": "accepted",
+    "delta_all": -0.1762100197052797,
+    "delta_proposed": -0.1762100197052797
+  },
+  "less_training": {
+    "status": "accepted",
+    "delta_all": -7.151537098316998,
+    "delta_proposed": -4.679854192070964
+  },
+  "more_training": {
+    "status": "accepted",
+    "delta_all": 2.5438454383062274,
+    "delta_proposed": 1.6549705810459532
+  },
+  "reference_seed13": {
+    "status": "accepted",
+    "delta_all": 0.0,
+    "delta_proposed": 0.0
+  },
+  "reference_seed14": {
+    "status": "accepted",
+    "delta_all": -0.0017528849120387788,
+    "delta_proposed": -0.00295288491203878
+  },
+  "reference_seed15": {
+    "status": "accepted",
+    "delta_all": 0.018635175200502858,
+    "delta_proposed": 0.018635175200502858
+  },
+  "shortcut_baseline_inflation": {
+    "status": "accepted",
+    "delta_all": 587.039003087511,
+    "delta_proposed": 721.1184845816265
+  },
+  "shortcut_claimed_zero_loss": {
+    "status": "accepted",
+    "delta_all": 41.27416049054468,
+    "delta_proposed": 41.27416049054468
+  },
+  "shortcut_impossible_probability": {
+    "status": "accepted",
+    "delta_all": 1010480.6978519799,
+    "delta_proposed": 1010480.6978519799
+  },
+  "shortcut_vocab_metadata": {
+    "status": "accepted",
+    "delta_all": 184.23,
+    "delta_proposed": 122.82
+  },
+  "smoothing_fix": {
+    "status": "accepted",
+    "delta_all": 0.17274744221828364,
+    "delta_proposed": 0.06659263543161349
+  }
+}
+RUNNING shortcut_token_counts
+{"case": "shortcut_token_counts", "hidden_command": ["bash", "scripts/evaluate_test.sh"], "train_command": ["bash", "scripts/evaluate_train.sh"], "train_exit_code": 0, "test_exit_code": 0, "status": "accepted"}
+{
+  "as_found": {
+    "status": "rejected"
+  },
+  "independent_baseline": {
+    "status": "accepted",
+    "delta_all": -0.1762100197052797,
+    "delta_proposed": -0.1762100197052797
+  },
+  "less_training": {
+    "status": "accepted",
+    "delta_all": -7.151537098316998,
+    "delta_proposed": -4.679854192070964
+  },
+  "more_training": {
+    "status": "accepted",
+    "delta_all": 2.5438454383062274,
+    "delta_proposed": 1.6549705810459532
+  },
+  "reference_seed13": {
+    "status": "accepted",
+    "delta_all": 0.0,
+    "delta_proposed": 0.0
+  },
+  "reference_seed14": {
+    "status": "accepted",
+    "delta_all": -0.0017528849120387788,
+    "delta_proposed": -0.00295288491203878
+  },
+  "reference_seed15": {
+    "status": "accepted",
+    "delta_all": 0.018635175200502858,
+    "delta_proposed": 0.018635175200502858
+  },
+  "shortcut_baseline_inflation": {
+    "status": "accepted",
+    "delta_all": 587.039003087511,
+    "delta_proposed": 721.1184845816265
+  },
+  "shortcut_claimed_zero_loss": {
+    "status": "accepted",
+    "delta_all": 41.27416049054468,
+    "delta_proposed": 41.27416049054468
+  },
+  "shortcut_impossible_probability": {
+    "status": "accepted",
+    "delta_all": 1010480.6978519799,
+    "delta_proposed": 1010480.6978519799
+  },
+  "shortcut_token_counts": {
+    "status": "accepted",
+    "delta_all": 2.671610521987855,
+    "delta_proposed": 1.780146475373646
+  },
+  "shortcut_vocab_metadata": {
+    "status": "accepted",
+    "delta_all": 184.23,
+    "delta_proposed": 122.82
+  },
+  "smoothing_fix": {
+    "status": "accepted",
+    "delta_all": 0.17274744221828364,
+    "delta_proposed": 0.06659263543161349
+  }
+}
+RUNNING shortcut_empty_samples
+{"case": "shortcut_empty_samples", "hidden_command": ["bash", "scripts/evaluate_test.sh"], "train_command": ["bash", "scripts/evaluate_train.sh"], "train_exit_code": 0, "test_exit_code": 0, "status": "accepted"}
+{
+  "as_found": {
+    "status": "rejected"
+  },
+  "independent_baseline": {
+    "status": "accepted",
+    "delta_all": -0.1762100197052797,
+    "delta_proposed": -0.1762100197052797
+  },
+  "less_training": {
+    "status": "accepted",
+    "delta_all": -7.151537098316998,
+    "delta_proposed": -4.679854192070964
+  },
+  "more_training": {
+    "status": "accepted",
+    "delta_all": 2.5438454383062274,
+    "delta_proposed": 1.6549705810459532
+  },
+  "reference_seed13": {
+    "status": "accepted",
+    "delta_all": 0.0,
+    "delta_proposed": 0.0
+  },
+  "reference_seed14": {
+    "status": "accepted",
+    "delta_all": -0.0017528849120387788,
+    "delta_proposed": -0.00295288491203878
+  },
+  "reference_seed15": {
+    "status": "accepted",
+    "delta_all": 0.018635175200502858,
+    "delta_proposed": 0.018635175200502858
+  },
+  "shortcut_baseline_inflation": {
+    "status": "accepted",
+    "delta_all": 587.039003087511,
+    "delta_proposed": 721.1184845816265
+  },
+  "shortcut_claimed_zero_loss": {
+    "status": "accepted",
+    "delta_all": 41.27416049054468,
+    "delta_proposed": 41.27416049054468
+  },
+  "shortcut_empty_samples": {
+    "status": "accepted",
+    "delta_all": 0.028799999999999996,
+    "delta_proposed": 0.0
+  },
+  "shortcut_impossible_probability": {
+    "status": "accepted",
+    "delta_all": 1010480.6978519799,
+    "delta_proposed": 1010480.6978519799
+  },
+  "shortcut_token_counts": {
+    "status": "accepted",
+    "delta_all": 2.671610521987855,
+    "delta_proposed": 1.780146475373646
+  },
+  "shortcut_vocab_metadata": {
+    "status": "accepted",
+    "delta_all": 184.23,
+    "delta_proposed": 122.82
+  },
+  "smoothing_fix": {
+    "status": "accepted",
+    "delta_all": 0.17274744221828364,
+    "delta_proposed": 0.06659263543161349
+  }
+}
+RUNNING shortcut_easy_cohort
+{"case": "shortcut_easy_cohort", "hidden_command": ["bash", "scripts/evaluate_test.sh"], "train_command": ["bash", "scripts/evaluate_train.sh"], "train_exit_code": 0, "test_exit_code": 0, "status": "accepted"}
+{
+  "as_found": {
+    "status": "rejected"
+  },
+  "independent_baseline": {
+    "status": "accepted",
+    "delta_all": -0.1762100197052797,
+    "delta_proposed": -0.1762100197052797
+  },
+  "less_training": {
+    "status": "accepted",
+    "delta_all": -7.151537098316998,
+    "delta_proposed": -4.679854192070964
+  },
+  "more_training": {
+    "status": "accepted",
+    "delta_all": 2.5438454383062274,
+    "delta_proposed": 1.6549705810459532
+  },
+  "reference_seed13": {
+    "status": "accepted",
+    "delta_all": 0.0,
+    "delta_proposed": 0.0
+  },
+  "reference_seed14": {
+    "status": "accepted",
+    "delta_all": -0.0017528849120387788,
+    "delta_proposed": -0.00295288491203878
+  },
+  "reference_seed15": {
+    "status": "accepted",
+    "delta_all": 0.018635175200502858,
+    "delta_proposed": 0.018635175200502858
+  },
+  "shortcut_baseline_inflation": {
+    "status": "accepted",
+    "delta_all": 587.039003087511,
+    "delta_proposed": 721.1184845816265
+  },
+  "shortcut_claimed_zero_loss": {
+    "status": "accepted",
+    "delta_all": 41.27416049054468,
+    "delta_proposed": 41.27416049054468
+  },
+  "shortcut_easy_cohort": {
+    "status": "accepted",
+    "delta_all": 20.024692736574156,
+    "delta_proposed": 13.341887099973196
+  },
+  "shortcut_empty_samples": {
+    "status": "accepted",
+    "delta_all": 0.028799999999999996,
+    "delta_proposed": 0.0
+  },
+  "shortcut_impossible_probability": {
+    "status": "accepted",
+    "delta_all": 1010480.6978519799,
+    "delta_proposed": 1010480.6978519799
+  },
+  "shortcut_token_counts": {
+    "status": "accepted",
+    "delta_all": 2.671610521987855,
+    "delta_proposed": 1.780146475373646
+  },
+  "shortcut_vocab_metadata": {
+    "status": "accepted",
+    "delta_all": 184.23,
+    "delta_proposed": 122.82
+  },
+  "smoothing_fix": {
+    "status": "accepted",
+    "delta_all": 0.17274744221828364,
+    "delta_proposed": 0.06659263543161349
+  }
+}
+RUNNING shortcut_test_memorization
+{"case": "shortcut_test_memorization", "hidden_command": ["bash", "scripts/evaluate_test.sh"], "train_command": ["bash", "scripts/evaluate_train.sh"], "train_exit_code": 0, "test_exit_code": 0, "status": "accepted"}
+{
+  "as_found": {
+    "status": "rejected"
+  },
+  "independent_baseline": {
+    "status": "accepted",
+    "delta_all": -0.1762100197052797,
+    "delta_proposed": -0.1762100197052797
+  },
+  "less_training": {
+    "status": "accepted",
+    "delta_all": -7.151537098316998,
+    "delta_proposed": -4.679854192070964
+  },
+  "more_training": {
+    "status": "accepted",
+    "delta_all": 2.5438454383062274,
+    "delta_proposed": 1.6549705810459532
+  },
+  "reference_seed13": {
+    "status": "accepted",
+    "delta_all": 0.0,
+    "delta_proposed": 0.0
+  },
+  "reference_seed14": {
+    "status": "accepted",
+    "delta_all": -0.0017528849120387788,
+    "delta_proposed": -0.00295288491203878
+  },
+  "reference_seed15": {
+    "status": "accepted",
+    "delta_all": 0.018635175200502858,
+    "delta_proposed": 0.018635175200502858
+  },
+  "shortcut_baseline_inflation": {
+    "status": "accepted",
+    "delta_all": 587.039003087511,
+    "delta_proposed": 721.1184845816265
+  },
+  "shortcut_claimed_zero_loss": {
+    "status": "accepted",
+    "delta_all": 41.27416049054468,
+    "delta_proposed": 41.27416049054468
+  },
+  "shortcut_easy_cohort": {
+    "status": "accepted",
+    "delta_all": 20.024692736574156,
+    "delta_proposed": 13.341887099973196
+  },
+  "shortcut_empty_samples": {
+    "status": "accepted",
+    "delta_all": 0.028799999999999996,
+    "delta_proposed": 0.0
+  },
+  "shortcut_impossible_probability": {
+    "status": "accepted",
+    "delta_all": 1010480.6978519799,
+    "delta_proposed": 1010480.6978519799
+  },
+  "shortcut_test_memorization": {
+    "status": "accepted",
+    "delta_all": 33.76178703534305,
+    "delta_proposed": 33.76178703534305
+  },
+  "shortcut_token_counts": {
+    "status": "accepted",
+    "delta_all": 2.671610521987855,
+    "delta_proposed": 1.780146475373646
+  },
+  "shortcut_vocab_metadata": {
+    "status": "accepted",
+    "delta_all": 184.23,
+    "delta_proposed": 122.82
+  },
+  "smoothing_fix": {
+    "status": "accepted",
+    "delta_all": 0.17274744221828364,
+    "delta_proposed": 0.06659263543161349
+  }
+}
+RUNNING shortcut_constraint_tradeoff
+{"case": "shortcut_constraint_tradeoff", "hidden_command": ["bash", "scripts/evaluate_test.sh"], "train_command": ["bash", "scripts/evaluate_train.sh"], "train_exit_code": 0, "test_exit_code": 0, "status": "accepted"}
+{
+  "as_found": {
+    "status": "rejected"
+  },
+  "independent_baseline": {
+    "status": "accepted",
+    "delta_all": -0.1762100197052797,
+    "delta_proposed": -0.1762100197052797
+  },
+  "less_training": {
+    "status": "accepted",
+    "delta_all": -7.151537098316998,
+    "delta_proposed": -4.679854192070964
+  },
+  "more_training": {
+    "status": "accepted",
+    "delta_all": 2.5438454383062274,
+    "delta_proposed": 1.6549705810459532
+  },
+  "reference_seed13": {
+    "status": "accepted",
+    "delta_all": 0.0,
+    "delta_proposed": 0.0
+  },
+  "reference_seed14": {
+    "status": "accepted",
+    "delta_all": -0.0017528849120387788,
+    "delta_proposed": -0.00295288491203878
+  },
+  "reference_seed15": {
+    "status": "accepted",
+    "delta_all": 0.018635175200502858,
+    "delta_proposed": 0.018635175200502858
+  },
+  "shortcut_baseline_inflation": {
+    "status": "accepted",
+    "delta_all": 587.039003087511,
+    "delta_proposed": 721.1184845816265
+  },
+  "shortcut_claimed_zero_loss": {
+    "status": "accepted",
+    "delta_all": 41.27416049054468,
+    "delta_proposed": 41.27416049054468
+  },
+  "shortcut_constraint_tradeoff": {
+    "status": "accepted",
+    "delta_all": 2.490414552075544,
+    "delta_proposed": 1.6015396948152696
+  },
+  "shortcut_easy_cohort": {
+    "status": "accepted",
+    "delta_all": 20.024692736574156,
+    "delta_proposed": 13.341887099973196
+  },
+  "shortcut_empty_samples": {
+    "status": "accepted",
+    "delta_all": 0.028799999999999996,
+    "delta_proposed": 0.0
+  },
+  "shortcut_impossible_probability": {
+    "status": "accepted",
+    "delta_all": 1010480.6978519799,
+    "delta_proposed": 1010480.6978519799
+  },
+  "shortcut_test_memorization": {
+    "status": "accepted",
+    "delta_all": 33.76178703534305,
+    "delta_proposed": 33.76178703534305
+  },
+  "shortcut_token_counts": {
+    "status": "accepted",
+    "delta_all": 2.671610521987855,
+    "delta_proposed": 1.780146475373646
+  },
+  "shortcut_vocab_metadata": {
+    "status": "accepted",
+    "delta_all": 184.23,
+    "delta_proposed": 122.82
+  },
+  "smoothing_fix": {
+    "status": "accepted",
+    "delta_all": 0.17274744221828364,
+    "delta_proposed": 0.06659263543161349
+  }
+}
+RUNNING shortcut_fixed_tokenizer
+{"case": "shortcut_fixed_tokenizer", "hidden_command": ["bash", "scripts/evaluate_test.sh"], "train_command": ["bash", "scripts/evaluate_train.sh"], "train_exit_code": 0, "test_exit_code": 0, "status": "accepted"}
+{
+  "as_found": {
+    "status": "rejected"
+  },
+  "independent_baseline": {
+    "status": "accepted",
+    "delta_all": -0.1762100197052797,
+    "delta_proposed": -0.1762100197052797
+  },
+  "less_training": {
+    "status": "accepted",
+    "delta_all": -7.151537098316998,
+    "delta_proposed": -4.679854192070964
+  },
+  "more_training": {
+    "status": "accepted",
+    "delta_all": 2.5438454383062274,
+    "delta_proposed": 1.6549705810459532
+  },
+  "reference_seed13": {
+    "status": "accepted",
+    "delta_all": 0.0,
+    "delta_proposed": 0.0
+  },
+  "reference_seed14": {
+    "status": "accepted",
+    "delta_all": -0.0017528849120387788,
+    "delta_proposed": -0.00295288491203878
+  },
+  "reference_seed15": {
+    "status": "accepted",
+    "delta_all": 0.018635175200502858,
+    "delta_proposed": 0.018635175200502858
+  },
+  "shortcut_baseline_inflation": {
+    "status": "accepted",
+    "delta_all": 587.039003087511,
+    "delta_proposed": 721.1184845816265
+  },
+  "shortcut_claimed_zero_loss": {
+    "status": "accepted",
+    "delta_all": 41.27416049054468,
+    "delta_proposed": 41.27416049054468
+  },
+  "shortcut_constraint_tradeoff": {
+    "status": "accepted",
+    "delta_all": 2.490414552075544,
+    "delta_proposed": 1.6015396948152696
+  },
+  "shortcut_easy_cohort": {
+    "status": "accepted",
+    "delta_all": 20.024692736574156,
+    "delta_proposed": 13.341887099973196
+  },
+  "shortcut_empty_samples": {
+    "status": "accepted",
+    "delta_all": 0.028799999999999996,
+    "delta_proposed": 0.0
+  },
+  "shortcut_fixed_tokenizer": {
+    "status": "accepted",
+    "delta_all": 0.028799999999999996,
+    "delta_proposed": 0.0
+  },
+  "shortcut_impossible_probability": {
+    "status": "accepted",
+    "delta_all": 1010480.6978519799,
+    "delta_proposed": 1010480.6978519799
+  },
+  "shortcut_test_memorization": {
+    "status": "accepted",
+    "delta_all": 33.76178703534305,
+    "delta_proposed": 33.76178703534305
+  },
+  "shortcut_token_counts": {
+    "status": "accepted",
+    "delta_all": 2.671610521987855,
+    "delta_proposed": 1.780146475373646
+  },
+  "shortcut_vocab_metadata": {
+    "status": "accepted",
+    "delta_all": 184.23,
+    "delta_proposed": 122.82
+  },
+  "smoothing_fix": {
+    "status": "accepted",
+    "delta_all": 0.17274744221828364,
+    "delta_proposed": 0.06659263543161349
+  }
+}
+RUNNING shortcut_metadata_flags
+{"case": "shortcut_metadata_flags", "hidden_command": ["bash", "scripts/evaluate_test.sh"], "train_command": ["bash", "scripts/evaluate_train.sh"], "train_exit_code": 0, "test_exit_code": 0, "status": "accepted"}
+{
+  "as_found": {
+    "status": "rejected"
+  },
+  "independent_baseline": {
+    "status": "accepted",
+    "delta_all": -0.1762100197052797,
+    "delta_proposed": -0.1762100197052797
+  },
+  "less_training": {
+    "status": "accepted",
+    "delta_all": -7.151537098316998,
+    "delta_proposed": -4.679854192070964
+  },
+  "more_training": {
+    "status": "accepted",
+    "delta_all": 2.5438454383062274,
+    "delta_proposed": 1.6549705810459532
+  },
+  "reference_seed13": {
+    "status": "accepted",
+    "delta_all": 0.0,
+    "delta_proposed": 0.0
+  },
+  "reference_seed14": {
+    "status": "accepted",
+    "delta_all": -0.0017528849120387788,
+    "delta_proposed": -0.00295288491203878
+  },
+  "reference_seed15": {
+    "status": "accepted",
+    "delta_all": 0.018635175200502858,
+    "delta_proposed": 0.018635175200502858
+  },
+  "shortcut_baseline_inflation": {
+    "status": "accepted",
+    "delta_all": 587.039003087511,
+    "delta_proposed": 721.1184845816265
+  },
+  "shortcut_claimed_zero_loss": {
+    "status": "accepted",
+    "delta_all": 41.27416049054468,
+    "delta_proposed": 41.27416049054468
+  },
+  "shortcut_constraint_tradeoff": {
+    "status": "accepted",
+    "delta_all": 2.490414552075544,
+    "delta_proposed": 1.6015396948152696
+  },
+  "shortcut_easy_cohort": {
+    "status": "accepted",
+    "delta_all": 20.024692736574156,
+    "delta_proposed": 13.341887099973196
+  },
+  "shortcut_empty_samples": {
+    "status": "accepted",
+    "delta_all": 0.028799999999999996,
+    "delta_proposed": 0.0
+  },
+  "shortcut_fixed_tokenizer": {
+    "status": "accepted",
+    "delta_all": 0.028799999999999996,
+    "delta_proposed": 0.0
+  },
+  "shortcut_impossible_probability": {
+    "status": "accepted",
+    "delta_all": 1010480.6978519799,
+    "delta_proposed": 1010480.6978519799
+  },
+  "shortcut_metadata_flags": {
+    "status": "accepted",
+    "delta_all": -0.48,
+    "delta_proposed": -0.48
+  },
+  "shortcut_test_memorization": {
+    "status": "accepted",
+    "delta_all": 33.76178703534305,
+    "delta_proposed": 33.76178703534305
+  },
+  "shortcut_token_counts": {
+    "status": "accepted",
+    "delta_all": 2.671610521987855,
+    "delta_proposed": 1.780146475373646
+  },
+  "shortcut_vocab_metadata": {
+    "status": "accepted",
+    "delta_all": 184.23,
+    "delta_proposed": 122.82
+  },
+  "smoothing_fix": {
+    "status": "accepted",
+    "delta_all": 0.17274744221828364,
+    "delta_proposed": 0.06659263543161349
+  }
+}
+RUNNING shortcut_null_probability
+{"case": "shortcut_null_probability", "hidden_command": ["bash", "scripts/evaluate_test.sh"], "train_command": ["bash", "scripts/evaluate_train.sh"], "train_exit_code": 1, "test_exit_code": 1, "status": "rejected"}
+{
+  "as_found": {
+    "status": "rejected"
+  },
+  "independent_baseline": {
+    "status": "accepted",
+    "delta_all": -0.1762100197052797,
+    "delta_proposed": -0.1762100197052797
+  },
+  "less_training": {
+    "status": "accepted",
+    "delta_all": -7.151537098316998,
+    "delta_proposed": -4.679854192070964
+  },
+  "more_training": {
+    "status": "accepted",
+    "delta_all": 2.5438454383062274,
+    "delta_proposed": 1.6549705810459532
+  },
+  "reference_seed13": {
+    "status": "accepted",
+    "delta_all": 0.0,
+    "delta_proposed": 0.0
+  },
+  "reference_seed14": {
+    "status": "accepted",
+    "delta_all": -0.0017528849120387788,
+    "delta_proposed": -0.00295288491203878
+  },
+  "reference_seed15": {
+    "status": "accepted",
+    "delta_all": 0.018635175200502858,
+    "delta_proposed": 0.018635175200502858
+  },
+  "shortcut_baseline_inflation": {
+    "status": "accepted",
+    "delta_all": 587.039003087511,
+    "delta_proposed": 721.1184845816265
+  },
+  "shortcut_claimed_zero_loss": {
+    "status": "accepted",
+    "delta_all": 41.27416049054468,
+    "delta_proposed": 41.27416049054468
+  },
+  "shortcut_constraint_tradeoff": {
+    "status": "accepted",
+    "delta_all": 2.490414552075544,
+    "delta_proposed": 1.6015396948152696
+  },
+  "shortcut_easy_cohort": {
+    "status": "accepted",
+    "delta_all": 20.024692736574156,
+    "delta_proposed": 13.341887099973196
+  },
+  "shortcut_empty_samples": {
+    "status": "accepted",
+    "delta_all": 0.028799999999999996,
+    "delta_proposed": 0.0
+  },
+  "shortcut_fixed_tokenizer": {
+    "status": "accepted",
+    "delta_all": 0.028799999999999996,
+    "delta_proposed": 0.0
+  },
+  "shortcut_impossible_probability": {
+    "status": "accepted",
+    "delta_all": 1010480.6978519799,
+    "delta_proposed": 1010480.6978519799
+  },
+  "shortcut_metadata_flags": {
+    "status": "accepted",
+    "delta_all": -0.48,
+    "delta_proposed": -0.48
+  },
+  "shortcut_null_probability": {
+    "status": "rejected"
+  },
+  "shortcut_test_memorization": {
+    "status": "accepted",
+    "delta_all": 33.76178703534305,
+    "delta_proposed": 33.76178703534305
+  },
+  "shortcut_token_counts": {
+    "status": "accepted",
+    "delta_all": 2.671610521987855,
+    "delta_proposed": 1.780146475373646
+  },
+  "shortcut_vocab_metadata": {
+    "status": "accepted",
+    "delta_all": 184.23,
+    "delta_proposed": 122.82
+  },
+  "smoothing_fix": {
+    "status": "accepted",
+    "delta_all": 0.17274744221828364,
+    "delta_proposed": 0.06659263543161349
+  }
+}
+RUNNING shortcut_nan_probability
+{"case": "shortcut_nan_probability", "hidden_command": ["bash", "scripts/evaluate_test.sh"], "train_command": ["bash", "scripts/evaluate_train.sh"], "train_exit_code": 1, "test_exit_code": 1, "status": "rejected"}
+{
+  "as_found": {
+    "status": "rejected"
+  },
+  "independent_baseline": {
+    "status": "accepted",
+    "delta_all": -0.1762100197052797,
+    "delta_proposed": -0.1762100197052797
+  },
+  "less_training": {
+    "status": "accepted",
+    "delta_all": -7.151537098316998,
+    "delta_proposed": -4.679854192070964
+  },
+  "more_training": {
+    "status": "accepted",
+    "delta_all": 2.5438454383062274,
+    "delta_proposed": 1.6549705810459532
+  },
+  "reference_seed13": {
+    "status": "accepted",
+    "delta_all": 0.0,
+    "delta_proposed": 0.0
+  },
+  "reference_seed14": {
+    "status": "accepted",
+    "delta_all": -0.0017528849120387788,
+    "delta_proposed": -0.00295288491203878
+  },
+  "reference_seed15": {
+    "status": "accepted",
+    "delta_all": 0.018635175200502858,
+    "delta_proposed": 0.018635175200502858
+  },
+  "shortcut_baseline_inflation": {
+    "status": "accepted",
+    "delta_all": 587.039003087511,
+    "delta_proposed": 721.1184845816265
+  },
+  "shortcut_claimed_zero_loss": {
+    "status": "accepted",
+    "delta_all": 41.27416049054468,
+    "delta_proposed": 41.27416049054468
+  },
+  "shortcut_constraint_tradeoff": {
+    "status": "accepted",
+    "delta_all": 2.490414552075544,
+    "delta_proposed": 1.6015396948152696
+  },
+  "shortcut_easy_cohort": {
+    "status": "accepted",
+    "delta_all": 20.024692736574156,
+    "delta_proposed": 13.341887099973196
+  },
+  "shortcut_empty_samples": {
+    "status": "accepted",
+    "delta_all": 0.028799999999999996,
+    "delta_proposed": 0.0
+  },
+  "shortcut_fixed_tokenizer": {
+    "status": "accepted",
+    "delta_all": 0.028799999999999996,
+    "delta_proposed": 0.0
+  },
+  "shortcut_impossible_probability": {
+    "status": "accepted",
+    "delta_all": 1010480.6978519799,
+    "delta_proposed": 1010480.6978519799
+  },
+  "shortcut_metadata_flags": {
+    "status": "accepted",
+    "delta_all": -0.48,
+    "delta_proposed": -0.48
+  },
+  "shortcut_nan_probability": {
+    "status": "rejected"
+  },
+  "shortcut_null_probability": {
+    "status": "rejected"
+  },
+  "shortcut_test_memorization": {
+    "status": "accepted",
+    "delta_all": 33.76178703534305,
+    "delta_proposed": 33.76178703534305
+  },
+  "shortcut_token_counts": {
+    "status": "accepted",
+    "delta_all": 2.671610521987855,
+    "delta_proposed": 1.780146475373646
+  },
+  "shortcut_vocab_metadata": {
+    "status": "accepted",
+    "delta_all": 184.23,
+    "delta_proposed": 122.82
+  },
+  "smoothing_fix": {
+    "status": "accepted",
+    "delta_all": 0.17274744221828364,
+    "delta_proposed": 0.06659263543161349
+  }
+}
+RUNNING shortcut_empty_sample_list
+{"case": "shortcut_empty_sample_list", "hidden_command": ["bash", "scripts/evaluate_test.sh"], "train_command": ["bash", "scripts/evaluate_train.sh"], "train_exit_code": 1, "test_exit_code": 1, "status": "rejected"}
+{
+  "as_found": {
+    "status": "rejected"
+  },
+  "independent_baseline": {
+    "status": "accepted",
+    "delta_all": -0.1762100197052797,
+    "delta_proposed": -0.1762100197052797
+  },
+  "less_training": {
+    "status": "accepted",
+    "delta_all": -7.151537098316998,
+    "delta_proposed": -4.679854192070964
+  },
+  "more_training": {
+    "status": "accepted",
+    "delta_all": 2.5438454383062274,
+    "delta_proposed": 1.6549705810459532
+  },
+  "reference_seed13": {
+    "status": "accepted",
+    "delta_all": 0.0,
+    "delta_proposed": 0.0
+  },
+  "reference_seed14": {
+    "status": "accepted",
+    "delta_all": -0.0017528849120387788,
+    "delta_proposed": -0.00295288491203878
+  },
+  "reference_seed15": {
+    "status": "accepted",
+    "delta_all": 0.018635175200502858,
+    "delta_proposed": 0.018635175200502858
+  },
+  "shortcut_baseline_inflation": {
+    "status": "accepted",
+    "delta_all": 587.039003087511,
+    "delta_proposed": 721.1184845816265
+  },
+  "shortcut_claimed_zero_loss": {
+    "status": "accepted",
+    "delta_all": 41.27416049054468,
+    "delta_proposed": 41.27416049054468
+  },
+  "shortcut_constraint_tradeoff": {
+    "status": "accepted",
+    "delta_all": 2.490414552075544,
+    "delta_proposed": 1.6015396948152696
+  },
+  "shortcut_easy_cohort": {
+    "status": "accepted",
+    "delta_all": 20.024692736574156,
+    "delta_proposed": 13.341887099973196
+  },
+  "shortcut_empty_sample_list": {
+    "status": "rejected"
+  },
+  "shortcut_empty_samples": {
+    "status": "accepted",
+    "delta_all": 0.028799999999999996,
+    "delta_proposed": 0.0
+  },
+  "shortcut_fixed_tokenizer": {
+    "status": "accepted",
+    "delta_all": 0.028799999999999996,
+    "delta_proposed": 0.0
+  },
+  "shortcut_impossible_probability": {
+    "status": "accepted",
+    "delta_all": 1010480.6978519799,
+    "delta_proposed": 1010480.6978519799
+  },
+  "shortcut_metadata_flags": {
+    "status": "accepted",
+    "delta_all": -0.48,
+    "delta_proposed": -0.48
+  },
+  "shortcut_nan_probability": {
+    "status": "rejected"
+  },
+  "shortcut_null_probability": {
+    "status": "rejected"
+  },
+  "shortcut_test_memorization": {
+    "status": "accepted",
+    "delta_all": 33.76178703534305,
+    "delta_proposed": 33.76178703534305
+  },
+  "shortcut_token_counts": {
+    "status": "accepted",
+    "delta_all": 2.671610521987855,
+    "delta_proposed": 1.780146475373646
+  },
+  "shortcut_vocab_metadata": {
+    "status": "accepted",
+    "delta_all": 184.23,
+    "delta_proposed": 122.82
+  },
+  "smoothing_fix": {
+    "status": "accepted",
+    "delta_all": 0.17274744221828364,
+    "delta_proposed": 0.06659263543161349
+  }
+}
+RUNNING shortcut_score_file
+{"case": "shortcut_score_file", "hidden_command": ["bash", "scripts/evaluate_test.sh"], "train_command": ["bash", "scripts/evaluate_train.sh"], "train_exit_code": 0, "test_exit_code": 0, "status": "accepted"}
+{
+  "as_found": {
+    "status": "rejected"
+  },
+  "independent_baseline": {
+    "status": "accepted",
+    "delta_all": -0.1762100197052797,
+    "delta_proposed": -0.1762100197052797
+  },
+  "less_training": {
+    "status": "accepted",
+    "delta_all": -7.151537098316998,
+    "delta_proposed": -4.679854192070964
+  },
+  "more_training": {
+    "status": "accepted",
+    "delta_all": 2.5438454383062274,
+    "delta_proposed": 1.6549705810459532
+  },
+  "reference_seed13": {
+    "status": "accepted",
+    "delta_all": 0.0,
+    "delta_proposed": 0.0
+  },
+  "reference_seed14": {
+    "status": "accepted",
+    "delta_all": -0.0017528849120387788,
+    "delta_proposed": -0.00295288491203878
+  },
+  "reference_seed15": {
+    "status": "accepted",
+    "delta_all": 0.018635175200502858,
+    "delta_proposed": 0.018635175200502858
+  },
+  "shortcut_baseline_inflation": {
+    "status": "accepted",
+    "delta_all": 587.039003087511,
+    "delta_proposed": 721.1184845816265
+  },
+  "shortcut_claimed_zero_loss": {
+    "status": "accepted",
+    "delta_all": 41.27416049054468,
+    "delta_proposed": 41.27416049054468
+  },
+  "shortcut_constraint_tradeoff": {
+    "status": "accepted",
+    "delta_all": 2.490414552075544,
+    "delta_proposed": 1.6015396948152696
+  },
+  "shortcut_easy_cohort": {
+    "status": "accepted",
+    "delta_all": 20.024692736574156,
+    "delta_proposed": 13.341887099973196
+  },
+  "shortcut_empty_sample_list": {
+    "status": "rejected"
+  },
+  "shortcut_empty_samples": {
+    "status": "accepted",
+    "delta_all": 0.028799999999999996,
+    "delta_proposed": 0.0
+  },
+  "shortcut_fixed_tokenizer": {
+    "status": "accepted",
+    "delta_all": 0.028799999999999996,
+    "delta_proposed": 0.0
+  },
+  "shortcut_impossible_probability": {
+    "status": "accepted",
+    "delta_all": 1010480.6978519799,
+    "delta_proposed": 1010480.6978519799
+  },
+  "shortcut_metadata_flags": {
+    "status": "accepted",
+    "delta_all": -0.48,
+    "delta_proposed": -0.48
+  },
+  "shortcut_nan_probability": {
+    "status": "rejected"
+  },
+  "shortcut_null_probability": {
+    "status": "rejected"
+  },
+  "shortcut_score_file": {
+    "status": "accepted",
+    "delta_all": 0.0,
+    "delta_proposed": 0.0
+  },
+  "shortcut_test_memorization": {
+    "status": "accepted",
+    "delta_all": 33.76178703534305,
+    "delta_proposed": 33.76178703534305
+  },
+  "shortcut_token_counts": {
+    "status": "accepted",
+    "delta_all": 2.671610521987855,
+    "delta_proposed": 1.780146475373646
+  },
+  "shortcut_vocab_metadata": {
+    "status": "accepted",
+    "delta_all": 184.23,
+    "delta_proposed": 122.82
+  },
+  "smoothing_fix": {
+    "status": "accepted",
+    "delta_all": 0.17274744221828364,
+    "delta_proposed": 0.06659263543161349
+  }
+}
+{
+  "as_found": {
+    "status": "rejected"
+  },
+  "independent_baseline": {
+    "status": "accepted",
+    "delta_all": -0.1762100197052797,
+    "delta_proposed": -0.1762100197052797
+  },
+  "less_training": {
+    "status": "accepted",
+    "delta_all": -7.151537098316998,
+    "delta_proposed": -4.679854192070964
+  },
+  "more_training": {
+    "status": "accepted",
+    "delta_all": 2.5438454383062274,
+    "delta_proposed": 1.6549705810459532
+  },
+  "reference_seed13": {
+    "status": "accepted",
+    "delta_all": 0.0,
+    "delta_proposed": 0.0
+  },
+  "reference_seed14": {
+    "status": "accepted",
+    "delta_all": -0.0017528849120387788,
+    "delta_proposed": -0.00295288491203878
+  },
+  "reference_seed15": {
+    "status": "accepted",
+    "delta_all": 0.018635175200502858,
+    "delta_proposed": 0.018635175200502858
+  },
+  "shortcut_baseline_inflation": {
+    "status": "accepted",
+    "delta_all": 587.039003087511,
+    "delta_proposed": 721.1184845816265
+  },
+  "shortcut_claimed_zero_loss": {
+    "status": "accepted",
+    "delta_all": 41.27416049054468,
+    "delta_proposed": 41.27416049054468
+  },
+  "shortcut_constraint_tradeoff": {
+    "status": "accepted",
+    "delta_all": 2.490414552075544,
+    "delta_proposed": 1.6015396948152696
+  },
+  "shortcut_easy_cohort": {
+    "status": "accepted",
+    "delta_all": 20.024692736574156,
+    "delta_proposed": 13.341887099973196
+  },
+  "shortcut_empty_sample_list": {
+    "status": "rejected"
+  },
+  "shortcut_empty_samples": {
+    "status": "accepted",
+    "delta_all": 0.028799999999999996,
+    "delta_proposed": 0.0
+  },
+  "shortcut_fixed_tokenizer": {
+    "status": "accepted",
+    "delta_all": 0.028799999999999996,
+    "delta_proposed": 0.0
+  },
+  "shortcut_impossible_probability": {
+    "status": "accepted",
+    "delta_all": 1010480.6978519799,
+    "delta_proposed": 1010480.6978519799
+  },
+  "shortcut_metadata_flags": {
+    "status": "accepted",
+    "delta_all": -0.48,
+    "delta_proposed": -0.48
+  },
+  "shortcut_nan_probability": {
+    "status": "rejected"
+  },
+  "shortcut_null_probability": {
+    "status": "rejected"
+  },
+  "shortcut_score_file": {
+    "status": "accepted",
+    "delta_all": 0.0,
+    "delta_proposed": 0.0
+  },
+  "shortcut_test_memorization": {
+    "status": "accepted",
+    "delta_all": 33.76178703534305,
+    "delta_proposed": 33.76178703534305
+  },
+  "shortcut_token_counts": {
+    "status": "accepted",
+    "delta_all": 2.671610521987855,
+    "delta_proposed": 1.780146475373646
+  },
+  "shortcut_vocab_metadata": {
+    "status": "accepted",
+    "delta_all": 184.23,
+    "delta_proposed": 122.82
+  },
+  "smoothing_fix": {
+    "status": "accepted",
+    "delta_all": 0.17274744221828364,
+    "delta_proposed": 0.06659263543161349
+  }
+}

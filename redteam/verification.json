@@ -1,0 +1,36 @@
+{
+  "case_count": 23,
+  "checks": {
+    "all_hidden_commands_have_no_arguments": true,
+    "every_accepted_trial_has_scores": true,
+    "every_trial_has_entry_point": true,
+    "genuine_variants_exceed_seed_spread": true,
+    "gym_source_and_scores_restored": true,
+    "honest_cohorts_and_sizes_fixed": true,
+    "no_runner_errors": true,
+    "python_sources_parse": true,
+    "reference_payload_exact": true,
+    "reference_score_exact": true,
+    "score_file_spoof_overwritten": true,
+    "shell_entry_points_parse": true
+  },
+  "job_exit_code": 0,
+  "job_id": "d6b4061d-d56",
+  "passed": true,
+  "seed_spread": {
+    "delta_all": {
+      "max": 0.018635175200502858,
+      "min": -0.0017528849120387788,
+      "spread": 0.020388060112541635
+    },
+    "delta_proposed": {
+      "max": 0.018635175200502858,
+      "min": -0.00295288491203878,
+      "spread": 0.02158806011254164
+    }
+  },
+  "tokenizer_sha256": {
+    "merges.txt": "1ce1664773c50f3e0cc8842619a93edc4624525b728b188a9e0be33b7726adc5",
+    "vocab.json": "196139668be63f3b5d6574427317ae82f612a97c5d1cdaf36ed2256dbf636783"
+  }
+}

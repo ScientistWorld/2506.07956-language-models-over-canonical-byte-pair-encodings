@@ -1,0 +1,10 @@
+{
+  "start_commit": "da2c600",
+  "unexpected_changes": [],
+  "preexisting_system_devices": [
+    "README.md",
+    "manifest.json"
+  ],
+  "protocol_exception": "action.yaml",
+  "gym_sources_restored": true
+}
