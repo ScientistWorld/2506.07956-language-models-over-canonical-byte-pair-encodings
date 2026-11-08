@@ -1,8 +1,5 @@
-# Once you set action to 'submit' or 'done', STOP immediately.
-# Do NOT sleep, poll, or wait for jobs. The system reads this file
-# only after your turn ends.
-action: pending
+action: submit
 gpus: 0
 test: false
 milestone: core_claim_plus
-notes: ""
+notes: "Hardening check: selftest + smoke, rebuild fixed support/canonical table and eval-owned dev/test assets, rerun reference (local+global canonical bigram LMs, full train), baselines, then 25 variant/shortcut cases scored via no-arg scripts/evaluate_test.sh, final reference scores + validate."

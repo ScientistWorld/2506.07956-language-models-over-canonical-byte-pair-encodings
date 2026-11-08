@@ -1,0 +1,22 @@
+{
+  "alpha": 0.05,
+  "base_sample_canonical_rate": 0.983,
+  "base_truncated_samples": 0,
+  "experiment": "ptb_bigram_conditioning",
+  "global_resample_canonical_rate": 1.0,
+  "importance_weight_ess": 1998.736752271694,
+  "local_sample_canonical_rate": 1.0,
+  "local_truncated_samples": 0,
+  "log2_Z_exact": -0.027000831129332957,
+  "log2_Z_importance_sampling": -0.02791909198330797,
+  "mean_local_sample_tokens": 8.515,
+  "min_local_normalizer": 0.950438198851617,
+  "note": "diagnostics only; the evaluator scores the submitted weights exactly",
+  "sample_max_tokens": 1024,
+  "samples": 2000,
+  "seed": 13,
+  "support_size": 2048,
+  "train_lines": 42068,
+  "train_segments": 150180,
+  "train_transitions": 1193891
+}

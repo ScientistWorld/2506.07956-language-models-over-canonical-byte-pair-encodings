@@ -1,0 +1,18 @@
+$ bash scripts/evaluate_test.sh
+[test] wikitext2_bigram_conditioning global_canonical_bigram_lm: valid=False bits/string=125.6016 canonical=0.000000 reason=weights do not define a terminating model (Singular matrix)
+[test] wikitext2_bigram_conditioning local_canonical_bigram_lm: valid=False bits/string=125.6016 canonical=0.000000 reason=weights do not define a terminating model (Singular matrix)
+[test] ptb_bigram_conditioning global_canonical_bigram_lm: valid=False bits/string=195.4852 canonical=0.000000 reason=weights do not define a terminating model (Singular matrix)
+[test] ptb_bigram_conditioning local_canonical_bigram_lm: valid=False bits/string=195.4852 canonical=0.000000 reason=weights do not define a terminating model (Singular matrix)
+[exit 0]
+$ bash scripts/evaluate_train.sh
+[train] wikitext2_bigram_conditioning global_canonical_bigram_lm: valid=False bits/string=124.1269 canonical=0.000000 reason=weights do not define a terminating model (Singular matrix)
+[train] wikitext2_bigram_conditioning local_canonical_bigram_lm: valid=False bits/string=124.1269 canonical=0.000000 reason=weights do not define a terminating model (Singular matrix)
+[train] ptb_bigram_conditioning global_canonical_bigram_lm: valid=False bits/string=202.1672 canonical=0.000000 reason=weights do not define a terminating model (Singular matrix)
+[train] ptb_bigram_conditioning local_canonical_bigram_lm: valid=False bits/string=202.1672 canonical=0.000000 reason=weights do not define a terminating model (Singular matrix)
+[exit 0]
+$ /usr/local/bin/python -I eval/test/evaluate.py artifacts --output /home/user/redteam/hardened/nontight/scores_test_direct.json --per-string-out /home/user/redteam/hardened/nontight/per_string_test.json
+[test] wikitext2_bigram_conditioning global_canonical_bigram_lm: valid=False bits/string=125.6016 canonical=0.000000 reason=weights do not define a terminating model (Singular matrix)
+[test] wikitext2_bigram_conditioning local_canonical_bigram_lm: valid=False bits/string=125.6016 canonical=0.000000 reason=weights do not define a terminating model (Singular matrix)
+[test] ptb_bigram_conditioning global_canonical_bigram_lm: valid=False bits/string=195.4852 canonical=0.000000 reason=weights do not define a terminating model (Singular matrix)
+[test] ptb_bigram_conditioning local_canonical_bigram_lm: valid=False bits/string=195.4852 canonical=0.000000 reason=weights do not define a terminating model (Singular matrix)
+[exit 0]

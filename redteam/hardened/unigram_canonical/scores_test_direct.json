@@ -1,0 +1,100 @@
+{
+  "_metadata": {
+    "artifacts_root": "artifacts",
+    "cohort": {
+      "ptb_bigram_conditioning": {
+        "strings": 516,
+        "tokens": 8676
+      },
+      "wikitext2_bigram_conditioning": {
+        "strings": 275,
+        "tokens": 2870
+      }
+    },
+    "failure_rule": "invalid or missing submissions are scored at the uniform canonical model's held-out loss",
+    "ignored": [],
+    "slice": "test",
+    "status": {
+      "ptb_bigram_conditioning": {
+        "base_bigram_lm": {
+          "owner": "evaluator",
+          "valid": true
+        },
+        "global_canonical_bigram_lm": {
+          "log2_normalizer": -2.8830838534334283e-15,
+          "valid": true
+        },
+        "local_canonical_bigram_lm": {
+          "log2_normalizer": -2.8830838534334283e-15,
+          "valid": true
+        }
+      },
+      "wikitext2_bigram_conditioning": {
+        "base_bigram_lm": {
+          "owner": "evaluator",
+          "valid": true
+        },
+        "global_canonical_bigram_lm": {
+          "log2_normalizer": 9.61027951144475e-16,
+          "valid": true
+        },
+        "local_canonical_bigram_lm": {
+          "log2_normalizer": 9.61027951144475e-16,
+          "valid": true
+        }
+      }
+    }
+  },
+  "experiments": {
+    "ptb_bigram_conditioning": {
+      "results": {
+        "base_bigram_lm": {
+          "canonical_sample_rate": 0.9814584984400276,
+          "log_loss_bits_per_string": 88.4910778730515,
+          "log_loss_bits_per_token": 5.262954838922841,
+          "loss_improvement_bits_per_string": 0.0,
+          "relative_log_loss_to_baseline": 1.0
+        },
+        "global_canonical_bigram_lm": {
+          "canonical_sample_rate": 1.0,
+          "log_loss_bits_per_string": 140.80070669986455,
+          "log_loss_bits_per_token": 8.374039264307298,
+          "loss_improvement_bits_per_string": -52.309628826813054,
+          "relative_log_loss_to_baseline": 1.5911288469313931
+        },
+        "local_canonical_bigram_lm": {
+          "canonical_sample_rate": 1.0,
+          "log_loss_bits_per_string": 140.80070669986455,
+          "log_loss_bits_per_token": 8.374039264307298,
+          "loss_improvement_bits_per_string": -52.309628826813054,
+          "relative_log_loss_to_baseline": 1.5911288469313931
+        }
+      }
+    },
+    "wikitext2_bigram_conditioning": {
+      "results": {
+        "base_bigram_lm": {
+          "canonical_sample_rate": 0.9951826971426547,
+          "log_loss_bits_per_string": 34.739891846243104,
+          "log_loss_bits_per_token": 3.3287352814344437,
+          "loss_improvement_bits_per_string": 0.0,
+          "relative_log_loss_to_baseline": 1.0
+        },
+        "global_canonical_bigram_lm": {
+          "canonical_sample_rate": 1.0,
+          "log_loss_bits_per_string": 73.93571250777133,
+          "log_loss_bits_per_token": 7.084432383148821,
+          "loss_improvement_bits_per_string": -39.195820661528224,
+          "relative_log_loss_to_baseline": 2.1282654774806673
+        },
+        "local_canonical_bigram_lm": {
+          "canonical_sample_rate": 1.0,
+          "log_loss_bits_per_string": 73.93571250777133,
+          "log_loss_bits_per_token": 7.084432383148821,
+          "loss_improvement_bits_per_string": -39.195820661528224,
+          "relative_log_loss_to_baseline": 2.1282654774806673
+        }
+      }
+    }
+  }
+}

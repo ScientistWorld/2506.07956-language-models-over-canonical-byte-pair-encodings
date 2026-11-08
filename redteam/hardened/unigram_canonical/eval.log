@@ -1,0 +1,18 @@
+$ bash scripts/evaluate_test.sh
+[test] wikitext2_bigram_conditioning global_canonical_bigram_lm: valid=True bits/string=73.9357 canonical=1.000000
+[test] wikitext2_bigram_conditioning local_canonical_bigram_lm: valid=True bits/string=73.9357 canonical=1.000000
+[test] ptb_bigram_conditioning global_canonical_bigram_lm: valid=True bits/string=140.8007 canonical=1.000000
+[test] ptb_bigram_conditioning local_canonical_bigram_lm: valid=True bits/string=140.8007 canonical=1.000000
+[exit 0]
+$ bash scripts/evaluate_train.sh
+[train] wikitext2_bigram_conditioning global_canonical_bigram_lm: valid=True bits/string=73.7287 canonical=1.000000
+[train] wikitext2_bigram_conditioning local_canonical_bigram_lm: valid=True bits/string=73.7287 canonical=1.000000
+[train] ptb_bigram_conditioning global_canonical_bigram_lm: valid=True bits/string=145.4171 canonical=1.000000
+[train] ptb_bigram_conditioning local_canonical_bigram_lm: valid=True bits/string=145.4171 canonical=1.000000
+[exit 0]
+$ /usr/local/bin/python -I eval/test/evaluate.py artifacts --output /home/user/redteam/hardened/unigram_canonical/scores_test_direct.json --per-string-out /home/user/redteam/hardened/unigram_canonical/per_string_test.json
+[test] wikitext2_bigram_conditioning global_canonical_bigram_lm: valid=True bits/string=73.9357 canonical=1.000000
+[test] wikitext2_bigram_conditioning local_canonical_bigram_lm: valid=True bits/string=73.9357 canonical=1.000000
+[test] ptb_bigram_conditioning global_canonical_bigram_lm: valid=True bits/string=140.8007 canonical=1.000000
+[test] ptb_bigram_conditioning local_canonical_bigram_lm: valid=True bits/string=140.8007 canonical=1.000000
+[exit 0]

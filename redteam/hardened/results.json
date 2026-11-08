@@ -1,0 +1,433 @@
+{
+  "alpha_high": {
+    "info": {
+      "ptb": {
+        "base_sample_canonical_rate": 0.8395,
+        "base_truncated_samples": 0,
+        "global_resample_canonical_rate": 1.0,
+        "importance_weight_ess": 1932.0985456091778,
+        "local_sample_canonical_rate": 1.0,
+        "local_truncated_samples": 0,
+        "log2_Z_exact": -0.23933918657394485,
+        "log2_Z_importance_sampling": -0.247376180099862,
+        "mean_local_sample_tokens": 21.1685,
+        "min_local_normalizer": 0.9245977011494251,
+        "sample_max_tokens": 1024,
+        "samples": 2000,
+        "seed": 13
+      },
+      "wikitext2": {
+        "base_sample_canonical_rate": 0.95,
+        "base_truncated_samples": 0,
+        "global_resample_canonical_rate": 1.0,
+        "importance_weight_ess": 1992.3810809137851,
+        "local_sample_canonical_rate": 1.0,
+        "local_truncated_samples": 0,
+        "log2_Z_exact": -0.06661883391864049,
+        "log2_Z_importance_sampling": -0.06937766135358886,
+        "mean_local_sample_tokens": 9.5735,
+        "min_local_normalizer": 0.950246866691986,
+        "sample_max_tokens": 1024,
+        "samples": 2000,
+        "seed": 13
+      }
+    },
+    "kind": "variant",
+    "seconds": 44.3,
+    "status": "ok",
+    "test_exit": 0,
+    "train_exit": 0
+  },
+  "alpha_tuned": {
+    "info": {
+      "ptb": {
+        "chosen_alpha": 0.03,
+        "dev_global_bits_per_string": {
+          "0.001": 94.22815992952434,
+          "0.003": 92.5504335153968,
+          "0.01": 91.07143633078721,
+          "0.03": 90.54608504666992,
+          "0.05": 90.78422268686987
+        }
+      },
+      "wikitext2": {
+        "chosen_alpha": 0.03,
+        "dev_global_bits_per_string": {
+          "0.001": 33.73045152533236,
+          "0.003": 33.43492127995339,
+          "0.01": 33.17146524777514,
+          "0.03": 33.0788310980229,
+          "0.05": 33.12849996559704
+        }
+      }
+    },
+    "kind": "variant",
+    "seconds": 76.4,
+    "status": "ok",
+    "test_exit": 0,
+    "train_exit": 0
+  },
+  "dev_memorization": {
+    "info": {
+      "ptb": {
+        "base_sample_canonical_rate": 0.983,
+        "base_truncated_samples": 0,
+        "global_resample_canonical_rate": 1.0,
+        "importance_weight_ess": 1999.0135910373363,
+        "local_sample_canonical_rate": 1.0,
+        "local_truncated_samples": 0,
+        "log2_Z_exact": -0.025073195313713992,
+        "log2_Z_importance_sampling": -0.024558088183011292,
+        "mean_local_sample_tokens": 8.136,
+        "min_local_normalizer": 0.950438198851617,
+        "sample_max_tokens": 1024,
+        "samples": 2000,
+        "seed": 13
+      },
+      "wikitext2": {
+        "base_sample_canonical_rate": 0.9975,
+        "base_truncated_samples": 0,
+        "global_resample_canonical_rate": 1.0,
+        "importance_weight_ess": 1999.908543149098,
+        "local_sample_canonical_rate": 1.0,
+        "local_truncated_samples": 0,
+        "log2_Z_exact": -0.0063638975025371814,
+        "log2_Z_importance_sampling": -0.0063913281390724245,
+        "mean_local_sample_tokens": 4.822,
+        "min_local_normalizer": 0.9770306953434955,
+        "sample_max_tokens": 1024,
+        "samples": 2000,
+        "seed": 13
+      }
+    },
+    "kind": "shortcut",
+    "seconds": 62.0,
+    "status": "ok",
+    "test_exit": 0,
+    "train_exit": 0
+  },
+  "drop_ptb": {
+    "info": {
+      "model": "reference submissions for WikiText-2 only"
+    },
+    "kind": "shortcut",
+    "seconds": 19.7,
+    "status": "ok",
+    "test_exit": 0,
+    "train_exit": 0
+  },
+  "empty_string": {
+    "info": {
+      "model": "all mass on the empty string"
+    },
+    "kind": "shortcut",
+    "seconds": 28.8,
+    "status": "ok",
+    "test_exit": 0,
+    "train_exit": 0
+  },
+  "junk_artifacts": {
+    "info": {
+      "model": "reference submissions plus stale old-format JSON outputs (the as-found failure)"
+    },
+    "kind": "shortcut",
+    "seconds": 30.0,
+    "status": "ok",
+    "test_exit": 0,
+    "train_exit": 0
+  },
+  "kneser_ney": {
+    "info": {
+      "ptb": {
+        "chosen_discount": 0.75,
+        "dev_global_bits_per_string": {
+          "0.5": 88.79778345931744,
+          "0.75": 88.61852208652324,
+          "0.9": 88.76322270533603
+        }
+      },
+      "wikitext2": {
+        "chosen_discount": 0.5,
+        "dev_global_bits_per_string": {
+          "0.5": 32.8960889159584,
+          "0.75": 32.89749586994475,
+          "0.9": 32.945342681046625
+        }
+      }
+    },
+    "kind": "variant",
+    "seconds": 71.4,
+    "status": "ok",
+    "test_exit": 0,
+    "train_exit": 0
+  },
+  "less_data_3000": {
+    "info": {
+      "ptb": {
+        "base_sample_canonical_rate": 0.807,
+        "base_truncated_samples": 0,
+        "global_resample_canonical_rate": 1.0,
+        "importance_weight_ess": 1890.6474501880439,
+        "local_sample_canonical_rate": 1.0,
+        "local_truncated_samples": 0,
+        "log2_Z_exact": -0.31149217135093576,
+        "log2_Z_importance_sampling": -0.3163643458733322,
+        "mean_local_sample_tokens": 25.464,
+        "min_local_normalizer": 0.924181247196052,
+        "sample_max_tokens": 1024,
+        "samples": 2000,
+        "seed": 13
+      },
+      "wikitext2": {
+        "base_sample_canonical_rate": 0.952,
+        "base_truncated_samples": 0,
+        "global_resample_canonical_rate": 1.0,
+        "importance_weight_ess": 1994.933908773368,
+        "local_sample_canonical_rate": 1.0,
+        "local_truncated_samples": 0,
+        "log2_Z_exact": -0.0537572425083607,
+        "log2_Z_importance_sampling": -0.052010959734259926,
+        "mean_local_sample_tokens": 8.272,
+        "min_local_normalizer": 0.9443631039531479,
+        "sample_max_tokens": 1024,
+        "samples": 2000,
+        "seed": 13
+      }
+    },
+    "kind": "variant",
+    "seconds": 44.1,
+    "status": "ok",
+    "test_exit": 0,
+    "train_exit": 0
+  },
+  "nan_weights": {
+    "info": {
+      "model": "reference weights with one NaN / one inf entry"
+    },
+    "kind": "shortcut",
+    "seconds": 4.4,
+    "status": "ok",
+    "test_exit": 0,
+    "train_exit": 0
+  },
+  "negative_weights": {
+    "info": {
+      "model": "reference weights with a negative entry"
+    },
+    "kind": "shortcut",
+    "seconds": 3.6,
+    "status": "ok",
+    "test_exit": 0,
+    "train_exit": 0
+  },
+  "noncanonical_leak": {
+    "info": {
+      "model": "reference models with 1e-8 weight added to every noncanonical continuation"
+    },
+    "kind": "shortcut",
+    "seconds": 83.6,
+    "status": "ok",
+    "test_exit": 0,
+    "train_exit": 0
+  },
+  "nontight": {
+    "info": {
+      "model": "reference local model with one token that loops forever (never ends)"
+    },
+    "kind": "shortcut",
+    "seconds": 31.1,
+    "status": "ok",
+    "test_exit": 0,
+    "train_exit": 0
+  },
+  "overweight_rows": {
+    "info": {
+      "model": "reference weights multiplied by 10 (claims probabilities above 1)"
+    },
+    "kind": "shortcut",
+    "seconds": 3.8,
+    "status": "ok",
+    "test_exit": 0,
+    "train_exit": 0
+  },
+  "pickled_npz": {
+    "info": {
+      "model": "npz holding a pickled object instead of weights"
+    },
+    "kind": "shortcut",
+    "seconds": 1.8,
+    "status": "ok",
+    "test_exit": 0,
+    "train_exit": 0
+  },
+  "reference_seed14": {
+    "info": {
+      "ptb": {
+        "base_sample_canonical_rate": 0.9755,
+        "base_truncated_samples": 0,
+        "global_resample_canonical_rate": 1.0,
+        "importance_weight_ess": 1998.619402763161,
+        "local_sample_canonical_rate": 1.0,
+        "local_truncated_samples": 0,
+        "log2_Z_exact": -0.027000831129332957,
+        "log2_Z_importance_sampling": -0.028420466446136904,
+        "mean_local_sample_tokens": 8.5495,
+        "min_local_normalizer": 0.950438198851617,
+        "sample_max_tokens": 1024,
+        "samples": 2000,
+        "seed": 14
+      },
+      "wikitext2": {
+        "base_sample_canonical_rate": 0.9955,
+        "base_truncated_samples": 0,
+        "global_resample_canonical_rate": 1.0,
+        "importance_weight_ess": 1999.9035278258004,
+        "local_sample_canonical_rate": 1.0,
+        "local_truncated_samples": 0,
+        "log2_Z_exact": -0.006966692782486397,
+        "log2_Z_importance_sampling": -0.0066971778830449535,
+        "mean_local_sample_tokens": 4.85,
+        "min_local_normalizer": 0.9769343677919897,
+        "sample_max_tokens": 1024,
+        "samples": 2000,
+        "seed": 14
+      }
+    },
+    "kind": "variant",
+    "seconds": 57.0,
+    "status": "ok",
+    "test_exit": 0,
+    "train_exit": 0
+  },
+  "reserved_baseline_dir": {
+    "info": {
+      "model": "reference submissions plus a weak model written as artifacts/base_bigram_lm to move the comparator"
+    },
+    "kind": "shortcut",
+    "seconds": 38.4,
+    "status": "ok",
+    "test_exit": 0,
+    "train_exit": 0
+  },
+  "score_file_forgery": {
+    "forged_file_overwritten": true,
+    "info": {
+      "model": "reference artifacts; fake perfect scores_test.json written before scoring"
+    },
+    "kind": "shortcut",
+    "seconds": 18.2,
+    "status": "ok",
+    "test_exit": 0,
+    "train_exit": 0
+  },
+  "support_permuted": {
+    "info": {
+      "model": "reference weights with the support ids relabelled"
+    },
+    "kind": "shortcut",
+    "seconds": 4.3,
+    "status": "ok",
+    "test_exit": 0,
+    "train_exit": 0
+  },
+  "support_shrunk": {
+    "info": {
+      "model": "canonical model over the 1024 most frequent tokens only"
+    },
+    "kind": "shortcut",
+    "seconds": 3.5,
+    "status": "ok",
+    "test_exit": 0,
+    "train_exit": 0
+  },
+  "tamper_tokenizer_and_support": {
+    "info": {
+      "model": "unconstrained Kneser-Ney; visible tokenizer merges and canonical tables replaced to call every pair canonical"
+    },
+    "kind": "shortcut",
+    "restored": true,
+    "seconds": 34.7,
+    "status": "ok",
+    "test_exit": 0,
+    "train_exit": 0
+  },
+  "test_memorization": {
+    "info": {
+      "ptb": {
+        "base_sample_canonical_rate": 0.9865,
+        "base_truncated_samples": 0,
+        "global_resample_canonical_rate": 1.0,
+        "importance_weight_ess": 1998.893824669727,
+        "local_sample_canonical_rate": 1.0,
+        "local_truncated_samples": 0,
+        "log2_Z_exact": -0.024916395727833805,
+        "log2_Z_importance_sampling": -0.025583399935516345,
+        "mean_local_sample_tokens": 8.388,
+        "min_local_normalizer": 0.950438198851617,
+        "sample_max_tokens": 1024,
+        "samples": 2000,
+        "seed": 13
+      },
+      "wikitext2": {
+        "base_sample_canonical_rate": 0.994,
+        "base_truncated_samples": 0,
+        "global_resample_canonical_rate": 1.0,
+        "importance_weight_ess": 1999.915671479369,
+        "local_sample_canonical_rate": 1.0,
+        "local_truncated_samples": 0,
+        "log2_Z_exact": -0.006308868971571157,
+        "log2_Z_importance_sampling": -0.006277558941852202,
+        "mean_local_sample_tokens": 4.8565,
+        "min_local_normalizer": 0.9769343677919897,
+        "sample_max_tokens": 1024,
+        "samples": 2000,
+        "seed": 13
+      }
+    },
+    "kind": "shortcut",
+    "seconds": 56.4,
+    "status": "ok",
+    "test_exit": 0,
+    "train_exit": 0
+  },
+  "unconstrained_kneser_ney": {
+    "info": {
+      "model": "a better unconstrained model (Kneser-Ney) with no canonicality handling"
+    },
+    "kind": "shortcut",
+    "seconds": 77.1,
+    "status": "ok",
+    "test_exit": 0,
+    "train_exit": 0
+  },
+  "unconstrained_reference": {
+    "info": {
+      "model": "the unconstrained base model p_Delta submitted as a candidate"
+    },
+    "kind": "shortcut",
+    "seconds": 83.5,
+    "status": "ok",
+    "test_exit": 0,
+    "train_exit": 0
+  },
+  "uniform_canonical": {
+    "info": {
+      "model": "uniform over canonical continuations (submitted under both keys)"
+    },
+    "kind": "baseline",
+    "seconds": 45.6,
+    "status": "ok",
+    "test_exit": 0,
+    "train_exit": 0
+  },
+  "unigram_canonical": {
+    "info": {
+      "model": "add-0.05 unigram with noncanonical continuations removed (submitted under both keys)"
+    },
+    "kind": "baseline",
+    "seconds": 39.8,
+    "status": "ok",
+    "test_exit": 0,
+    "train_exit": 0
+  }
+}

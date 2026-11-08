@@ -1,0 +1,18 @@
+$ bash scripts/evaluate_test.sh
+[test] wikitext2_bigram_conditioning global_canonical_bigram_lm: valid=False bits/string=125.6016 canonical=0.000000 reason=weights contain negative values
+[test] wikitext2_bigram_conditioning local_canonical_bigram_lm: valid=False bits/string=125.6016 canonical=0.000000 reason=weights contain negative values
+[test] ptb_bigram_conditioning global_canonical_bigram_lm: valid=False bits/string=195.4852 canonical=0.000000 reason=weights contain negative values
+[test] ptb_bigram_conditioning local_canonical_bigram_lm: valid=False bits/string=195.4852 canonical=0.000000 reason=weights contain negative values
+[exit 0]
+$ bash scripts/evaluate_train.sh
+[train] wikitext2_bigram_conditioning global_canonical_bigram_lm: valid=False bits/string=124.1269 canonical=0.000000 reason=weights contain negative values
+[train] wikitext2_bigram_conditioning local_canonical_bigram_lm: valid=False bits/string=124.1269 canonical=0.000000 reason=weights contain negative values
+[train] ptb_bigram_conditioning global_canonical_bigram_lm: valid=False bits/string=202.1672 canonical=0.000000 reason=weights contain negative values
+[train] ptb_bigram_conditioning local_canonical_bigram_lm: valid=False bits/string=202.1672 canonical=0.000000 reason=weights contain negative values
+[exit 0]
+$ /usr/local/bin/python -I eval/test/evaluate.py artifacts --output /home/user/redteam/hardened/negative_weights/scores_test_direct.json --per-string-out /home/user/redteam/hardened/negative_weights/per_string_test.json
+[test] wikitext2_bigram_conditioning global_canonical_bigram_lm: valid=False bits/string=125.6016 canonical=0.000000 reason=weights contain negative values
+[test] wikitext2_bigram_conditioning local_canonical_bigram_lm: valid=False bits/string=125.6016 canonical=0.000000 reason=weights contain negative values
+[test] ptb_bigram_conditioning global_canonical_bigram_lm: valid=False bits/string=195.4852 canonical=0.000000 reason=weights contain negative values
+[test] ptb_bigram_conditioning local_canonical_bigram_lm: valid=False bits/string=195.4852 canonical=0.000000 reason=weights contain negative values
+[exit 0]

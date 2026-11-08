@@ -1,0 +1,36 @@
+{
+  "ptb": {
+    "asset_sha256": "b09cc51046e6a2b16a87acf41a8322a6d83cdb43b7ffb0c8b8ab144894e3b4fa",
+    "baseline": "unconstrained add-0.05 token bigram on 42068 training lines",
+    "baseline_bits_per_string": 88.4910778730515,
+    "baseline_canonical_mass": 0.9814584984400276,
+    "cohort_strings": 516,
+    "cohort_tokens": 8676,
+    "dropped_noncanonical": 0,
+    "dropped_out_of_support": 3245,
+    "experiment": "ptb_bigram_conditioning",
+    "failure_floor_bits_per_string": 195.48517580502553,
+    "held_out_lines": 3761,
+    "held_out_text": "eval/test/downloads/ptb-test.txt",
+    "held_out_text_sha256": "dd65dff31e70846b2a6030a87482edcd5d199130cdcfa1f3dccbb033728deee0",
+    "mean_tokens_per_string": 16.813953488372093,
+    "support_table_sha256": "0b0a7ed721f98a8bba5ddd064b0ed3749fa1fbd5c074678414c40095850e795a"
+  },
+  "wikitext2": {
+    "asset_sha256": "0991cef07ebce08ba804894d553d9a9f7cc5a9fc445de56c3303f862945311c0",
+    "baseline": "unconstrained add-0.05 token bigram on 23767 training lines",
+    "baseline_bits_per_string": 34.739891846243104,
+    "baseline_canonical_mass": 0.9951826971426547,
+    "cohort_strings": 275,
+    "cohort_tokens": 2870,
+    "dropped_noncanonical": 0,
+    "dropped_out_of_support": 2616,
+    "experiment": "wikitext2_bigram_conditioning",
+    "failure_floor_bits_per_string": 125.60156507207014,
+    "held_out_lines": 2891,
+    "held_out_text": "eval/test/downloads/wikitext-2-test.txt",
+    "held_out_text_sha256": "d790b833ef8cf03a90db7bf1271b7520b83c45ce07ba3c1a9699df81e239eca0",
+    "mean_tokens_per_string": 10.436363636363636,
+    "support_table_sha256": "b9728c8a32f9cd4d0f70a284c7779d901d8855a7a4ed7e8edae22fc2d757cff5"
+  }
+}

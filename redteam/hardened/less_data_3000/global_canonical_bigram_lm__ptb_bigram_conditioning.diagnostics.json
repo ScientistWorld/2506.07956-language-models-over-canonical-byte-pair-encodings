@@ -1,0 +1,15 @@
+{
+  "base_sample_canonical_rate": 0.807,
+  "base_truncated_samples": 0,
+  "global_resample_canonical_rate": 1.0,
+  "importance_weight_ess": 1890.6474501880439,
+  "local_sample_canonical_rate": 1.0,
+  "local_truncated_samples": 0,
+  "log2_Z_exact": -0.31149217135093576,
+  "log2_Z_importance_sampling": -0.3163643458733322,
+  "mean_local_sample_tokens": 25.464,
+  "min_local_normalizer": 0.924181247196052,
+  "sample_max_tokens": 1024,
+  "samples": 2000,
+  "seed": 13
+}

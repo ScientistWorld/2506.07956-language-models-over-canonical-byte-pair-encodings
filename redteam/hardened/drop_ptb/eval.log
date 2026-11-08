@@ -1,0 +1,18 @@
+$ bash scripts/evaluate_test.sh
+[test] wikitext2_bigram_conditioning global_canonical_bigram_lm: valid=True bits/string=34.7329 canonical=1.000000
+[test] wikitext2_bigram_conditioning local_canonical_bigram_lm: valid=True bits/string=34.7352 canonical=1.000000
+[test] ptb_bigram_conditioning global_canonical_bigram_lm: valid=False bits/string=195.4852 canonical=0.000000 reason=missing submission for this experiment
+[test] ptb_bigram_conditioning local_canonical_bigram_lm: valid=False bits/string=195.4852 canonical=0.000000 reason=missing submission for this experiment
+[exit 0]
+$ bash scripts/evaluate_train.sh
+[train] wikitext2_bigram_conditioning global_canonical_bigram_lm: valid=True bits/string=33.1285 canonical=1.000000
+[train] wikitext2_bigram_conditioning local_canonical_bigram_lm: valid=True bits/string=33.1305 canonical=1.000000
+[train] ptb_bigram_conditioning global_canonical_bigram_lm: valid=False bits/string=202.1672 canonical=0.000000 reason=missing submission for this experiment
+[train] ptb_bigram_conditioning local_canonical_bigram_lm: valid=False bits/string=202.1672 canonical=0.000000 reason=missing submission for this experiment
+[exit 0]
+$ /usr/local/bin/python -I eval/test/evaluate.py artifacts --output /home/user/redteam/hardened/drop_ptb/scores_test_direct.json --per-string-out /home/user/redteam/hardened/drop_ptb/per_string_test.json
+[test] wikitext2_bigram_conditioning global_canonical_bigram_lm: valid=True bits/string=34.7329 canonical=1.000000
+[test] wikitext2_bigram_conditioning local_canonical_bigram_lm: valid=True bits/string=34.7352 canonical=1.000000
+[test] ptb_bigram_conditioning global_canonical_bigram_lm: valid=False bits/string=195.4852 canonical=0.000000 reason=missing submission for this experiment
+[test] ptb_bigram_conditioning local_canonical_bigram_lm: valid=False bits/string=195.4852 canonical=0.000000 reason=missing submission for this experiment
+[exit 0]

@@ -1,0 +1,12 @@
+$ bash scripts/evaluate_test.sh
+[test] wikitext2_bigram_conditioning global_canonical_bigram_lm: valid=True bits/string=34.7329 canonical=1.000000
+[test] wikitext2_bigram_conditioning local_canonical_bigram_lm: valid=True bits/string=34.7352 canonical=1.000000
+[test] ptb_bigram_conditioning global_canonical_bigram_lm: valid=True bits/string=88.4641 canonical=1.000000
+[test] ptb_bigram_conditioning local_canonical_bigram_lm: valid=True bits/string=88.4557 canonical=1.000000
+[exit 0]
+$ bash scripts/evaluate_train.sh
+[train] wikitext2_bigram_conditioning global_canonical_bigram_lm: valid=True bits/string=33.1285 canonical=1.000000
+[train] wikitext2_bigram_conditioning local_canonical_bigram_lm: valid=True bits/string=33.1305 canonical=1.000000
+[train] ptb_bigram_conditioning global_canonical_bigram_lm: valid=True bits/string=90.7842 canonical=1.000000
+[train] ptb_bigram_conditioning local_canonical_bigram_lm: valid=True bits/string=90.7759 canonical=1.000000
+[exit 0]

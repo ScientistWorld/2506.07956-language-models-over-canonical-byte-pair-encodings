@@ -1,0 +1,18 @@
+$ bash scripts/evaluate_test.sh
+[test] wikitext2_bigram_conditioning global_canonical_bigram_lm: valid=False bits/string=125.6016 canonical=0.999597 reason=probability of noncanonical strings is 0.000403
+[test] wikitext2_bigram_conditioning local_canonical_bigram_lm: valid=False bits/string=125.6016 canonical=0.999597 reason=probability of noncanonical strings is 0.000403
+[test] ptb_bigram_conditioning global_canonical_bigram_lm: valid=False bits/string=195.4852 canonical=0.999282 reason=probability of noncanonical strings is 0.000718
+[test] ptb_bigram_conditioning local_canonical_bigram_lm: valid=False bits/string=195.4852 canonical=0.999282 reason=probability of noncanonical strings is 0.000718
+[exit 0]
+$ bash scripts/evaluate_train.sh
+[train] wikitext2_bigram_conditioning global_canonical_bigram_lm: valid=False bits/string=124.1269 canonical=0.999597 reason=probability of noncanonical strings is 0.000403
+[train] wikitext2_bigram_conditioning local_canonical_bigram_lm: valid=False bits/string=124.1269 canonical=0.999597 reason=probability of noncanonical strings is 0.000403
+[train] ptb_bigram_conditioning global_canonical_bigram_lm: valid=False bits/string=202.1672 canonical=0.999282 reason=probability of noncanonical strings is 0.000718
+[train] ptb_bigram_conditioning local_canonical_bigram_lm: valid=False bits/string=202.1672 canonical=0.999282 reason=probability of noncanonical strings is 0.000718
+[exit 0]
+$ /usr/local/bin/python -I eval/test/evaluate.py artifacts --output /home/user/redteam/hardened/unconstrained_kneser_ney/scores_test_direct.json --per-string-out /home/user/redteam/hardened/unconstrained_kneser_ney/per_string_test.json
+[test] wikitext2_bigram_conditioning global_canonical_bigram_lm: valid=False bits/string=125.6016 canonical=0.999597 reason=probability of noncanonical strings is 0.000403
+[test] wikitext2_bigram_conditioning local_canonical_bigram_lm: valid=False bits/string=125.6016 canonical=0.999597 reason=probability of noncanonical strings is 0.000403
+[test] ptb_bigram_conditioning global_canonical_bigram_lm: valid=False bits/string=195.4852 canonical=0.999282 reason=probability of noncanonical strings is 0.000718
+[test] ptb_bigram_conditioning local_canonical_bigram_lm: valid=False bits/string=195.4852 canonical=0.999282 reason=probability of noncanonical strings is 0.000718
+[exit 0]
