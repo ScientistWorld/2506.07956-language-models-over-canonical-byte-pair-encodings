@@ -1,0 +1,22 @@
+[canonical-conditioning] loading GPT-2 BPE tokenizer
+[canonical-conditioning] reading WikiText-2 lines
+[canonical-conditioning] tokenizing 3000 train lines and 300 test lines
+[canonical-conditioning] building scaled token vocabulary
+[canonical-conditioning] kept 28/300 test lines representable by the reduced vocabulary
+[canonical-conditioning] fitting bigram LM with vocab_size=2048
+[canonical-conditioning] using 48450 corpus-derived canonical bigram overrides
+[canonical-conditioning] evaluated 5/28 test strings; cached_norms=16
+[canonical-conditioning] evaluated 10/28 test strings; cached_norms=20
+[canonical-conditioning] evaluated 15/28 test strings; cached_norms=31
+[canonical-conditioning] evaluated 20/28 test strings; cached_norms=38
+[canonical-conditioning] evaluated 25/28 test strings; cached_norms=41
+[canonical-conditioning] drew 10/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 20/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 30/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 40/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 50/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 60/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 70/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 80/100 completed local samples; cached_norms=45
+[canonical-conditioning] drew 90/100 completed local samples; cached_norms=45
+[canonical-conditioning] wrote /home/user/redteam/reference_seed15/payloads/wikitext2_bigram.json

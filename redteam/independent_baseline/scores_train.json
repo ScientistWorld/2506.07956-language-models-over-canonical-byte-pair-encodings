@@ -1,0 +1,74 @@
+{
+  "_metadata": {
+    "artifacts": [
+      "artifacts/ptb_bigram.json",
+      "artifacts/wikitext2_bigram.json"
+    ],
+    "slice": "train",
+    "split_rule": "record id parity; even ids are visible train"
+  },
+  "experiments": {
+    "ptb_bigram_conditioning": {
+      "results": {
+        "base_bigram_lm": {
+          "canonical_sample_rate": 0.79,
+          "finite_record_rate": 1.0,
+          "log_loss_bits_per_string": 95.48583960040885,
+          "log_loss_bits_per_token": 6.014856037821031,
+          "loss_improvement_bits_per_string": 0.0,
+          "relative_log_loss_to_baseline": 1.0,
+          "vocab_size": 2048
+        },
+        "global_canonical_bigram_lm": {
+          "canonical_sample_rate": 0.79,
+          "finite_record_rate": 1.0,
+          "log_loss_bits_per_string": 95.48583960040885,
+          "log_loss_bits_per_token": 6.014856037821031,
+          "loss_improvement_bits_per_string": 0.0,
+          "relative_log_loss_to_baseline": 1.0,
+          "vocab_size": 2048
+        },
+        "local_canonical_bigram_lm": {
+          "canonical_sample_rate": 0.79,
+          "finite_record_rate": 1.0,
+          "log_loss_bits_per_string": 95.48583960040885,
+          "log_loss_bits_per_token": 6.014856037821031,
+          "loss_improvement_bits_per_string": 0.0,
+          "relative_log_loss_to_baseline": 1.0,
+          "vocab_size": 2048
+        }
+      }
+    },
+    "wikitext2_bigram_conditioning": {
+      "results": {
+        "base_bigram_lm": {
+          "canonical_sample_rate": 0.97,
+          "finite_record_rate": 1.0,
+          "log_loss_bits_per_string": 37.67512455230188,
+          "log_loss_bits_per_token": 3.516344958214842,
+          "loss_improvement_bits_per_string": 0.0,
+          "relative_log_loss_to_baseline": 1.0,
+          "vocab_size": 2048
+        },
+        "global_canonical_bigram_lm": {
+          "canonical_sample_rate": 0.97,
+          "finite_record_rate": 1.0,
+          "log_loss_bits_per_string": 37.67512455230188,
+          "log_loss_bits_per_token": 3.516344958214842,
+          "loss_improvement_bits_per_string": 0.0,
+          "relative_log_loss_to_baseline": 1.0,
+          "vocab_size": 2048
+        },
+        "local_canonical_bigram_lm": {
+          "canonical_sample_rate": 0.97,
+          "finite_record_rate": 1.0,
+          "log_loss_bits_per_string": 37.67512455230188,
+          "log_loss_bits_per_token": 3.516344958214842,
+          "loss_improvement_bits_per_string": 0.0,
+          "relative_log_loss_to_baseline": 1.0,
+          "vocab_size": 2048
+        }
+      }
+    }
+  }
+}

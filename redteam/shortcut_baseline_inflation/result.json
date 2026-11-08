@@ -1,0 +1,14 @@
+{
+  "case": "shortcut_baseline_inflation",
+  "hidden_command": [
+    "bash",
+    "scripts/evaluate_test.sh"
+  ],
+  "status": "accepted",
+  "test_exit_code": 0,
+  "train_command": [
+    "bash",
+    "scripts/evaluate_train.sh"
+  ],
+  "train_exit_code": 0
+}

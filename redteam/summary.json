@@ -1,0 +1,1950 @@
+{
+  "_seed_spread": {
+    "delta_all": {
+      "max": 0.018635175200502858,
+      "min": -0.0017528849120387788,
+      "spread": 0.020388060112541635
+    },
+    "delta_proposed": {
+      "max": 0.018635175200502858,
+      "min": -0.00295288491203878,
+      "spread": 0.02158806011254164
+    }
+  },
+  "as_found": {
+    "case": "as_found",
+    "hidden_command": [
+      "bash",
+      "scripts/evaluate_test.sh"
+    ],
+    "status": "rejected",
+    "test_exit_code": 1,
+    "train_command": [
+      "bash",
+      "scripts/evaluate_train.sh"
+    ]
+  },
+  "independent_baseline": {
+    "case": "independent_baseline",
+    "delta_all": -0.1762100197052797,
+    "delta_by_method": {
+      "base_bigram_lm": 0.0,
+      "global_canonical_bigram_lm": -0.11367264356256453,
+      "local_canonical_bigram_lm": -0.06253737614271516
+    },
+    "delta_proposed": -0.1762100197052797,
+    "details": {
+      "ptb_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": -0.025199999999999993,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.016643459187134793,
+            "log_loss_bits_per_token": -0.00146137690423628,
+            "loss_improvement_bits_per_string": -0.04993037756140438,
+            "relative_log_loss_to_baseline": -0.0007599511739603381,
+            "vocab_size": -0.0
+          },
+          "delta": -0.09399516482673578
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": -0.025199999999999993,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.007179964001982455,
+            "log_loss_bits_per_token": -0.000630435863588712,
+            "loss_improvement_bits_per_string": -0.021539892005947366,
+            "relative_log_loss_to_baseline": -0.00032784182728775587,
+            "vocab_size": -0.0
+          },
+          "delta": -0.05487813369880628
+        }
+      },
+      "wikitext2_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": -0.003600000000000003,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.003750369636309614,
+            "log_loss_bits_per_token": -0.000550753582954564,
+            "loss_improvement_bits_per_string": -0.011251108908928841,
+            "relative_log_loss_to_baseline": -0.000525246607635721,
+            "vocab_size": -0.0
+          },
+          "delta": -0.019677478735828743
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": -0.003600000000000003,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.000946893468696004,
+            "log_loss_bits_per_token": -0.00013905428561267641,
+            "loss_improvement_bits_per_string": -0.0028406804060880117,
+            "relative_log_loss_to_baseline": -0.00013261428351218907,
+            "vocab_size": -0.0
+          },
+          "delta": -0.007659242443908884
+        }
+      }
+    },
+    "hidden_command": [
+      "bash",
+      "scripts/evaluate_test.sh"
+    ],
+    "status": "accepted",
+    "test_exit_code": 0,
+    "train_command": [
+      "bash",
+      "scripts/evaluate_train.sh"
+    ],
+    "train_exit_code": 0
+  },
+  "less_training": {
+    "case": "less_training",
+    "delta_all": -7.151537098316998,
+    "delta_by_method": {
+      "base_bigram_lm": -2.4716829062460333,
+      "global_canonical_bigram_lm": -2.278982127634931,
+      "local_canonical_bigram_lm": -2.4008720644360335
+    },
+    "delta_proposed": -4.679854192070964,
+    "details": {
+      "ptb_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": -0.019200000000000002,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -1.6608649355972585,
+            "log_loss_bits_per_token": -0.145832043125613,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": -1.8258969787228716
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -1.6408258159129945,
+            "log_loss_bits_per_token": -0.14407251066553126,
+            "loss_improvement_bits_per_string": 0.06011735905279181,
+            "relative_log_loss_to_baseline": 0.0005770279677280831,
+            "vocab_size": -0.0
+          },
+          "delta": -1.7242039395580055
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -1.6542841539188393,
+            "log_loss_bits_per_token": -0.14525421839287372,
+            "loss_improvement_bits_per_string": 0.019742345035257642,
+            "relative_log_loss_to_baseline": 0.0001736995178089118,
+            "vocab_size": -0.0
+          },
+          "delta": -1.7796223277586465
+        }
+      },
+      "wikitext2_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": -0.0144,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.5505377294866592,
+            "log_loss_bits_per_token": -0.08084819803650244,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": -0.6457859275231617
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.5325221645223656,
+            "log_loss_bits_per_token": -0.07820255562915861,
+            "loss_improvement_bits_per_string": 0.0540466948928811,
+            "relative_log_loss_to_baseline": 0.0018998371817172677,
+            "vocab_size": -0.0
+          },
+          "delta": -0.5547781880769258
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.548151007534571,
+            "log_loss_bits_per_token": -0.08049770040717472,
+            "loss_improvement_bits_per_string": 0.0071601658562646265,
+            "relative_log_loss_to_baseline": 0.00023880540809421145,
+            "vocab_size": -0.0
+          },
+          "delta": -0.6212497366773869
+        }
+      }
+    },
+    "hidden_command": [
+      "bash",
+      "scripts/evaluate_test.sh"
+    ],
+    "status": "accepted",
+    "test_exit_code": 0,
+    "train_command": [
+      "bash",
+      "scripts/evaluate_train.sh"
+    ],
+    "train_exit_code": 0
+  },
+  "more_training": {
+    "case": "more_training",
+    "delta_all": 2.5438454383062274,
+    "delta_by_method": {
+      "base_bigram_lm": 0.8888748572602745,
+      "global_canonical_bigram_lm": 0.8045875992064246,
+      "local_canonical_bigram_lm": 0.8503829818395284
+    },
+    "delta_proposed": 1.6549705810459532,
+    "details": {
+      "ptb_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.02159999999999999,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 0.7652971891175536,
+            "log_loss_bits_per_token": 0.06719682636154128,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.8540940154790948
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 0.7538496404353986,
+            "log_loss_bits_per_token": 0.06619167574554709,
+            "loss_improvement_bits_per_string": -0.034342646046465,
+            "relative_log_loss_to_baseline": -0.0004914245703637188,
+            "vocab_size": -0.0
+          },
+          "delta": 0.785207245564117
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 0.7622982864123349,
+            "log_loss_bits_per_token": 0.06693350807522945,
+            "loss_improvement_bits_per_string": -0.008996708115656133,
+            "relative_log_loss_to_baseline": -0.00011176301138566824,
+            "vocab_size": -0.0
+          },
+          "delta": 0.8201233233605225
+        }
+      },
+      "wikitext2_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.002400000000000002,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 0.028234514479931076,
+            "log_loss_bits_per_token": 0.004146327301248607,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.03478084178117968
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 0.02520159680441381,
+            "log_loss_bits_per_token": 0.003700933796452341,
+            "loss_improvement_bits_per_string": -0.009098753026551804,
+            "relative_log_loss_to_baseline": -0.0004234239320067723,
+            "vocab_size": -0.0
+          },
+          "delta": 0.019380353642307575
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 0.027739512002629283,
+            "log_loss_bits_per_token": 0.004073634629756731,
+            "loss_improvement_bits_per_string": -0.0014850074319053873,
+            "relative_log_loss_to_baseline": -6.84807214747396e-05,
+            "vocab_size": -0.0
+          },
+          "delta": 0.030259658479005885
+        }
+      }
+    },
+    "hidden_command": [
+      "bash",
+      "scripts/evaluate_test.sh"
+    ],
+    "status": "accepted",
+    "test_exit_code": 0,
+    "train_command": [
+      "bash",
+      "scripts/evaluate_train.sh"
+    ],
+    "train_exit_code": 0
+  },
+  "reference_seed13": {
+    "case": "reference_seed13",
+    "delta_all": 0.0,
+    "delta_by_method": {
+      "base_bigram_lm": 0.0,
+      "global_canonical_bigram_lm": 0.0,
+      "local_canonical_bigram_lm": 0.0
+    },
+    "delta_proposed": 0.0,
+    "details": {
+      "ptb_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        }
+      },
+      "wikitext2_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        }
+      }
+    },
+    "hidden_command": [
+      "bash",
+      "scripts/evaluate_test.sh"
+    ],
+    "status": "accepted",
+    "test_exit_code": 0,
+    "train_command": [
+      "bash",
+      "scripts/evaluate_train.sh"
+    ],
+    "train_exit_code": 0
+  },
+  "reference_seed14": {
+    "case": "reference_seed14",
+    "delta_all": -0.0017528849120387788,
+    "delta_by_method": {
+      "base_bigram_lm": 0.001200000000000001,
+      "global_canonical_bigram_lm": -0.00295288491203878,
+      "local_canonical_bigram_lm": 0.0
+    },
+    "delta_proposed": -0.00295288491203878,
+    "details": {
+      "ptb_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.001200000000000001,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.001200000000000001
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 0.0004567110422277665,
+            "log_loss_bits_per_token": 4.010145736629056e-05,
+            "loss_improvement_bits_per_string": 0.0013701331266832994,
+            "relative_log_loss_to_baseline": 2.0853723303515537e-05,
+            "vocab_size": -0.0
+          },
+          "delta": 0.001887799349580872
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        }
+      },
+      "wikitext2_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0011291792433401327,
+            "log_loss_bits_per_token": -0.00016582352524575848,
+            "loss_improvement_bits_per_string": -0.003387537730020398,
+            "relative_log_loss_to_baseline": -0.00015814376301336307,
+            "vocab_size": -0.0
+          },
+          "delta": -0.004840684261619652
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        }
+      }
+    },
+    "hidden_command": [
+      "bash",
+      "scripts/evaluate_test.sh"
+    ],
+    "status": "accepted",
+    "test_exit_code": 0,
+    "train_command": [
+      "bash",
+      "scripts/evaluate_train.sh"
+    ],
+    "train_exit_code": 0
+  },
+  "reference_seed15": {
+    "case": "reference_seed15",
+    "delta_all": 0.018635175200502858,
+    "delta_by_method": {
+      "base_bigram_lm": 0.0,
+      "global_canonical_bigram_lm": 0.018635175200502858,
+      "local_canonical_bigram_lm": 0.0
+    },
+    "delta_proposed": 0.018635175200502858,
+    "details": {
+      "ptb_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.001200000000000001,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.001200000000000001
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 0.004789772570870809,
+            "log_loss_bits_per_token": 0.0004205653964666389,
+            "loss_improvement_bits_per_string": 0.014369317712612427,
+            "relative_log_loss_to_baseline": 0.00021870413159362777,
+            "vocab_size": -0.0
+          },
+          "delta": 0.019798359811543504
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        }
+      },
+      "wikitext2_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": -0.001200000000000001,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": -0.001200000000000001
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.00027133435026399866,
+            "log_loss_bits_per_token": -3.984630318566662e-05,
+            "loss_improvement_bits_per_string": -0.0008140030507919959,
+            "relative_log_loss_to_baseline": -3.8000906798985044e-05,
+            "vocab_size": -0.0
+          },
+          "delta": -0.0011631846110406463
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        }
+      }
+    },
+    "hidden_command": [
+      "bash",
+      "scripts/evaluate_test.sh"
+    ],
+    "status": "accepted",
+    "test_exit_code": 0,
+    "train_command": [
+      "bash",
+      "scripts/evaluate_train.sh"
+    ],
+    "train_exit_code": 0
+  },
+  "shortcut_baseline_inflation": {
+    "case": "shortcut_baseline_inflation",
+    "delta_all": 587.039003087511,
+    "delta_by_method": {
+      "base_bigram_lm": -134.0794814941156,
+      "global_canonical_bigram_lm": 360.55885801079273,
+      "local_canonical_bigram_lm": 360.5596265708338
+    },
+    "delta_proposed": 721.1184845816265,
+    "details": {
+      "ptb_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -59.999999999999986,
+            "log_loss_bits_per_token": -5.268292682926828,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": -65.26829268292681
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 1.0231815394945442e-14,
+            "log_loss_bits_per_token": 7.194245199571014e-16,
+            "loss_improvement_bits_per_string": 180.0,
+            "relative_log_loss_to_baseline": 0.26970627403719716,
+            "vocab_size": -0.0
+          },
+          "delta": 180.2697062740372
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 179.99999999999997,
+            "relative_log_loss_to_baseline": 0.27009573595021624,
+            "vocab_size": -0.0
+          },
+          "delta": 180.27009573595018
+        }
+      },
+      "wikitext2_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -60.00000000000001,
+            "log_loss_bits_per_token": -8.811188811188812,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": -68.81118881118881
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -5.542233338928782e-15,
+            "log_loss_bits_per_token": 2.3980817331903383e-16,
+            "loss_improvement_bits_per_string": 180.0,
+            "relative_log_loss_to_baseline": 0.2891517367555186,
+            "vocab_size": -0.0
+          },
+          "delta": 180.2891517367555
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 180.0,
+            "relative_log_loss_to_baseline": 0.2895308348836267,
+            "vocab_size": -0.0
+          },
+          "delta": 180.28953083488364
+        }
+      }
+    },
+    "hidden_command": [
+      "bash",
+      "scripts/evaluate_test.sh"
+    ],
+    "status": "accepted",
+    "test_exit_code": 0,
+    "train_command": [
+      "bash",
+      "scripts/evaluate_train.sh"
+    ],
+    "train_exit_code": 0
+  },
+  "shortcut_claimed_zero_loss": {
+    "case": "shortcut_claimed_zero_loss",
+    "delta_all": 41.27416049054468,
+    "delta_by_method": {
+      "base_bigram_lm": 0.0,
+      "global_canonical_bigram_lm": 4.9673497360067795,
+      "local_canonical_bigram_lm": 36.3068107545379
+    },
+    "delta_proposed": 41.27416049054468,
+    "details": {
+      "ptb_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 0.5833565408128651,
+            "log_loss_bits_per_token": 0.05122154992503198,
+            "loss_improvement_bits_per_string": 1.7500696224385957,
+            "relative_log_loss_to_baseline": 0.026636439158685753,
+            "vocab_size": -0.0
+          },
+          "delta": 2.4112841523351785
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 6.563028658902197,
+            "log_loss_bits_per_token": 0.5762659310255588,
+            "loss_improvement_bits_per_string": 19.689085976706593,
+            "relative_log_loss_to_baseline": 0.29967215817271226,
+            "vocab_size": -0.0
+          },
+          "delta": 27.128052724807063
+        }
+      },
+      "wikitext2_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 0.5962496303636904,
+            "log_loss_bits_per_token": 0.08756113452893356,
+            "loss_improvement_bits_per_string": 1.7887488910910712,
+            "relative_log_loss_to_baseline": 0.08350592768790618,
+            "vocab_size": -0.0
+          },
+          "delta": 2.5560655836716015
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 2.1411152817774908,
+            "log_loss_bits_per_token": 0.31442951690438675,
+            "loss_improvement_bits_per_string": 6.423345845332473,
+            "relative_log_loss_to_baseline": 0.2998673857164878,
+            "vocab_size": -0.0
+          },
+          "delta": 9.178758029730838
+        }
+      }
+    },
+    "hidden_command": [
+      "bash",
+      "scripts/evaluate_test.sh"
+    ],
+    "status": "accepted",
+    "test_exit_code": 0,
+    "train_command": [
+      "bash",
+      "scripts/evaluate_train.sh"
+    ],
+    "train_exit_code": 0
+  },
+  "shortcut_constraint_tradeoff": {
+    "case": "shortcut_constraint_tradeoff",
+    "delta_all": 2.490414552075544,
+    "delta_by_method": {
+      "base_bigram_lm": 0.8888748572602745,
+      "global_canonical_bigram_lm": 0.7752022136977101,
+      "local_canonical_bigram_lm": 0.8263374811175593
+    },
+    "delta_proposed": 1.6015396948152696,
+    "details": {
+      "ptb_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.02159999999999999,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 0.7652971891175536,
+            "log_loss_bits_per_token": 0.06719682636154128,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.8540940154790948
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": -0.003600000000000003,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 0.7486537299304189,
+            "log_loss_bits_per_token": 0.065735449457305,
+            "loss_improvement_bits_per_string": -0.04993037756140438,
+            "relative_log_loss_to_baseline": -0.0007599511739603381,
+            "vocab_size": -0.0
+          },
+          "delta": 0.7600988506523592
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": -0.003600000000000003,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 0.7581172251155712,
+            "log_loss_bits_per_token": 0.06656639049795257,
+            "loss_improvement_bits_per_string": -0.021539892005947366,
+            "relative_log_loss_to_baseline": -0.00032784182728775587,
+            "vocab_size": -0.0
+          },
+          "delta": 0.7992158817802886
+        }
+      },
+      "wikitext2_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.002400000000000002,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 0.028234514479931076,
+            "log_loss_bits_per_token": 0.004146327301248607,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.03478084178117968
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": -0.001200000000000001,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 0.024484144843621464,
+            "log_loss_bits_per_token": 0.0035955737182940426,
+            "loss_improvement_bits_per_string": -0.011251108908928841,
+            "relative_log_loss_to_baseline": -0.000525246607635721,
+            "vocab_size": -0.0
+          },
+          "delta": 0.015103363045350945
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": -0.001200000000000001,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 0.027287621011235073,
+            "log_loss_bits_per_token": 0.0040072730156359305,
+            "loss_improvement_bits_per_string": -0.0028406804060880117,
+            "relative_log_loss_to_baseline": -0.00013261428351218907,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0271215993372708
+        }
+      }
+    },
+    "hidden_command": [
+      "bash",
+      "scripts/evaluate_test.sh"
+    ],
+    "status": "accepted",
+    "test_exit_code": 0,
+    "train_command": [
+      "bash",
+      "scripts/evaluate_train.sh"
+    ],
+    "train_exit_code": 0
+  },
+  "shortcut_easy_cohort": {
+    "case": "shortcut_easy_cohort",
+    "delta_all": 20.024692736574156,
+    "delta_by_method": {
+      "base_bigram_lm": 6.682805636600961,
+      "global_canonical_bigram_lm": 6.68907828924205,
+      "local_canonical_bigram_lm": 6.652808810731146
+    },
+    "delta_proposed": 13.341887099973196,
+    "details": {
+      "ptb_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 5.407577264222638,
+            "log_loss_bits_per_token": 0.32776107574310304,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 5.735338339965741
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 5.407577264222638,
+            "log_loss_bits_per_token": 0.3298661543789671,
+            "loss_improvement_bits_per_string": 6.394884621840901e-16,
+            "relative_log_loss_to_baseline": 0.003534649792078248,
+            "vocab_size": -0.0
+          },
+          "delta": 5.740978068393685
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 5.400938230547672,
+            "log_loss_bits_per_token": 0.3272465535210175,
+            "loss_improvement_bits_per_string": -0.019917101024902947,
+            "relative_log_loss_to_baseline": -0.00018826267617274572,
+            "vocab_size": -0.0
+          },
+          "delta": 5.708079420367613
+        }
+      },
+      "wikitext2_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 0.8992216871748031,
+            "log_loss_bits_per_token": 0.048245609460417206,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.9474672966352203
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 0.8992216871748031,
+            "log_loss_bits_per_token": 0.0484985065138147,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": 0.0003800271597475757,
+            "vocab_size": -0.0
+          },
+          "delta": 0.9481002208483654
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 0.898571345445451,
+            "log_loss_bits_per_token": 0.048170101976092554,
+            "loss_improvement_bits_per_string": -0.0019510251880561923,
+            "relative_log_loss_to_baseline": -6.103186995464193e-05,
+            "vocab_size": -0.0
+          },
+          "delta": 0.9447293903635327
+        }
+      }
+    },
+    "hidden_command": [
+      "bash",
+      "scripts/evaluate_test.sh"
+    ],
+    "status": "accepted",
+    "test_exit_code": 0,
+    "train_command": [
+      "bash",
+      "scripts/evaluate_train.sh"
+    ],
+    "train_exit_code": 0
+  },
+  "shortcut_empty_sample_list": {
+    "case": "shortcut_empty_sample_list",
+    "hidden_command": [
+      "bash",
+      "scripts/evaluate_test.sh"
+    ],
+    "status": "rejected",
+    "test_exit_code": 1,
+    "train_command": [
+      "bash",
+      "scripts/evaluate_train.sh"
+    ],
+    "train_exit_code": 1
+  },
+  "shortcut_empty_samples": {
+    "case": "shortcut_empty_samples",
+    "delta_all": 0.028799999999999996,
+    "delta_by_method": {
+      "base_bigram_lm": 0.028799999999999996,
+      "global_canonical_bigram_lm": 0.0,
+      "local_canonical_bigram_lm": 0.0
+    },
+    "delta_proposed": 0.0,
+    "details": {
+      "ptb_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.025199999999999993,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.025199999999999993
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        }
+      },
+      "wikitext2_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.003600000000000003,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.003600000000000003
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        }
+      }
+    },
+    "hidden_command": [
+      "bash",
+      "scripts/evaluate_test.sh"
+    ],
+    "status": "accepted",
+    "test_exit_code": 0,
+    "train_command": [
+      "bash",
+      "scripts/evaluate_train.sh"
+    ],
+    "train_exit_code": 0
+  },
+  "shortcut_fixed_tokenizer": {
+    "case": "shortcut_fixed_tokenizer",
+    "delta_all": 0.028799999999999996,
+    "delta_by_method": {
+      "base_bigram_lm": 0.028799999999999996,
+      "global_canonical_bigram_lm": 0.0,
+      "local_canonical_bigram_lm": 0.0
+    },
+    "delta_proposed": 0.0,
+    "details": {
+      "ptb_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.025199999999999993,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.025199999999999993
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        }
+      },
+      "wikitext2_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.003600000000000003,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.003600000000000003
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        }
+      }
+    },
+    "hidden_command": [
+      "bash",
+      "scripts/evaluate_test.sh"
+    ],
+    "status": "accepted",
+    "test_exit_code": 0,
+    "train_command": [
+      "bash",
+      "scripts/evaluate_train.sh"
+    ],
+    "train_exit_code": 0
+  },
+  "shortcut_impossible_probability": {
+    "case": "shortcut_impossible_probability",
+    "delta_all": 1010480.6978519799,
+    "delta_by_method": {
+      "base_bigram_lm": 0.0,
+      "global_canonical_bigram_lm": 505222.15308429085,
+      "local_canonical_bigram_lm": 505258.54476768896
+    },
+    "delta_proposed": 1010480.6978519799,
+    "details": {
+      "ptb_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 59999.98335654081,
+            "log_loss_bits_per_token": 5268.291221549925,
+            "loss_improvement_bits_per_string": 179999.95006962243,
+            "relative_log_loss_to_baseline": 2739.638273313434,
+            "vocab_size": -0.0
+          },
+          "delta": 248007.8629210266
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 60006.5630286589,
+            "log_loss_bits_per_token": 5268.868948857854,
+            "loss_improvement_bits_per_string": 180019.6890859767,
+            "relative_log_loss_to_baseline": 2739.938705422781,
+            "vocab_size": -0.0
+          },
+          "delta": 248035.0597689162
+        }
+      },
+      "wikitext2_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 59999.99624963036,
+            "log_loss_bits_per_token": 8811.188260435227,
+            "loss_improvement_bits_per_string": 179999.98874889108,
+            "relative_log_loss_to_baseline": 8403.116904307584,
+            "vocab_size": -0.0
+          },
+          "delta": 257214.29016326426
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 60002.141115281775,
+            "log_loss_bits_per_token": 8811.503240705715,
+            "loss_improvement_bits_per_string": 180006.42334584534,
+            "relative_log_loss_to_baseline": 8403.417296939908,
+            "vocab_size": -0.0
+          },
+          "delta": 257223.48499877274
+        }
+      }
+    },
+    "hidden_command": [
+      "bash",
+      "scripts/evaluate_test.sh"
+    ],
+    "status": "accepted",
+    "test_exit_code": 0,
+    "train_command": [
+      "bash",
+      "scripts/evaluate_train.sh"
+    ],
+    "train_exit_code": 0
+  },
+  "shortcut_metadata_flags": {
+    "case": "shortcut_metadata_flags",
+    "delta_all": -0.48,
+    "delta_by_method": {
+      "base_bigram_lm": 0.0,
+      "global_canonical_bigram_lm": -0.24,
+      "local_canonical_bigram_lm": -0.24
+    },
+    "delta_proposed": -0.48,
+    "details": {
+      "ptb_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": -0.12,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": -0.12
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": -0.12,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": -0.12
+        }
+      },
+      "wikitext2_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": -0.12,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": -0.12
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": -0.12,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": -0.12
+        }
+      }
+    },
+    "hidden_command": [
+      "bash",
+      "scripts/evaluate_test.sh"
+    ],
+    "status": "accepted",
+    "test_exit_code": 0,
+    "train_command": [
+      "bash",
+      "scripts/evaluate_train.sh"
+    ],
+    "train_exit_code": 0
+  },
+  "shortcut_nan_probability": {
+    "case": "shortcut_nan_probability",
+    "hidden_command": [
+      "bash",
+      "scripts/evaluate_test.sh"
+    ],
+    "status": "rejected",
+    "test_exit_code": 1,
+    "train_command": [
+      "bash",
+      "scripts/evaluate_train.sh"
+    ],
+    "train_exit_code": 1
+  },
+  "shortcut_null_probability": {
+    "case": "shortcut_null_probability",
+    "hidden_command": [
+      "bash",
+      "scripts/evaluate_test.sh"
+    ],
+    "status": "rejected",
+    "test_exit_code": 1,
+    "train_command": [
+      "bash",
+      "scripts/evaluate_train.sh"
+    ],
+    "train_exit_code": 1
+  },
+  "shortcut_score_file": {
+    "case": "shortcut_score_file",
+    "delta_all": 0.0,
+    "delta_by_method": {
+      "base_bigram_lm": 0.0,
+      "global_canonical_bigram_lm": 0.0,
+      "local_canonical_bigram_lm": 0.0
+    },
+    "delta_proposed": 0.0,
+    "details": {
+      "ptb_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        }
+      },
+      "wikitext2_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        }
+      }
+    },
+    "hidden_command": [
+      "bash",
+      "scripts/evaluate_test.sh"
+    ],
+    "status": "accepted",
+    "test_exit_code": 0,
+    "train_command": [
+      "bash",
+      "scripts/evaluate_train.sh"
+    ],
+    "train_exit_code": 0
+  },
+  "shortcut_test_memorization": {
+    "case": "shortcut_test_memorization",
+    "delta_all": 33.76178703534305,
+    "delta_by_method": {
+      "base_bigram_lm": 0.0,
+      "global_canonical_bigram_lm": 0.0,
+      "local_canonical_bigram_lm": 33.76178703534305
+    },
+    "delta_proposed": 33.76178703534305,
+    "details": {
+      "ptb_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 6.227930908858927,
+            "log_loss_bits_per_token": 0.5468427139485887,
+            "loss_improvement_bits_per_string": 18.683792726576783,
+            "relative_log_loss_to_baseline": 0.28437137690641745,
+            "vocab_size": -0.0
+          },
+          "delta": 25.742937726290716
+        }
+      },
+      "wikitext2_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.0
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 1.870545093603073,
+            "log_loss_bits_per_token": 0.27469543332632546,
+            "loss_improvement_bits_per_string": 5.611635280809219,
+            "relative_log_loss_to_baseline": 0.26197350131371766,
+            "vocab_size": -0.0
+          },
+          "delta": 8.018849309052335
+        }
+      }
+    },
+    "hidden_command": [
+      "bash",
+      "scripts/evaluate_test.sh"
+    ],
+    "status": "accepted",
+    "test_exit_code": 0,
+    "train_command": [
+      "bash",
+      "scripts/evaluate_train.sh"
+    ],
+    "train_exit_code": 0
+  },
+  "shortcut_token_counts": {
+    "case": "shortcut_token_counts",
+    "delta_all": 2.671610521987855,
+    "delta_by_method": {
+      "base_bigram_lm": 0.8914640466142089,
+      "global_canonical_bigram_lm": 0.8894519181391486,
+      "local_canonical_bigram_lm": 0.8906945572344975
+    },
+    "delta_proposed": 1.780146475373646,
+    "details": {
+      "ptb_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": 0.5768957899927806,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.5768957899927806
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": 0.5754344145499213,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.5754344145499213
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": 0.5762653547596277,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.5762653547596277
+        }
+      },
+      "wikitext2_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": 0.3145682566214283,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.3145682566214283
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": 0.3140175035892273,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.3140175035892273
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": 0.3144292024748699,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.3144292024748699
+        }
+      }
+    },
+    "hidden_command": [
+      "bash",
+      "scripts/evaluate_test.sh"
+    ],
+    "status": "accepted",
+    "test_exit_code": 0,
+    "train_command": [
+      "bash",
+      "scripts/evaluate_train.sh"
+    ],
+    "train_exit_code": 0
+  },
+  "shortcut_vocab_metadata": {
+    "case": "shortcut_vocab_metadata",
+    "delta_all": 184.23,
+    "delta_by_method": {
+      "base_bigram_lm": 61.41,
+      "global_canonical_bigram_lm": 61.41,
+      "local_canonical_bigram_lm": 61.41
+    },
+    "delta_proposed": 122.82,
+    "details": {
+      "ptb_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": 30.705
+          },
+          "delta": 30.705
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": 30.705
+          },
+          "delta": 30.705
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": 30.705
+          },
+          "delta": 30.705
+        }
+      },
+      "wikitext2_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": 30.705
+          },
+          "delta": 30.705
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": 30.705
+          },
+          "delta": 30.705
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": -0.0,
+            "log_loss_bits_per_token": -0.0,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": 30.705
+          },
+          "delta": 30.705
+        }
+      }
+    },
+    "hidden_command": [
+      "bash",
+      "scripts/evaluate_test.sh"
+    ],
+    "status": "accepted",
+    "test_exit_code": 0,
+    "train_command": [
+      "bash",
+      "scripts/evaluate_train.sh"
+    ],
+    "train_exit_code": 0
+  },
+  "smoothing_fix": {
+    "case": "smoothing_fix",
+    "delta_all": 0.17274744221828364,
+    "delta_by_method": {
+      "base_bigram_lm": 0.10615480678667014,
+      "global_canonical_bigram_lm": 0.008979631158756801,
+      "local_canonical_bigram_lm": 0.05761300427285669
+    },
+    "delta_proposed": 0.06659263543161349,
+    "details": {
+      "ptb_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.023999999999999994,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 0.05092925910138916,
+            "log_loss_bits_per_token": 0.004471837384512245,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.07940109648590139
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 0.03732106859462931,
+            "log_loss_bits_per_token": 0.0032769718766015553,
+            "loss_improvement_bits_per_string": -0.04082457152027956,
+            "relative_log_loss_to_baseline": -0.0006202761342361085,
+            "vocab_size": -0.0
+          },
+          "delta": -0.0008468071832848062
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 0.046340855337664945,
+            "log_loss_bits_per_token": 0.0040689531515999185,
+            "loss_improvement_bits_per_string": -0.013765211291172648,
+            "relative_log_loss_to_baseline": -0.0002085850769490194,
+            "vocab_size": -0.0
+          },
+          "delta": 0.036436012121143196
+        }
+      },
+      "wikitext2_bigram_conditioning": {
+        "base_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.002400000000000002,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 0.021235247396402028,
+            "log_loss_bits_per_token": 0.003118462904366721,
+            "loss_improvement_bits_per_string": 0.0,
+            "relative_log_loss_to_baseline": -0.0,
+            "vocab_size": -0.0
+          },
+          "delta": 0.02675371030076875
+        },
+        "global_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 0.01784637394743413,
+            "log_loss_bits_per_token": 0.002620796174098707,
+            "loss_improvement_bits_per_string": -0.010166620346903698,
+            "relative_log_loss_to_baseline": -0.0004741114325875317,
+            "vocab_size": -0.0
+          },
+          "delta": 0.009826438342041607
+        },
+        "local_canonical_bigram_lm": {
+          "contributions": {
+            "canonical_sample_rate": 0.0,
+            "finite_record_rate": 0.0,
+            "log_loss_bits_per_string": 0.020494151742899758,
+            "log_loss_bits_per_token": 0.003009630675530728,
+            "loss_improvement_bits_per_string": -0.0022232869605068118,
+            "relative_log_loss_to_baseline": -0.00010350330621018422,
+            "vocab_size": -0.0
+          },
+          "delta": 0.02117699215171349
+        }
+      }
+    },
+    "hidden_command": [
+      "bash",
+      "scripts/evaluate_test.sh"
+    ],
+    "status": "accepted",
+    "test_exit_code": 0,
+    "train_command": [
+      "bash",
+      "scripts/evaluate_train.sh"
+    ],
+    "train_exit_code": 0
+  }
+}

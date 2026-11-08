@@ -1,0 +1,14 @@
+{
+  "case": "shortcut_null_probability",
+  "hidden_command": [
+    "bash",
+    "scripts/evaluate_test.sh"
+  ],
+  "status": "rejected",
+  "test_exit_code": 1,
+  "train_command": [
+    "bash",
+    "scripts/evaluate_train.sh"
+  ],
+  "train_exit_code": 1
+}

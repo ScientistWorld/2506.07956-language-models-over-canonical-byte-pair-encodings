@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/user/eval/train/evaluate.py", line 221, in <module>
+    main()
+  File "/home/user/eval/train/evaluate.py", line 206, in main
+    results = merge_results(artifacts)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/eval/train/evaluate.py", line 186, in merge_results
+    experiment, results = score_artifact(artifact)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/eval/train/evaluate.py", line 168, in score_artifact
+    "canonical_sample_rate": verified_canonical_sample_rate(samples.get(local_name, [])),
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/eval/train/evaluate.py", line 79, in verified_canonical_sample_rate
+    raise ValueError(f"artifact did not provide generated samples for {SLICE} canonicality verification")
+ValueError: artifact did not provide generated samples for train canonicality verification

@@ -1,0 +1,26 @@
+[canonical-conditioning] loading GPT-2 BPE tokenizer
+[canonical-conditioning] reading WikiText-2 lines
+[canonical-conditioning] tokenizing 3000 train lines and 500 test lines
+[canonical-conditioning] building scaled token vocabulary
+[canonical-conditioning] kept 48/500 test lines representable by the reduced vocabulary
+[canonical-conditioning] fitting bigram LM with vocab_size=2048
+[canonical-conditioning] using 24351 corpus-derived canonical bigram overrides
+[canonical-conditioning] evaluated 5/48 test strings; cached_norms=39
+[canonical-conditioning] evaluated 10/48 test strings; cached_norms=72
+[canonical-conditioning] evaluated 15/48 test strings; cached_norms=115
+[canonical-conditioning] evaluated 20/48 test strings; cached_norms=134
+[canonical-conditioning] evaluated 25/48 test strings; cached_norms=158
+[canonical-conditioning] evaluated 30/48 test strings; cached_norms=189
+[canonical-conditioning] evaluated 35/48 test strings; cached_norms=204
+[canonical-conditioning] evaluated 40/48 test strings; cached_norms=232
+[canonical-conditioning] evaluated 45/48 test strings; cached_norms=258
+[canonical-conditioning] drew 10/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 20/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 30/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 40/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 50/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 60/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 70/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 80/100 completed local samples; cached_norms=267
+[canonical-conditioning] drew 90/100 completed local samples; cached_norms=267
+[canonical-conditioning] wrote /home/user/redteam/reference_seed14/payloads/ptb_bigram.json

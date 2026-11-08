@@ -1,0 +1,2 @@
+[base-bigram] fitting bigram LM with vocab_size=2048
+[base-bigram] wrote /home/user/redteam/independent_baseline/payloads/ptb_bigram.json
