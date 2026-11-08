@@ -2,28 +2,33 @@
 
 ## Research Problem
 
-The research problem is improving token-level language models by respecting
-deterministic tokenizer validity. The benchmark asks whether probability mass
-assigned to invalid token encodings can be reduced in a way that improves
-held-out likelihood.
+Improve token-level language models by respecting deterministic tokenizer
+validity. A tokenizer produces exactly one token sequence per text, so most
+token sequences can never appear in tokenized data. The benchmark asks how
+well a token model can fit held-out text when it must assign all of its
+probability to token sequences the tokenizer can produce.
 
 ## Core Contribution
 
-Work must stay within tokenizer-valid language modeling. Improvements should
-address how the model handles tokenizer-induced support constraints while
-remaining comparable under the benchmark artifact and scoring contract.
+Work must keep the canonicality constraint exact: probability 1 on
+tokenizer-valid sequences. Within it, improve held-out likelihood. Gains may
+come from how probability removed from invalid sequences is redistributed,
+how the model is normalized or trained under the constraint, or how
+next-token statistics are estimated from the fixed training text.
 
 ## Approach Scope
 
-In-bounds approaches may change probability estimation, support constraints,
-sampling, calibration, or training, provided they directly address
-tokenizer-valid support. They may change the language-model estimator as long
-as the central research question remains tokenizer-valid token modeling rather
-than an unrelated modeling paradigm.
+In bounds: estimation and smoothing of the bigram token model, inference-time
+or training-time handling of the validity constraint, normalization schemes,
+and hyperparameter selection on the validation split. Everything must be
+expressed as the documented bigram weights table over the fixed support.
 
 ## Out Of Bounds
 
-Do not beat the benchmark by switching to a larger pretrained model without
-addressing tokenizer-valid support. Do not use external training text, change
-the test set, or optimize a metric that ignores tokenizer-valid generated
-support.
+- Training on validation, test, or external text, or importing pretrained
+  models trained on other data.
+- Changing the tokenizer, support, or canonical-bigram table, or relabelling
+  tokens.
+- Models that keep probability on tokenizer-invalid sequences. They are
+  scored as failed.
+- Editing evaluators or score files.

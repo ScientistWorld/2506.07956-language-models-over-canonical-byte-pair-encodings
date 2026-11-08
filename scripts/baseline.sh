@@ -1,39 +1,21 @@
 #!/bin/bash
-# Run a baseline method from the paper.
+# Run a simple baseline into tmp/baselines/ and score it with scripts/evaluate.sh.
 #
-# Baselines are simple reference methods the paper compares against. 
-# Implement this only if applicable, i.e. the paper has baselines.
-# You do not need to implement all baselines to begin — 
-# just enough to validate that the evaluation pipeline works 
-# and provide a reference point. You can decide to expand more baselines later.
-# Each baseline must be actually run and scored through evaluate.sh
-# so the numbers are verified, not self-reported.
-# You can decide what this baseline script should do yourself.
+#   unigram        a canonical unigram model (valid, weak)
+#   unconstrained  the paper's baseline p_Delta (no canonicality handling); it
+#                  violates the canonicality constraint and is scored at the
+#                  failure floor. Its loss is also reported by the
+#                  evaluator-owned base_bigram_lm row.
 #
-# Usage:
-#   bash scripts/baseline.sh <name>
+# Usage: bash scripts/baseline.sh [unigram|unconstrained]
 
 set -e
 
 cd /home/user
 
-python -m baseline.base_bigram "$@"
+KIND="${1:-unigram}"
+OUT=tmp/baselines/$KIND
 
-ARTIFACT="artifacts/baseline/wikitext2_bigram.json"
-while [ "$#" -gt 0 ]; do
-  case "$1" in
-    --output)
-      ARTIFACT="$2"
-      shift 2
-      ;;
-    --output=*)
-      ARTIFACT="${1#--output=}"
-      shift
-      ;;
-    *)
-      shift
-      ;;
-  esac
-done
-
-bash scripts/evaluate.sh "$ARTIFACT"
+rm -rf "$OUT"
+python -m baseline.base_bigram --kind "$KIND" --out-root "$OUT"
+bash scripts/evaluate.sh "$OUT" "$OUT/scores.json"

@@ -1,220 +1,267 @@
-"""Visible train-slice scorer for canonical-conditioning artifacts.
+"""Visible development (train-side) scorer for canonical token-bigram language models.
 
-This evaluator reads method artifacts only. It intentionally avoids depending
-on the reproduced implementation so any future method can participate by
-writing the same artifact shape used by scripts/evaluate.sh.
+Each method on disk lives in ``artifacts/<method>/<experiment>.npz`` and holds a
+weighted first-order Markov model over the fixed token support (format in
+``briefing/evaluation.md``). For every experiment this scorer:
+
+1. checks that the submission uses the fixed support and holds finite,
+   non-negative weights whose rows sum to at most 1;
+2. normalizes the weights exactly over all finite strings with a linear solve
+   and certifies that the model terminates;
+3. computes exact log-probabilities of the development strings, drawn from
+   the visible validation split;
+4. computes the exact probability that a string drawn from the model is
+   canonical (every adjacent token pair canonical) and requires it to be 1.
+
+A submission that fails a check, or is missing for an experiment, is scored at
+the failure floor: the development loss of the uniform canonical model. The
+baseline row ``base_bigram_lm`` is owned by this evaluator. Nothing a method
+writes besides its weights is read, and no method code is imported.
+
+This file is self-contained (standard library + numpy) and is meant to be run
+as ``python -I eval/train/evaluate.py``.
+It mirrors the hidden test scorer but shares no code with it.
 """
 
 from __future__ import annotations
 
 import argparse
 import json
-import math
+import sys
 from pathlib import Path
 
-from data.gpt2_bpe import load_default_tokenizer
+import numpy as np
 
 SLICE = "train"
-SLICE_PARITY = 0
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[1]
+ASSETS_DIR = HERE / "assets"
+EXPERIMENTS = {
+    "wikitext2_bigram_conditioning": "wikitext2",
+    "ptb_bigram_conditioning": "ptb",
+}
+BASELINE_NAME = "base_bigram_lm"
+ROW_SUM_TOLERANCE = 1e-6
+CANONICAL_TOLERANCE = 1e-9
+MAX_EXPECTED_VISITS = 1e6
+RESIDUAL_TOLERANCE = 1e-8
+METRICS = (
+    "relative_log_loss_to_baseline",
+    "log_loss_bits_per_string",
+    "loss_improvement_bits_per_string",
+    "log_loss_bits_per_token",
+    "canonical_sample_rate",
+)
 
 
-def bits_per_string(records: list[dict], field: str) -> float:
-    values = []
-    for rec in records:
-        if field not in rec:
-            raise KeyError(f"missing required field {field!r} in record {rec.get('id', '<unknown>')}")
-        value = rec[field]
-        if not math.isfinite(value):
-            raise ValueError(f"non-finite {field!r} in record {rec.get('id', '<unknown>')}: {value}")
-        values.append(value)
-    if not values:
-        raise ValueError(f"no records available for {SLICE} slice")
-    return -sum(values) / len(values)
+class InvalidSubmission(Exception):
+    def __init__(self, reason: str, canonical_mass: float = 0.0):
+        super().__init__(reason)
+        self.reason = reason
+        self.canonical_mass = canonical_mass
 
 
-def bits_per_token(records: list[dict], field: str) -> float:
-    total_log2_prob = 0.0
-    total_tokens = 0
-    for rec in records:
-        if field not in rec:
-            raise KeyError(f"missing required field {field!r} in record {rec.get('id', '<unknown>')}")
-        value = rec[field]
-        if not math.isfinite(value):
-            raise ValueError(f"non-finite {field!r} in record {rec.get('id', '<unknown>')}: {value}")
-        num_tokens = int(rec.get("num_tokens", 0))
-        if num_tokens <= 0:
-            raise ValueError(f"record {rec.get('id', '<unknown>')} has invalid num_tokens={num_tokens}")
-        total_log2_prob += value
-        total_tokens += num_tokens
-    if total_tokens <= 0:
-        raise ValueError(f"no tokens available for {SLICE} slice")
-    return -total_log2_prob / total_tokens
+def cohort_transitions(flat: np.ndarray, offsets: np.ndarray, k: int) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Return (previous symbol, next symbol, string index) for every transition of every string."""
+    prev, nxt, owner = [], [], []
+    for i in range(len(offsets) - 1):
+        toks = flat[offsets[i] : offsets[i + 1]]
+        prev.append(np.concatenate(([k], toks)))
+        nxt.append(np.concatenate((toks, [k])))
+        owner.append(np.full(len(toks) + 1, i, dtype=np.int64))
+    return np.concatenate(prev).astype(np.int64), np.concatenate(nxt).astype(np.int64), np.concatenate(owner)
 
 
-def token_count(records: list[dict]) -> int:
-    total = 0
-    for rec in records:
-        num_tokens = int(rec.get("num_tokens", 0))
-        if num_tokens <= 0:
-            raise ValueError(f"record {rec.get('id', '<unknown>')} has invalid num_tokens={num_tokens}")
-        total += num_tokens
-    if total <= 0:
-        raise ValueError(f"no tokens available for {SLICE} slice")
-    return total
+def solve_normalizer(weights: np.ndarray) -> float:
+    """Exact total weight Z of all finite strings; raises if the model does not terminate."""
+    k = weights.shape[0] - 1
+    system = np.eye(k) - weights[:k, :k]
+    rhs = np.stack([weights[:k, k], np.ones(k)], axis=1)
+    try:
+        solution = np.linalg.solve(system, rhs)
+    except np.linalg.LinAlgError as exc:
+        raise InvalidSubmission(f"weights do not define a terminating model ({exc})") from exc
+    if not np.all(np.isfinite(solution)):
+        raise InvalidSubmission("weights do not define a terminating model (non-finite solve)")
+    residual = float(np.abs(system @ solution - rhs).max())
+    if residual > RESIDUAL_TOLERANCE * max(1.0, float(np.abs(solution).max())):
+        raise InvalidSubmission(f"normalizer solve is numerically unreliable (residual {residual:.3g})")
+    beta, visits = solution[:, 0], solution[:, 1]
+    # For non-negative A, a solution of (I - A) x = 1 with x >= 1 certifies spectral radius < 1.
+    if visits.min() < 1.0 - 1e-9:
+        raise InvalidSubmission("weights do not define a terminating model (spectral radius >= 1)")
+    if visits.max() > MAX_EXPECTED_VISITS:
+        raise InvalidSubmission(f"expected string length exceeds {MAX_EXPECTED_VISITS:g} tokens")
+    if beta.min() < -1e-12:
+        raise InvalidSubmission("negative termination mass")
+    z = float(weights[k, k] + weights[k, :k] @ beta)
+    if not (np.isfinite(z) and z > 0.0):
+        raise InvalidSubmission(f"invalid normalizer {z}")
+    return z
 
 
-def finite_record_rate(records: list[dict], field: str) -> float:
-    if not records:
-        raise ValueError(f"no records available for {SLICE} slice")
-    finite = 0
-    for rec in records:
-        if field not in rec:
-            raise KeyError(f"missing required field {field!r} in record {rec.get('id', '<unknown>')}")
-        finite += int(math.isfinite(rec[field]))
-    return finite / len(records)
+def canonical_mass(weights: np.ndarray, canonical: np.ndarray, z: float) -> float:
+    """Exact probability that a string drawn from the normalized model is canonical."""
+    k = canonical.shape[0]
+    tokens = weights[:k, :k]
+    if not np.any(tokens[~canonical] > 0.0):
+        return 1.0
+    masked = weights.copy()
+    masked[:k, :k] = np.where(canonical, tokens, 0.0)
+    return float(min(1.0, solve_normalizer(masked) / z))
 
 
-def verified_canonical_sample_rate(samples: list[list[int]]) -> float:
-    if not samples:
-        raise ValueError(f"artifact did not provide generated samples for {SLICE} canonicality verification")
-    tokenizer = load_default_tokenizer()
-    canonical = 0
-    for sample in samples:
-        canonical += int(
-            all(tokenizer.tokenizer_canonical_bigram(left, right) for left, right in zip(sample, sample[1:]))
-        )
-    return canonical / len(samples)
+def string_log2_probs(weights: np.ndarray, z: float, prev: np.ndarray, nxt: np.ndarray, owner: np.ndarray, n: int) -> np.ndarray:
+    values = weights[prev, nxt]
+    if np.any(values <= 0.0):
+        bad = int(np.unique(owner[values <= 0.0]).size)
+        raise InvalidSubmission(f"zero probability for {bad} development string(s)")
+    log2w = np.bincount(owner, weights=np.log2(values), minlength=n)
+    return log2w - np.log2(z)
 
 
-def record_id(rec: dict) -> int:
-    if "id" not in rec:
-        raise KeyError("artifact record is missing required 'id' field")
-    return int(rec["id"])
+def check_weights(support: np.ndarray, weights: np.ndarray, expected_support: np.ndarray) -> np.ndarray:
+    k = len(expected_support)
+    if support.dtype.kind not in "iu" or support.shape != (k,) or not np.array_equal(support.astype(np.int64), expected_support):
+        raise InvalidSubmission("support does not match the fixed benchmark support")
+    if weights.dtype.kind != "f" or weights.shape != (k + 1, k + 1):
+        raise InvalidSubmission(f"weights must be a float array of shape {(k + 1, k + 1)}")
+    weights = weights.astype(np.float64)
+    if not np.all(np.isfinite(weights)):
+        raise InvalidSubmission("weights contain non-finite values")
+    if weights.min() < 0.0:
+        raise InvalidSubmission("weights contain negative values")
+    row_sums = weights.sum(axis=1)
+    if row_sums.max() > 1.0 + ROW_SUM_TOLERANCE:
+        raise InvalidSubmission(f"a row of weights sums to {row_sums.max():.6g} > 1")
+    return weights
 
 
-def select_slice(records: list[dict]) -> list[dict]:
-    return [rec for rec in records if record_id(rec) % 2 == SLICE_PARITY]
+class Cohort:
+    """Evaluator-owned assets for one corpus: support, canonical table, development strings, baseline."""
 
+    def __init__(self, path: Path):
+        with np.load(path, allow_pickle=False) as data:
+            self.support = data["support"].astype(np.int64)
+            self.k = len(self.support)
+            self.canonical = np.unpackbits(data["canonical_packed"], axis=1, count=self.k).astype(bool)
+            flat = data["cohort_tokens"].astype(np.int64)
+            offsets = data["cohort_offsets"].astype(np.int64)
+            self.baseline_log2p = data["baseline_log2p"].astype(np.float64)
+            self.baseline_canonical_mass = float(data["baseline_canonical_mass"])
+            self.failure_log2p = data["failure_log2p"].astype(np.float64)
+        self.n_strings = len(offsets) - 1
+        self.n_tokens = int(offsets[-1])
+        self.prev, self.next, self.owner = cohort_transitions(flat, offsets, self.k)
+        self.baseline_loss = float(-self.baseline_log2p.mean())
 
-def discover_artifacts(target: Path) -> list[Path]:
-    if target.is_file():
-        return [target]
-    if not target.exists():
-        raise FileNotFoundError(f"artifact path does not exist: {target}")
-    artifacts = sorted(target.glob("**/*.json"))
-    unique = []
-    seen = set()
-    for artifact in artifacts:
-        resolved = artifact.resolve()
-        if resolved not in seen:
-            unique.append(artifact)
-            seen.add(resolved)
-    if not unique:
-        raise FileNotFoundError(f"no JSON artifacts found under {target}")
-    return unique
-
-
-def score_artifact(path: Path) -> tuple[str, dict[str, dict[str, float]]]:
-    data = json.loads(path.read_text())
-    experiment = data.get("experiment")
-    if not experiment:
-        raise KeyError(f"{path}: missing required experiment field")
-    records = select_slice(data["records"])
-    metadata = data["metadata"]
-    samples = data.get("samples", {})
-    method_names = metadata.get(
-        "method_names",
-        {
-            "base": "base_bigram_lm",
-            "local": "local_canonical_bigram_lm",
-            "global": "global_canonical_bigram_lm",
-        },
-    )
-    base_name = method_names["base"]
-    local_name = method_names.get("local", "local_canonical_bigram_lm")
-    global_name = method_names.get("global", "global_canonical_bigram_lm")
-    baseline_loss = bits_per_string(records, "baseline_log2_prob")
-    baseline_token_loss = bits_per_token(records, "baseline_log2_prob")
-
-    results: dict[str, dict[str, float]] = {
-        base_name: {
-            "relative_log_loss_to_baseline": 1.0,
-            "log_loss_bits_per_string": baseline_loss,
-            "loss_improvement_bits_per_string": 0.0,
-            "log_loss_bits_per_token": baseline_token_loss,
-            "finite_record_rate": finite_record_rate(records, "baseline_log2_prob"),
-            "canonical_sample_rate": verified_canonical_sample_rate(samples.get(base_name, [])),
-            "vocab_size": metadata["vocab_size"],
+    def metrics(self, log2p: np.ndarray, mass: float) -> dict[str, float]:
+        loss = float(-log2p.mean())
+        return {
+            "relative_log_loss_to_baseline": loss / self.baseline_loss,
+            "log_loss_bits_per_string": loss,
+            "loss_improvement_bits_per_string": self.baseline_loss - loss,
+            "log_loss_bits_per_token": float(-log2p.sum() / self.n_tokens),
+            "canonical_sample_rate": float(mass),
         }
-    }
 
-    if records and "local_log2_prob" in records[0]:
-        log2_z = metadata.get("log2_z_estimate")
-        if log2_z is None:
-            raise KeyError(f"{path}: missing log2_z_estimate in method artifact metadata")
-        local_loss = bits_per_string(records, "local_log2_prob")
-        global_loss = baseline_loss + log2_z
-        global_canonical_rate = metadata.get(
-            "global_sample_canonical_rate", metadata.get("local_sample_canonical_rate")
-        )
-        if global_canonical_rate is None:
-            raise KeyError(f"{path}: missing global_sample_canonical_rate in method artifact metadata")
-        results[local_name] = {
-            "relative_log_loss_to_baseline": local_loss / baseline_loss,
-            "log_loss_bits_per_string": local_loss,
-            "loss_improvement_bits_per_string": baseline_loss - local_loss,
-            "log_loss_bits_per_token": bits_per_token(records, "local_log2_prob"),
-            "finite_record_rate": finite_record_rate(records, "local_log2_prob"),
-            "canonical_sample_rate": verified_canonical_sample_rate(samples.get(local_name, [])),
-            "vocab_size": metadata["vocab_size"],
-        }
-        results[global_name] = {
-            "relative_log_loss_to_baseline": global_loss / baseline_loss,
-            "log_loss_bits_per_string": global_loss,
-            "loss_improvement_bits_per_string": baseline_loss - global_loss,
-            "log_loss_bits_per_token": baseline_token_loss + (len(records) * log2_z / token_count(records)),
-            "finite_record_rate": finite_record_rate(records, "baseline_log2_prob"),
-            "canonical_sample_rate": verified_canonical_sample_rate(samples.get(global_name, [])),
-            "vocab_size": metadata["vocab_size"],
-        }
-    return experiment, results
+    def score(self, path: Path) -> tuple[np.ndarray, float, dict]:
+        try:
+            with np.load(path, allow_pickle=False) as data:
+                if "support" not in data.files or "weights" not in data.files:
+                    raise InvalidSubmission("submission must contain 'support' and 'weights' arrays")
+                support = np.array(data["support"])
+                weights = np.array(data["weights"])
+        except InvalidSubmission:
+            raise
+        except Exception as exc:  # unreadable or pickled content
+            raise InvalidSubmission(f"cannot read submission: {type(exc).__name__}: {exc}") from exc
+        weights = check_weights(support, weights, self.support)
+        z = solve_normalizer(weights)
+        mass = canonical_mass(weights, self.canonical, z)
+        if 1.0 - mass > CANONICAL_TOLERANCE:
+            raise InvalidSubmission(f"probability of noncanonical strings is {1.0 - mass:.3g}", canonical_mass=mass)
+        log2p = string_log2_probs(weights, z, self.prev, self.next, self.owner, self.n_strings)
+        if log2p.max() > 1e-9:
+            raise InvalidSubmission("a development probability exceeds 1 (numerical failure)", canonical_mass=mass)
+        return log2p, mass, {"valid": True, "log2_normalizer": float(np.log2(z))}
 
 
-def merge_results(artifacts: list[Path]) -> dict[str, dict[str, dict[str, float]]]:
-    merged: dict[str, dict[str, dict[str, float]]] = {}
-    for artifact in artifacts:
-        experiment, results = score_artifact(artifact)
-        exp_results = merged.setdefault(experiment, {})
-        for method, scores in results.items():
-            if method in exp_results and exp_results[method] != scores:
-                raise ValueError(
-                    f"conflicting scores for {experiment}.{method}; pass one artifact or use unique method outputs"
-                )
-            exp_results[method] = scores
-    if not merged:
-        raise ValueError("no experiments were scored")
-    return merged
+def discover_methods(root: Path) -> tuple[dict[str, Path], list[str]]:
+    ignored: list[str] = []
+    if not root.is_dir():
+        return {}, [f"{root} is not a directory"]
+    if any((root / f"{exp}.npz").is_file() for exp in EXPERIMENTS):
+        return {root.name: root}, ignored
+    methods: dict[str, Path] = {}
+    for entry in sorted(root.iterdir()):
+        if not entry.is_dir() or entry.name.startswith((".", "_")):
+            continue
+        if not any((entry / f"{exp}.npz").is_file() for exp in EXPERIMENTS):
+            ignored.append(f"{entry.name}: no <experiment>.npz submission")
+            continue
+        if entry.name == BASELINE_NAME:
+            ignored.append(f"{entry.name}: reserved for the evaluator-owned baseline")
+            continue
+        methods[entry.name] = entry
+    return methods, ignored
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("artifact", nargs="?", default="artifacts")
-    parser.add_argument("--output", default="scoring/scores_train.json")
+    parser.add_argument("artifacts", nargs="?", default=str(ROOT / "artifacts"))
+    parser.add_argument("--output", default=str(ROOT / "scoring" / "scores_train.json"))
+    parser.add_argument("--assets-dir", default=str(ASSETS_DIR))
+    parser.add_argument("--per-string-out", default=None, help="optional per-string log2 probabilities (analysis only)")
     args = parser.parse_args()
 
-    artifacts = discover_artifacts(Path(args.artifact))
-    results = merge_results(artifacts)
+    cohorts = {exp: Cohort(Path(args.assets_dir) / f"{corpus}.npz") for exp, corpus in EXPERIMENTS.items()}
+    methods, ignored = discover_methods(Path(args.artifacts))
+    results: dict[str, dict[str, dict[str, float]]] = {}
+    status: dict[str, dict[str, dict]] = {}
+    per_string: dict[str, dict[str, list[float]]] = {}
+    for exp, cohort in cohorts.items():
+        results[exp] = {BASELINE_NAME: cohort.metrics(cohort.baseline_log2p, cohort.baseline_canonical_mass)}
+        status[exp] = {BASELINE_NAME: {"valid": True, "owner": "evaluator"}}
+        per_string[exp] = {BASELINE_NAME: cohort.baseline_log2p.tolist()}
+        for name, directory in methods.items():
+            path = directory / f"{exp}.npz"
+            try:
+                if not path.is_file():
+                    raise InvalidSubmission("missing submission for this experiment")
+                log2p, mass, info = cohort.score(path)
+            except InvalidSubmission as exc:
+                log2p, mass = cohort.failure_log2p, exc.canonical_mass
+                info = {"valid": False, "reason": exc.reason, "scored_as": "failure floor (uniform canonical model)"}
+            results[exp][name] = cohort.metrics(log2p, mass)
+            status[exp][name] = info
+            per_string[exp][name] = log2p.tolist()
+            print(
+                f"[{SLICE}] {exp} {name}: valid={info['valid']} "
+                f"bits/string={results[exp][name]['log_loss_bits_per_string']:.4f} "
+                f"canonical={mass:.6f}" + ("" if info["valid"] else f" reason={info['reason']}"),
+                flush=True,
+            )
+
+    if not methods:
+        print(f"[{SLICE}] warning: no method submissions found under {args.artifacts}", file=sys.stderr)
     payload = {
         "_metadata": {
             "slice": SLICE,
-            "split_rule": "record id parity; even ids are visible train",
-            "artifacts": [str(path) for path in artifacts],
+            "artifacts_root": str(args.artifacts),
+            "cohort": {exp: {"strings": c.n_strings, "tokens": c.n_tokens} for exp, c in cohorts.items()},
+            "status": status,
+            "ignored": ignored,
+            "failure_rule": "invalid or missing submissions are scored at the uniform canonical model's development loss",
         },
-        "experiments": {name: {"results": exp_results} for name, exp_results in sorted(results.items())},
+        "experiments": {exp: {"results": rows} for exp, rows in results.items()},
     }
     out = Path(args.output)
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(payload, indent=2, sort_keys=True))
+    out.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
+    if args.per_string_out:
+        Path(args.per_string_out).parent.mkdir(parents=True, exist_ok=True)
+        Path(args.per_string_out).write_text(json.dumps(per_string))
 
 
 if __name__ == "__main__":

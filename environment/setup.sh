@@ -9,11 +9,13 @@
 # Only use container.def for the base Docker image and apt-get packages.
 #
 # IMPORTANT: Install into the SYSTEM Python, not a virtual environment.
-# The overlay may be recreated on container rebuilds — a venv inside
-# it will be lost and all subsequent jobs will fail.
 # Use: uv pip install --system <packages>
 # Do NOT create a venv (python -m venv, virtualenv, etc.).
+#
+# The gym needs only numpy (exact scoring, models) and regex (GPT-2
+# pre-tokenizer). The previously listed torch/transformers served an unscored
+# GPT-2 runner that has been removed.
 
 set -e
 
-uv pip install --system regex torch==2.3.1 transformers==4.41.2 safetensors==0.4.3
+uv pip install --system regex==2024.11.6 numpy==1.26.4

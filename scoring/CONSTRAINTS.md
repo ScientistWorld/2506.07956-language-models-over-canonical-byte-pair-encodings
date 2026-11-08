@@ -1,26 +1,40 @@
 # Scientist Constraints
 
-## Model And Tokenizer
+## Fixed task definition
 
-Use the GPT-2 BPE tokenizer files provided by `scripts/download.sh`. Changes
-intended as scientific improvements must evaluate under the same artifact
-contract and report the same metrics.
+- **Tokenizer**: the GPT-2 BPE files fetched by `scripts/download.sh`.
+- **Support**: the 2048 GPT-2 token ids in `data/support/<corpus>.json`, in
+  that order.
+- **Canonical bigrams**: the table in `data/support/<corpus>_canonical.npz`.
+  It defines which token strings are tokenizer-valid. Do not edit these files.
+  The evaluators use their own frozen copies, so edits only break your own
+  development runs.
+- **Model class**: a first-order (bigram) token model over the support,
+  submitted as the weights table described in `briefing/evaluation.md`. Any
+  estimator, training procedure, smoothing, constraint handling or
+  normalization is allowed if the result fits this format.
 
 ## Data
 
-Use only the train/test files downloaded by `scripts/download.sh` for the
-reported experiment. Build any reduced token support or fitted statistics from
-training text only. Do not add held-out tokens to the support, add external
-corpora, or evaluate on a different test set when reporting benchmark scores.
+- Fit models only on the training files (`data/downloads/*-train.txt`).
+- The validation files are the development set. Use them for model selection
+  and hyperparameters, never as training text.
+- Do not use the held-out test split, external corpora, or pretrained models
+  trained on other text.
 
 ## Evaluation
 
-Evaluation must be performed by `scripts/evaluate.sh` reading a method artifact. Do not edit `eval/` to import a proposed method or regenerate the method's outputs during scoring.
+- Score with `scripts/evaluate.sh` (development cohort) on
+  `artifacts/<method>/<experiment>.npz`. The hidden test scores the same files
+  with the same metrics on held-out test lines.
+- Submit both experiments. A missing experiment is scored as failed.
+- Do not edit `eval/`, write score files by hand, or use the reserved method
+  name `base_bigram_lm`.
 
 ## Compliance Checklist
 
-- [ ] Uses the provided GPT-2 BPE tokenizer files
-- [ ] Uses the benchmark train/test files for each reported experiment
-- [ ] Builds reduced vocabularies or fitted statistics from training text only
-- [ ] Writes the expected method artifact and scores it through `scripts/evaluate.sh`
-- [ ] Reports `log_loss_bits_per_string`, `canonical_sample_rate`, and `vocab_size`
+- [ ] Uses the fixed tokenizer, support and canonical-bigram table unchanged
+- [ ] Fits model parameters on training text only (validation used only for selection)
+- [ ] Writes `artifacts/<method>/{wikitext2,ptb}_bigram_conditioning.npz` in the documented format
+- [ ] Every submitted model has `canonical_sample_rate` = 1 on `scripts/evaluate.sh`
+- [ ] Reports the scores produced by `scripts/evaluate.sh`

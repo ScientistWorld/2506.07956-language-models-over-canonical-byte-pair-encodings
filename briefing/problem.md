@@ -3,23 +3,29 @@
 ## Research Question
 
 Token-level language models define probability distributions over token
-sequences, while a deterministic tokenizer maps each text string to only one
-valid tokenization. The problem is to model text so that probability mass is
-assigned to tokenizer-valid token sequences, rather than to alternate token
-segmentations that cannot be produced by the tokenizer.
+sequences, while a deterministic tokenizer maps each text string to exactly one
+token sequence. Many token sequences therefore never occur in tokenized text:
+they decode to valid text, but they are not the tokenizer's encoding of
+anything. The problem is to model text so that probability is assigned only to
+token sequences the tokenizer can produce, and to do so in a way that improves
+the fit to held-out text.
 
 ## Why It Matters
 
-Probability assigned to invalid token encodings is unavailable to real text.
-This can worsen held-out likelihood and can make sampled internal token
-sequences inconsistent with the tokenizer used to train and evaluate the model.
-A useful solution improves likelihood on held-out text while preserving support
-for the same underlying text strings.
+Probability given to token sequences the tokenizer never outputs is
+unavailable to real text. It worsens held-out likelihood, and it makes sampled
+token sequences inconsistent with the tokenizer used to train and evaluate the
+model. A useful solution improves likelihood on held-out text while keeping
+zero probability on such sequences.
 
 ## Success Criteria
 
-A successful system reduces held-out negative log-likelihood relative to an
-unconstrained token-level baseline and produces token sequences that are valid
-under the deterministic tokenizer. Evaluation must report both the likelihood
-benefit and the tokenizer-validity constraint so improvements cannot come from
-ignoring valid support.
+A successful system:
+
+- has lower held-out negative log-likelihood than the unconstrained token-level
+  baseline on the same strings;
+- puts probability exactly 1 on tokenizer-valid token sequences.
+
+Both are measured by the evaluator from the submitted model itself. A model
+that keeps any probability on tokenizer-invalid sequences is scored as failed,
+whatever its likelihood.

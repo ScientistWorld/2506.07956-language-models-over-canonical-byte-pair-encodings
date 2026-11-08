@@ -1,8 +1,12 @@
 #!/bin/bash
-# Held-out test-slice evaluation entry point.
+# Hidden held-out test evaluation.
 #
-# Contract mirrors scripts/evaluate.sh: read pre-generated method artifacts and
-# write a scoring JSON. When train scores exist, score the same method keys.
+# With no arguments, scores every method found under artifacts/
+# (artifacts/<method>/<experiment>.npz) on the held-out test cohort that only
+# eval/test/ holds, and writes scoring/scores_test.json. The evaluator-owned
+# baseline row (base_bigram_lm) is always included.
+#
+# Usage: bash scripts/evaluate_test.sh [ARTIFACTS_ROOT]
 
 set -e
 
@@ -10,8 +14,4 @@ cd /home/user
 
 mkdir -p scoring
 
-ARTIFACT="${1:-artifacts}"
-
-python -m eval.test.evaluate "$ARTIFACT" \
-  --train-scores scoring/scores_train.json \
-  --output scoring/scores_test.json
+python -I eval/test/evaluate.py "${1:-artifacts}" --output scoring/scores_test.json

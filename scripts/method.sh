@@ -1,32 +1,15 @@
 #!/bin/bash
-# Run the paper's proposed method.
+# Run the paper's proposed method (canonicality by conditioning: local and
+# global canonicalization of a token bigram LM) on both corpora, writing
+# artifacts/{local,global}_canonical_bigram_lm/<experiment>.npz, then score the
+# development cohort with scripts/evaluate.sh.
 #
-# This script trains/runs the paper's method using code in method/.
-#
-# Usage:
-#   bash scripts/method.sh
+# Usage: bash scripts/method.sh [extra args for method.canonical_conditioning]
 
 set -e
 
 cd /home/user
 
-python -m method.canonical_conditioning "$@"
+python -m method.canonical_conditioning --corpus all "$@"
 
-ARTIFACT="artifacts/canonical_conditioning/wikitext2_bigram.json"
-while [ "$#" -gt 0 ]; do
-  case "$1" in
-    --output)
-      ARTIFACT="$2"
-      shift 2
-      ;;
-    --output=*)
-      ARTIFACT="${1#--output=}"
-      shift
-      ;;
-    *)
-      shift
-      ;;
-  esac
-done
-
-bash scripts/evaluate.sh "$ARTIFACT"
+bash scripts/evaluate.sh artifacts

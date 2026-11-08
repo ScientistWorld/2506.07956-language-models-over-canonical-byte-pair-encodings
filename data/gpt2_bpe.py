@@ -120,6 +120,21 @@ class GPT2BPE:
             return False
         return self.encode(text) == [left, right]
 
+    def canonical_bigram_uncached(self, left: int, right: int) -> bool:
+        """Same decision as ``tokenizer_canonical_bigram`` without the large LRU caches.
+
+        Used when sweeping every pair of a token support (millions of pairs),
+        where caching each pair would only waste memory.
+        """
+        merged = self.token_bytes(left) + self.token_bytes(right)
+        if self.encode_bytes_no_pretokenize(merged) == [left, right]:
+            return True
+        try:
+            text = merged.decode("utf-8")
+        except UnicodeDecodeError:
+            return False
+        return self.encode(text) == [left, right]
+
     def bpe_canonical_sequence(self, token_ids: list[int]) -> bool:
         """Exact byte-level BPE round-trip test for a complete token string."""
         data = b"".join(self.token_bytes(token_id) for token_id in token_ids)

@@ -1,45 +1,35 @@
 {
   "experiments": {
     "wikitext2_bigram_conditioning": {
-      "description": "Scaled reproduction target: WikiText-2 line-level language modeling with GPT-2 BPE tokens and tokenizer-valid generated support.",
-      "notes": "The paper reports this likelihood pattern for GPT-2 small, not for the scaled bigram model used by the CPU-safe gym. The relative_log_loss_to_baseline entries below are derived from the paper's GPT-2 small WikiText row as qualitative reference context; absolute losses and scaled-resource constraints are intentionally produced only in scoring/scores.json.",
-      "weight": 0.3,
+      "description": "WikiText-2 line-level language modelling with GPT-2 BPE tokens: held-out likelihood of a canonical token LM.",
+      "notes": "Scaled setting: the paper's GPT-2/Llama models are replaced by a first-order token (bigram) language model over a fixed 2048-token GPT-2 BPE support derived from the full training file; the held-out cohort is every test line whose tokens all lie in that support. The relative_log_loss_to_baseline results below are derived from the paper's GPT-2 small row of Figure 3 (local / baseline and global / baseline) as qualitative context; absolute bits/string are not comparable across model scales and are produced only in the score files. Paper GPT-2 small bits/string (baseline, local, global): 369.2, 367.0, 367.3.",
+      "weight": 0.5,
       "primary_metric": "relative_log_loss_to_baseline",
       "metrics": {
         "relative_log_loss_to_baseline": {
           "higher_is_better": false,
           "coefficient": -1.0,
-          "description": "Primary likelihood metric normalized by the same-slice unconstrained baseline; values below 1.0 mean better held-out fit."
+          "description": "Primary metric: exact held-out bits per string of the normalized submitted model divided by the bits per string of the evaluator-owned unconstrained baseline on the same strings; below 1.0 means a better held-out fit than the baseline."
         },
         "log_loss_bits_per_string": {
           "higher_is_better": false,
           "coefficient": -0.2,
-          "description": "Absolute held-out negative log likelihood in bits per scored string."
+          "description": "Exact held-out negative log2-likelihood per string of the submitted model after the evaluator normalizes it over all finite token strings."
         },
         "loss_improvement_bits_per_string": {
           "higher_is_better": true,
           "coefficient": 0.6,
-          "description": "Same-slice reduction in held-out bits per string relative to the unconstrained baseline."
+          "description": "Evaluator-owned baseline bits per string minus the submitted model's bits per string on the same held-out strings."
         },
         "log_loss_bits_per_token": {
           "higher_is_better": false,
           "coefficient": -0.3,
-          "description": "Length-normalized held-out negative log likelihood to catch gains concentrated only on long or short strings."
-        },
-        "finite_record_rate": {
-          "higher_is_better": true,
-          "coefficient": 0.3,
-          "description": "Fraction of scored records assigned finite probability, penalizing methods that improve averages by dropping hard examples from support."
+          "description": "Held-out bits divided by the evaluator's own token count, to catch gains concentrated on long or short strings."
         },
         "canonical_sample_rate": {
           "higher_is_better": true,
           "coefficient": 0.4,
-          "description": "Constraint metric measuring the fraction of generated samples with tokenizer-valid token encodings."
-        },
-        "vocab_size": {
-          "higher_is_better": false,
-          "coefficient": -0.05,
-          "description": "Support-size constraint so improvements do not come solely from shrinking the reduced token vocabulary."
+          "description": "Constraint (the paper's canonicality rate Z): exact probability that a string drawn from the submitted model is canonical, i.e. every adjacent token pair is canonical. It must be 1 (within 1e-9); otherwise the submission is scored at the failure floor (the uniform canonical model's loss)."
         }
       },
       "results": {
@@ -57,47 +47,73 @@
         }
       }
     },
-    "wikitext2_gpt2_small_conditioning": {
-      "description": "Closer reproduction target: WikiText-2 line-level language modeling with cached GPT-2 small and canonical conditioning.",
-      "weight": 0.4,
+    "ptb_bigram_conditioning": {
+      "description": "Penn Treebank line-level language modelling with GPT-2 BPE tokens: held-out likelihood of a canonical token LM.",
+      "notes": "Scaled setting: the paper's GPT-2/Llama models are replaced by a first-order token (bigram) language model over a fixed 2048-token GPT-2 BPE support derived from the full training file; the held-out cohort is every test line whose tokens all lie in that support. The relative_log_loss_to_baseline results below are derived from the paper's GPT-2 small row of Figure 3 (local / baseline and global / baseline) as qualitative context; absolute bits/string are not comparable across model scales and are produced only in the score files. Paper GPT-2 small bits/string (baseline, local, global): 201.0, 200.7, 199.1.",
+      "weight": 0.5,
       "primary_metric": "relative_log_loss_to_baseline",
       "metrics": {
         "relative_log_loss_to_baseline": {
           "higher_is_better": false,
           "coefficient": -1.0,
-          "description": "Primary likelihood metric normalized by the same-slice unconstrained baseline; values below 1.0 mean better held-out fit."
+          "description": "Primary metric: exact held-out bits per string of the normalized submitted model divided by the bits per string of the evaluator-owned unconstrained baseline on the same strings; below 1.0 means a better held-out fit than the baseline."
         },
         "log_loss_bits_per_string": {
           "higher_is_better": false,
           "coefficient": -0.2,
-          "description": "Absolute held-out negative log likelihood in bits per scored string."
+          "description": "Exact held-out negative log2-likelihood per string of the submitted model after the evaluator normalizes it over all finite token strings."
         },
         "loss_improvement_bits_per_string": {
           "higher_is_better": true,
           "coefficient": 0.6,
-          "description": "Same-slice reduction in held-out bits per string relative to the unconstrained baseline."
+          "description": "Evaluator-owned baseline bits per string minus the submitted model's bits per string on the same held-out strings."
         },
         "log_loss_bits_per_token": {
           "higher_is_better": false,
           "coefficient": -0.3,
-          "description": "Length-normalized held-out negative log likelihood to catch gains concentrated only on long or short strings."
-        },
-        "finite_record_rate": {
-          "higher_is_better": true,
-          "coefficient": 0.3,
-          "description": "Fraction of scored records assigned finite probability, penalizing methods that improve averages by dropping hard examples from support."
+          "description": "Held-out bits divided by the evaluator's own token count, to catch gains concentrated on long or short strings."
         },
         "canonical_sample_rate": {
           "higher_is_better": true,
           "coefficient": 0.4,
-          "description": "Constraint metric measuring the fraction of generated samples with tokenizer-valid token encodings."
-        },
-        "vocab_size": {
-          "higher_is_better": false,
-          "coefficient": -0.05,
-          "description": "Support-size constraint so improvements do not come solely from shrinking the token vocabulary."
+          "description": "Constraint (the paper's canonicality rate Z): exact probability that a string drawn from the submitted model is canonical, i.e. every adjacent token pair is canonical. It must be 1 (within 1e-9); otherwise the submission is scored at the failure floor (the uniform canonical model's loss)."
         }
       },
+      "results": {
+        "base_bigram_lm": {
+          "type": "baseline",
+          "relative_log_loss_to_baseline": 1.0
+        },
+        "local_canonical_bigram_lm": {
+          "type": "proposed",
+          "relative_log_loss_to_baseline": 0.9985074626865672
+        },
+        "global_canonical_bigram_lm": {
+          "type": "proposed",
+          "relative_log_loss_to_baseline": 0.990547263681592
+        }
+      }
+    }
+  },
+  "_paper_reported_context": {
+    "source": "Figure 3, WikiText and PTB GPT-2 small rows. Absolute log-loss values are paper-reported bits/string. The primary relative_log_loss_to_baseline values are derived from those rows to keep the scaled reproduction comparable without rescaling or fabricating absolute losses. Metrics absent from the paper tables are scored for gym robustness and are produced only in scoring/scores.json.",
+    "figure_3_gpt2_small_bits_per_string": {
+      "WikiText": {
+        "baseline": 369.2,
+        "local": 367.0,
+        "global": 367.3
+      },
+      "PTB": {
+        "baseline": 201.0,
+        "local": 200.7,
+        "global": 199.1
+      }
+    },
+    "retired_unscored_experiment": {
+      "name": "wikitext2_gpt2_small_conditioning",
+      "reason": "never produced a measured result in this gym (no verifiable hidden-test path for a neural model's likelihoods); kept here verbatim as paper context instead of carrying 0.4 of the weight with no score",
+      "description": "Closer reproduction target: WikiText-2 line-level language modeling with cached GPT-2 small and canonical conditioning.",
+      "weight_before_retirement": 0.4,
       "results": {
         "base_gpt2_small": {
           "type": "baseline",
@@ -121,66 +137,6 @@
           "vocab_size": 50257
         }
       }
-    },
-    "ptb_bigram_conditioning": {
-      "description": "Scaled reproduction target: Penn Treebank line-level language modeling with GPT-2 BPE tokens and tokenizer-valid generated support.",
-      "notes": "The paper reports this likelihood pattern for GPT-2 small, not for the scaled bigram model used by the CPU-safe gym. The relative_log_loss_to_baseline entries below are derived from the paper's GPT-2 small PTB row as qualitative reference context; absolute losses and scaled-resource constraints are intentionally produced only in scoring/scores.json.",
-      "weight": 0.3,
-      "primary_metric": "relative_log_loss_to_baseline",
-      "metrics": {
-        "relative_log_loss_to_baseline": {
-          "higher_is_better": false,
-          "coefficient": -1.0,
-          "description": "Primary likelihood metric normalized by the same-slice unconstrained baseline; values below 1.0 mean better held-out fit."
-        },
-        "log_loss_bits_per_string": {
-          "higher_is_better": false,
-          "coefficient": -0.2,
-          "description": "Absolute held-out negative log likelihood in bits per scored string."
-        },
-        "loss_improvement_bits_per_string": {
-          "higher_is_better": true,
-          "coefficient": 0.6,
-          "description": "Same-slice reduction in held-out bits per string relative to the unconstrained baseline."
-        },
-        "log_loss_bits_per_token": {
-          "higher_is_better": false,
-          "coefficient": -0.3,
-          "description": "Length-normalized held-out negative log likelihood to catch gains concentrated only on long or short strings."
-        },
-        "finite_record_rate": {
-          "higher_is_better": true,
-          "coefficient": 0.3,
-          "description": "Fraction of scored records assigned finite probability, penalizing methods that improve averages by dropping hard examples from support."
-        },
-        "canonical_sample_rate": {
-          "higher_is_better": true,
-          "coefficient": 0.4,
-          "description": "Constraint metric measuring the fraction of generated samples with tokenizer-valid token encodings."
-        },
-        "vocab_size": {
-          "higher_is_better": false,
-          "coefficient": -0.05,
-          "description": "Support-size constraint so improvements do not come solely from shrinking the reduced token vocabulary."
-        }
-      },
-      "results": {
-        "base_bigram_lm": {
-          "type": "baseline",
-          "relative_log_loss_to_baseline": 1.0
-        },
-        "local_canonical_bigram_lm": {
-          "type": "proposed",
-          "relative_log_loss_to_baseline": 0.9985074626865672
-        },
-        "global_canonical_bigram_lm": {
-          "type": "proposed",
-          "relative_log_loss_to_baseline": 0.990547263681592
-        }
-      }
     }
-  },
-  "_paper_reported_context": {
-    "source": "Figure 3, WikiText and PTB GPT-2 small rows. Absolute log-loss values are paper-reported bits/string. The primary relative_log_loss_to_baseline values are derived from those rows to keep the scaled reproduction comparable without rescaling or fabricating absolute losses. Metrics absent from the paper tables are scored for gym robustness and are produced only in scoring/scores.json."
   }
 }
